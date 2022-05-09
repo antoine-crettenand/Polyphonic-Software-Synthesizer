@@ -10,6 +10,12 @@
 
 #include <JuceHeader.h>
 
+struct AmpSettings {
+    float ampGain {0}, ampAttack {0}, ampDecay {0}, ampSustain {0}, ampRelease {0};
+};
+
+AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts);
+
 //==============================================================================
 /**
 */

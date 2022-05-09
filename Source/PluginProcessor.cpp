@@ -230,6 +230,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                           juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
                                                            0.0f));
     
+    /*
     // filter section parameters
     layout.add(std::make_unique<juce::AudioParameterFloat>("FilterAttack",
                                                           "Attack",
@@ -250,9 +251,23 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                           "Release",
                                                           juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
                                                            0.0f));
-    
+    */
     return layout;
 }
+
+AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts){
+    AmpSettings ampSettings;
+    
+    ampSettings.ampGain = apvts.getRawParameterValue("AmpGain")->load();
+    
+    ampSettings.ampAttack = apvts.getRawParameterValue("AmpAttack")->load();
+    ampSettings.ampDecay = apvts.getRawParameterValue("AmpDecay")->load();
+    ampSettings.ampSustain = apvts.getRawParameterValue("AmpSustain")->load();
+    ampSettings.ampRelease = apvts.getRawParameterValue("AmpRelease")->load();
+    
+    return ampSettings;
+}
+
 
 
 //==============================================================================
