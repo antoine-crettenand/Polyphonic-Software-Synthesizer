@@ -19,9 +19,13 @@ COM418AudioProcessor::COM418AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), apvts (*this, nullptr, "Parameters", createParameterLayout())
+                        
 #endif
 {
+    //no need call delete for memory, handled
+    synth.addSound(new SynthSound());
+    synth.addVoice(new SynthVoice());
 }
 
 COM418AudioProcessor::~COM418AudioProcessor()
@@ -93,8 +97,16 @@ void COM418AudioProcessor::changeProgramName (int index, const juce::String& new
 //==============================================================================
 void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    synth.setCurrentPlaybackSampleRate(sampleRate);
+    
+    for(int i = 0; i < synth.getNumVoices(); i++)
+    {
+        if(auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
+        {
+            voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+        }
+        
+    }
 }
 
 void COM418AudioProcessor::releaseResources()
@@ -135,27 +147,28 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
+    
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
-
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    
+    for(int i = 0; i < synth.getNumVoices(); ++i)
     {
-        auto* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
+        if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
+        {
+            //osc controls; adsr; lfo
+            
+            // Amp ADSR parameters
+            auto& attack = *apvts.getRawParameterValue("AmpAttack");
+            auto& decay = *apvts.getRawParameterValue("AmpDecay");
+            auto& sustain = *apvts.getRawParameterValue("AmpSustain");
+            auto& release = *apvts.getRawParameterValue("AmpRelease");
+            
+            voice->updateADSR(attack.load(), decay.load(), sustain.load(), release.load());
+        }
     }
+
+    
+    synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
 //==============================================================================
@@ -212,22 +225,22 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpAttack",
                                                           "Attack",
-                                                          juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
+                                                          juce::NormalisableRange<float>(0.0f, 5.f, .001f, 1.f),
                                                            0.0f));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpDecay",
                                                           "Decay",
-                                                          juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
+                                                          juce::NormalisableRange<float>(0.0f, 5.f, .001f, 1.f),
                                                            0.0f));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpSustain",
                                                           "Sustain",
-                                                          juce::NormalisableRange<float>(0.0f, 10.0f, 0.5f, 1.f),
+                                                          juce::NormalisableRange<float>(0.0f, 1.0f, 0.1f, 1.f),
                                                            10.0f));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpRelease",
                                                           "Release",
-                                                          juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
+                                                          juce::NormalisableRange<float>(0.0f, 5.f, .001f, 1.f),
                                                            0.0f));
     
     /*
@@ -259,7 +272,7 @@ AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts){
     AmpSettings ampSettings;
     
     ampSettings.ampGain = apvts.getRawParameterValue("AmpGain")->load();
-    
+
     ampSettings.ampAttack = apvts.getRawParameterValue("AmpAttack")->load();
     ampSettings.ampDecay = apvts.getRawParameterValue("AmpDecay")->load();
     ampSettings.ampSustain = apvts.getRawParameterValue("AmpSustain")->load();
@@ -267,8 +280,6 @@ AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts){
     
     return ampSettings;
 }
-
-
 
 //==============================================================================
 // This creates new instances of the plugin..

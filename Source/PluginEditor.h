@@ -25,9 +25,26 @@ public:
     void resized() override;
 
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
+    juce::Slider ampAttackSlider;
+    juce::Slider ampDecaySlider;
+    juce::Slider ampSustainSlider;
+    juce::Slider ampReleaseSlider;
+    juce::ComboBox oscSelector;
+    
+    //alias
+    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+    
+    std::unique_ptr<SliderAttachment> ampAttackAttachment;
+    std::unique_ptr<SliderAttachment> ampDecayAttachment;
+    std::unique_ptr<SliderAttachment> ampSustainAttachment;
+    std::unique_ptr<SliderAttachment> ampReleaseAttachment;
+    
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelAttachment;
+    
+    //& == reference here to plugin processor
     COM418AudioProcessor& audioProcessor;
+    
+    void setAmpADSRParametersStyle();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessorEditor)
 };

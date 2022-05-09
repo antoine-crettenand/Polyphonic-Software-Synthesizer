@@ -9,6 +9,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "SynthVoice.h"
+#include "SynthSound.h"
 
 struct AmpSettings {
     float ampGain {0}, ampAttack {0}, ampDecay {0}, ampSustain {0}, ampRelease {0};
@@ -58,13 +60,12 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-
-    // Defines all the parameters present in the GUI
-    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
-    // This is the interface which binds the editor with the processor
-    juce::AudioProcessorValueTreeState apvts {*this, nullptr, "Parameters", createParameterLayout()};
     
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    juce::AudioProcessorValueTreeState apvts;
+
 private:
+    juce::Synthesiser synth;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessor)
 };
