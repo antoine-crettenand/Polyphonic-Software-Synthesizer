@@ -166,7 +166,8 @@ bool COM418AudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* COM418AudioProcessor::createEditor()
 {
-    return new COM418AudioProcessorEditor (*this);
+  //  return new COM418AudioProcessorEditor (*this);
+    return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -182,6 +183,77 @@ void COM418AudioProcessor::setStateInformation (const void* data, int sizeInByte
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
 }
+
+juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::createParameterLayout()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    
+    
+    /* Oscillator section
+    Osc waveType => Sine, Saw, Square
+    */
+    
+    juce::StringArray waveTypeChoices = {"Sine", "Saw", "Square"};
+    layout.add(std::make_unique<juce::AudioParameterChoice>("WaveType", "WaveType", waveTypeChoices, 0));
+    
+    /* Amp section parameters
+    AmpGain => Gain knob (-10 dB / +10 dB : 1db)
+     
+    ADSR
+    AmpAttack => Attack Slider (0ms / 5s : 1ms)
+    AmpDecay => Decay Slider (0ms / 5s : 1ms)
+    AmpSustain => Sustain Slider (0 / 10 : 0.5)
+    AmpRelease => Release Slider (0 / 5s : 1ms)
+    */
+    layout.add(std::make_unique<juce::AudioParameterFloat>("AmpGain",
+                                                          "Gain",
+                                                          juce::NormalisableRange<float>(-10.f, 10.f, .5f, 1.f),
+                                                           0.0f));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("AmpAttack",
+                                                          "Attack",
+                                                          juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
+                                                           0.0f));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("AmpDecay",
+                                                          "Decay",
+                                                          juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
+                                                           0.0f));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("AmpSustain",
+                                                          "Sustain",
+                                                          juce::NormalisableRange<float>(0.0f, 10.0f, 0.5f, 1.f),
+                                                           10.0f));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("AmpRelease",
+                                                          "Release",
+                                                          juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
+                                                           0.0f));
+    
+    // filter section parameters
+    layout.add(std::make_unique<juce::AudioParameterFloat>("FilterAttack",
+                                                          "Attack",
+                                                          juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
+                                                           0.0f));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("FilterDecay",
+                                                          "Decay",
+                                                          juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
+                                                           0.0f));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("FilterSustain",
+                                                          "Sustain",
+                                                          juce::NormalisableRange<float>(0.0f, 10.0f, 1.f, 1.f),
+                                                           10.0f));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("FilterRelease",
+                                                          "Release",
+                                                          juce::NormalisableRange<float>(0.0f, 5000.f, 1.f, 1.f),
+                                                           0.0f));
+    
+    return layout;
+}
+
 
 //==============================================================================
 // This creates new instances of the plugin..
