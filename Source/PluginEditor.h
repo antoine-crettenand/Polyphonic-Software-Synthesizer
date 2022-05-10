@@ -10,6 +10,8 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "UI/AdsrComponent.h"
+#include "UI/OscComponent.h"
 
 //==============================================================================
 /**
@@ -25,26 +27,15 @@ public:
     void resized() override;
 
 private:
-    juce::Slider ampAttackSlider;
-    juce::Slider ampDecaySlider;
-    juce::Slider ampSustainSlider;
-    juce::Slider ampReleaseSlider;
-    juce::ComboBox oscSelector;
-    
-    //alias
-    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
-    
-    std::unique_ptr<SliderAttachment> ampAttackAttachment;
-    std::unique_ptr<SliderAttachment> ampDecayAttachment;
-    std::unique_ptr<SliderAttachment> ampSustainAttachment;
-    std::unique_ptr<SliderAttachment> ampReleaseAttachment;
-    
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelAttachment;
-    
     //& == reference here to plugin processor
     COM418AudioProcessor& audioProcessor;
     
-    void setAmpADSRParametersStyle();
+    OscComponent osc;
+    AdsrComponent ampAdsr;
+    
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelAttachment;
+    juce::ComboBox oscSelector;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessorEditor)
 };

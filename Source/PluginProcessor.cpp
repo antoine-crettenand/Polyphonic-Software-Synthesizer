@@ -156,14 +156,12 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
         {
             //osc controls; adsr; lfo
+            auto& oscWaveChoice = *apvts.getRawParameterValue("Osc1WaveType");
             
             // Amp ADSR parameters
-            auto& attack = *apvts.getRawParameterValue("AmpAttack");
-            auto& decay = *apvts.getRawParameterValue("AmpDecay");
-            auto& sustain = *apvts.getRawParameterValue("AmpSustain");
-            auto& release = *apvts.getRawParameterValue("AmpRelease");
-            
-            voice->updateADSR(attack.load(), decay.load(), sustain.load(), release.load());
+            AmpSettings ampSettings = getAmpSettings(apvts);
+            voice->update(ampSettings.attack, ampSettings.decay, ampSettings.sustain, ampSettings.release);
+            voice->getOscillator().setWaveType(oscWaveChoice);
         }
     }
 
@@ -179,8 +177,8 @@ bool COM418AudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* COM418AudioProcessor::createEditor()
 {
-  //  return new COM418AudioProcessorEditor (*this);
-    return new juce::GenericAudioProcessorEditor(*this);
+    return new COM418AudioProcessorEditor (*this);
+  //  return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -207,10 +205,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     */
     
     juce::StringArray waveTypeChoices = {"Sine", "Saw", "Square"};
-    layout.add(std::make_unique<juce::AudioParameterChoice>("WaveType", "WaveType", waveTypeChoices, 0));
+    layout.add(std::make_unique<juce::AudioParameterChoice>("Osc1WaveType", "Osc 1 Wave Type", waveTypeChoices, 0));
     
     /* Amp section parameters
-    AmpGain => Gain knob (-10 dB / +10 dB : 1db)
+    AmpGain => Gain knob (-10 dB / +10 dB : 1db) - not implemented
      
     ADSR
     AmpAttack => Attack Slider (0ms / 5s : 1ms)
@@ -220,12 +218,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     */
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpGain",
                                                           "Gain",
-                                                          juce::NormalisableRange<float>(-10.f, 10.f, .5f, 1.f),
+                                                          juce::NormalisableRange<float>(-10.f, 10.f, .5f, .5f),
                                                            0.0f));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpAttack",
                                                           "Attack",
-                                                          juce::NormalisableRange<float>(0.0f, 5.f, .001f, 1.f),
+                                                          juce::NormalisableRange<float>(0.0f, 5.f, .001f, .5f),
                                                            0.0f));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpDecay",
@@ -240,7 +238,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpRelease",
                                                           "Release",
-                                                          juce::NormalisableRange<float>(0.0f, 5.f, .001f, 1.f),
+                                                          juce::NormalisableRange<float>(0.0f, 5.f, .001f, .5f),
                                                            0.0f));
     
     /*
@@ -271,12 +269,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
 AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts){
     AmpSettings ampSettings;
     
-    ampSettings.ampGain = apvts.getRawParameterValue("AmpGain")->load();
+    ampSettings.gain = apvts.getRawParameterValue("AmpGain")->load();
 
-    ampSettings.ampAttack = apvts.getRawParameterValue("AmpAttack")->load();
-    ampSettings.ampDecay = apvts.getRawParameterValue("AmpDecay")->load();
-    ampSettings.ampSustain = apvts.getRawParameterValue("AmpSustain")->load();
-    ampSettings.ampRelease = apvts.getRawParameterValue("AmpRelease")->load();
+    ampSettings.attack = apvts.getRawParameterValue("AmpAttack")->load();
+    ampSettings.decay = apvts.getRawParameterValue("AmpDecay")->load();
+    ampSettings.sustain = apvts.getRawParameterValue("AmpSustain")->load();
+    ampSettings.release = apvts.getRawParameterValue("AmpRelease")->load();
     
     return ampSettings;
 }

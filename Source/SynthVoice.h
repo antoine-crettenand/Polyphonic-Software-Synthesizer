@@ -11,7 +11,9 @@
 #pragma once
 
 #include <JuceHeader.h>
-# include "SynthSound.h"
+#include "SynthSound.h"
+#include "Data/AdsrData.h"
+#include "Data/OscData.h"
 
 class SynthVoice : public juce::SynthesiserVoice
 {
@@ -24,21 +26,15 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     void renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
     
-    void updateADSR(const float attack, const float decay, const float sustain, const float release);
+    void update(const float attack, const float decay, const float sustain, const float release);
+    OscData& getOscillator() { return osc; };
 
 private:
-    juce::ADSR adsr;
-    juce::ADSR::Parameters adsrParams;
+    AdsrData ampAdsr;
     //use lambda function, another : ;
-    juce::dsp::Oscillator<float> osc {[](float x){ return std::sin(x); }};
+    OscData osc;
     
     juce::AudioBuffer<float> synthBuffer;
-    /*
-     sin wave : return std::sin(x)
-     square wave : return x < 0.0f ? -1.0f : 1.0f;
-     saw wave : return x / juce::MathConstants<float>::pi; (scie /|/|)
-     => more efficient when change freq : use lookup table
-     */
     juce::dsp::Gain<float> gain;
     //to enforce to use prepareToPlay
     bool isPrepared { false };

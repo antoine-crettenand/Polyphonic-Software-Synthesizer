@@ -13,7 +13,7 @@
 #include "SynthSound.h"
 
 struct AmpSettings {
-    float ampGain {0}, ampAttack {0}, ampDecay {0}, ampSustain {0}, ampRelease {0};
+    float gain {0}, attack {0}, decay {0}, sustain {0}, release {0};
 };
 
 AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts);
