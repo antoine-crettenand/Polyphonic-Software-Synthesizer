@@ -19,6 +19,8 @@
         <FILE id="wBE0qH" name="AdsrData.h" compile="0" resource="0" file="Source/Data/AdsrData.h"/>
         <FILE id="us0Ryn" name="OscData.cpp" compile="1" resource="0" file="Source/Data/OscData.cpp"/>
         <FILE id="u86QBz" name="OscData.h" compile="0" resource="0" file="Source/Data/OscData.h"/>
+        <FILE id="Kov8NF" name="FilterData.cpp" compile="1" resource="0" file="Source/Data/FilterData.cpp"/>
+        <FILE id="p0ITYt" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
       </GROUP>
       <GROUP id="{18E55AC1-EDC9-7B8E-6751-905A2143C764}" name="UI">
         <FILE id="TKyrm2" name="AdsrComponent.cpp" compile="1" resource="0"
@@ -27,6 +29,10 @@
         <FILE id="Mn5SPq" name="OscComponent.cpp" compile="1" resource="0"
               file="Source/UI/OscComponent.cpp"/>
         <FILE id="gGaogu" name="OscComponent.h" compile="0" resource="0" file="Source/UI/OscComponent.h"/>
+        <FILE id="jCWNa7" name="FilterComponent.cpp" compile="1" resource="0"
+              file="Source/UI/FilterComponent.cpp"/>
+        <FILE id="EImhG3" name="FilterComponent.h" compile="0" resource="0"
+              file="Source/UI/FilterComponent.h"/>
       </GROUP>
     </GROUP>
   </MAINGROUP>

@@ -32,12 +32,7 @@ private:
     MonoChain chain;
     
     double sampleRate;
-    
-    double lowCutSlope = 1;
-    double lowCutOrder = (lowCutSlope + 1)*2;
-    
-    double highCutSlope = 1;
-    double highCutOrder = (highCutSlope + 1)*2;
+
     enum ChainPositions
     {
         LowCut,
@@ -50,12 +45,7 @@ private:
     using Coefficients = Filter::CoefficientsPtr;
     
     static void updateCoefficients(Coefficients& old, const Coefficients& replacement);
-    
-    template<int Index, typename CoefficientType>
-    void updateCutFilter(const CoefficientType& coefficients)
-    {
-        updateCoefficients(chain.template get<Index>().coefficients, coefficients);
-    }
+
     
     void updateLowCutFilter(const ChainSettings& chainSettings);
     void updateHighCutFilter(const ChainSettings& chainSettings);
