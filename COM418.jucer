@@ -2,7 +2,8 @@
 
 <JUCERPROJECT id="K2OPU5" name="COM418" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              cppLanguageStandard="17" pluginCharacteristicsValue="pluginWantsMidiIn">
+              cppLanguageStandard="17" pluginCharacteristicsValue="pluginWantsMidiIn"
+              pluginVST3Category="Instrument">
   <MAINGROUP id="R5eGg0" name="COM418">
     <GROUP id="{ACBB9D11-05DA-11AC-ADC8-4A1DBBEAAE32}" name="Source">
       <FILE id="SRac7a" name="PluginProcessor.cpp" compile="1" resource="0"
