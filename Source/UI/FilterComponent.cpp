@@ -18,11 +18,11 @@ FilterComponent::FilterComponent(juce::AudioProcessorValueTreeState& apvts, juce
     // initialise any special settings that your component needs.
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
     
-    lowCutFreqAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("LowCut Freq"), lowCutFreqSlider);
-    highCutAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("HighCut Freq"), highCutFreqSlider);
-    peakFreqAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Peak Freq"), peakFreqSlider);
-    peakGainInDecibelsAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Peak Gain"), peakGainInDecibelsSlider);
-    peakQualityAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Peak Quality"), peakQualitySlider);
+    lowCutFreqAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("LowCutFreq"), lowCutFreqSlider);
+    highCutAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("HighCutFreq"), highCutFreqSlider);
+    peakFreqAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("PeakFreq"), peakFreqSlider);
+    peakGainInDecibelsAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("PeakGain"), peakGainInDecibelsSlider);
+    peakQualityAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("PeakQuality"), peakQualitySlider);
 
     setParameterStyle(lowCutFreqSlider);
     setParameterStyle(highCutFreqSlider);

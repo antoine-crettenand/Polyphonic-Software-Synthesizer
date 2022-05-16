@@ -31,12 +31,12 @@ void FilterData::updateFilters(juce::AudioProcessorValueTreeState& apvts){
 ChainSettings FilterData::getChainSettings(juce::AudioProcessorValueTreeState& apvts){
     ChainSettings settings;
 //in real units
-    settings.lowCutFreq = apvts.getRawParameterValue("LowCut Freq")->load();
-    settings.highCutFreq = apvts.getRawParameterValue("HighCut Freq")->load();
+    settings.lowCutFreq = apvts.getRawParameterValue("LowCutFreq")->load();
+    settings.highCutFreq = apvts.getRawParameterValue("HighCutFreq")->load();
 
-    settings.peakFreq = apvts.getRawParameterValue("Peak Freq")->load();
-    settings.peakGainInDecibels = apvts.getRawParameterValue("Peak Gain")->load();
-    settings.peakQuality = apvts.getRawParameterValue("Peak Quality")->load();
+    settings.peakFreq = apvts.getRawParameterValue("PeakFreq")->load();
+    settings.peakGainInDecibels = apvts.getRawParameterValue("PeakGain")->load();
+    settings.peakQuality = apvts.getRawParameterValue("PeakQuality")->load();
     return settings;
 }
 
@@ -60,24 +60,24 @@ void FilterData::setParameterLayout(juce::AudioProcessorValueTreeState::Paramete
      PeakQuality => peak quality (0.1 - 10)
      */
     layout.add(std::make_unique<juce::AudioParameterFloat>("LowCutFreq",
-                                                           "LowCut Freq",
+                                                           "LowCutFreq",
                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 0.25f),
                                                             20.f));
     layout.add(std::make_unique<juce::AudioParameterFloat>("HighCutFreq",
-                                                           "HighCut Freq",
+                                                           "HighCutFreq",
                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 0.25f),
                                                            20000.f));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("PeakFreq",
-                                                           "Peak Freq",
+                                                           "PeakFreq",
                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 0.25f),
                                                            750.f));
     layout.add(std::make_unique<juce::AudioParameterFloat>("PeakGain",
-                                                           "Peak Gain",
+                                                           "PeakGain",
                                                            juce::NormalisableRange<float>(-24.f, 24.f, 0.5f, 1.f),
                                                            0.f));
     layout.add(std::make_unique<juce::AudioParameterFloat>("PeakQuality",
-                                                           "Peak Quality",
+                                                           "PeakQuality",
                                                            juce::NormalisableRange<float>(0.1f, 10.f, 0.05f, 1.f),
                                                            1.f));
     

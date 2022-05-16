@@ -109,7 +109,8 @@ void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
         
     }
     filter->prepare(sampleRate, samplesPerBlock);
-    filter->updateFilters(apvts);
+//    TODO : check 
+//    filter->updateFilters(apvts);
 }
 
 void COM418AudioProcessor::releaseResources()
