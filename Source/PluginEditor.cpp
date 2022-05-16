@@ -11,7 +11,7 @@
 
 //==============================================================================
 COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p), osc(audioProcessor.apvts, "Osc1WaveType"), ampAdsr(audioProcessor.apvts, "Amp")
+    : AudioProcessorEditor (&p), audioProcessor (p), osc(audioProcessor.apvts, "Osc1WaveType"), ampAdsr(audioProcessor.apvts, "Amp"), filter(audioProcessor.apvts, "Filter")
 {
     setSize (400, 300);
     
@@ -19,6 +19,7 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
     
     addAndMakeVisible(ampAdsr);
     addAndMakeVisible(osc);
+    addAndMakeVisible(filter);
 }
 
 COM418AudioProcessorEditor::~COM418AudioProcessorEditor()

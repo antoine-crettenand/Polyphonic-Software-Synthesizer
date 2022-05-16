@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 #include "UI/AdsrComponent.h"
 #include "UI/OscComponent.h"
+#include "UI/FilterComponent.h"
 
 //==============================================================================
 /**
@@ -32,6 +33,7 @@ private:
     
     OscComponent osc;
     AdsrComponent ampAdsr;
+    FilterComponent filter;
     
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelAttachment;
     juce::ComboBox oscSelector;
