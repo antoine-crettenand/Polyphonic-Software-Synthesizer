@@ -25,13 +25,20 @@ struct ChainSettings
 class FilterData : public MonoChain
 {
 public:
-    FilterData(double sampleRate){
-        
+    FilterData()
+    {
     }
+    
+    void prepare (double sampleRate, int samplesPerBlock);
+    void updateFilters(juce::AudioProcessorValueTreeState& apvts);
+    void processBlock(juce::AudioBuffer<float>& buffer);
+    void setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
+    
 private:
     MonoChain chain;
     
     double sampleRate;
+    bool isPrepared = false;
 
     enum ChainPositions
     {
@@ -39,6 +46,7 @@ private:
         Peak,
         HighCut
     };
+    ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts);
     
     void updatePeakFilter(const ChainSettings& chainSettings);
     
@@ -49,7 +57,7 @@ private:
     
     void updateLowCutFilter(const ChainSettings& chainSettings);
     void updateHighCutFilter(const ChainSettings& chainSettings);
-    void updateFilters(const ChainSettings& chainSettings);
+    
     
 };
 

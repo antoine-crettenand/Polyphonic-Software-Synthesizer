@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 #include "SynthVoice.h"
 #include "SynthSound.h"
+#include "Data/FilterData.h"
+
 
 struct AmpSettings {
     float gain {0}, attack {0}, decay {0}, sustain {0}, release {0};
@@ -66,6 +68,9 @@ public:
 
 private:
     juce::Synthesiser synth;
+    FilterData* filter = new FilterData();
+    
+    
     
     
     

@@ -7,6 +7,82 @@
 
 #include "FilterData.h"
 
+void FilterData::prepare(double sampleRate, int samplesPerBlock){
+    this->sampleRate = sampleRate;
+    juce::dsp::ProcessSpec spec;
+    spec.maximumBlockSize = samplesPerBlock;
+    //Can process only one channel of audio
+    spec.numChannels = 1;
+    spec.sampleRate = sampleRate;
+    //a dsp processorChain takes to instantiate the spec
+    chain.prepare(spec);
+    
+    this->isPrepared = true;
+}
+
+
+void FilterData::updateFilters(juce::AudioProcessorValueTreeState& apvts){
+    auto chainSettings = getChainSettings(apvts);
+    updatePeakFilter(chainSettings);
+    updateLowCutFilter(chainSettings);
+    updateHighCutFilter(chainSettings);
+}
+
+ChainSettings FilterData::getChainSettings(juce::AudioProcessorValueTreeState& apvts){
+    ChainSettings settings;
+//in real units
+    settings.lowCutFreq = apvts.getRawParameterValue("LowCut Freq")->load();
+    settings.highCutFreq = apvts.getRawParameterValue("HighCut Freq")->load();
+
+    settings.peakFreq = apvts.getRawParameterValue("Peak Freq")->load();
+    settings.peakGainInDecibels = apvts.getRawParameterValue("Peak Gain")->load();
+    settings.peakQuality = apvts.getRawParameterValue("Peak Quality")->load();
+    return settings;
+}
+
+void FilterData::processBlock(juce::AudioBuffer<float>& buffer){
+    juce::dsp::AudioBlock<float> block(buffer);
+    //only mono, o.w. define for left and right
+    auto monoBlock = block.getSingleChannelBlock(0);
+
+    
+    juce::dsp::ProcessContextReplacing<float> monoContext(monoBlock);
+    chain.process(monoContext);
+}
+
+void FilterData::setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout){
+    /*
+     Filter settings :
+     LowCutFreq => lowCut frequency (20 - 20000 [Hz])
+     HighCutFreq => highCut frequency (20 - 20000 [Hz])
+     PeakFreq => peak frequency (20 - 20000 [Hz])
+     PeakGain => Peak gain (-24 to +10 dB)
+     PeakQuality => peak quality (0.1 - 10)
+     */
+    layout.add(std::make_unique<juce::AudioParameterFloat>("LowCutFreq",
+                                                           "LowCut Freq",
+                                                           juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 0.25f),
+                                                            20.f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("HighCutFreq",
+                                                           "HighCut Freq",
+                                                           juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 0.25f),
+                                                           20000.f));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("PeakFreq",
+                                                           "Peak Freq",
+                                                           juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 0.25f),
+                                                           750.f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("PeakGain",
+                                                           "Peak Gain",
+                                                           juce::NormalisableRange<float>(-24.f, 24.f, 0.5f, 1.f),
+                                                           0.f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("PeakQuality",
+                                                           "Peak Quality",
+                                                           juce::NormalisableRange<float>(0.1f, 10.f, 0.05f, 1.f),
+                                                           1.f));
+    
+}
+
 
 void FilterData::updatePeakFilter(const ChainSettings &chainSettings){
     auto peakCoefficients = juce::dsp::IIR::Coefficients<float>::makePeakFilter(sampleRate,
