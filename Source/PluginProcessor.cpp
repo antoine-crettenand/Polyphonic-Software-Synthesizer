@@ -156,12 +156,8 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
         {
             //osc controls; adsr; lfo
-            auto& oscWaveChoice = *apvts.getRawParameterValue("Osc1WaveType");
             
-            // Amp ADSR parameters
-            AmpSettings ampSettings = getAmpSettings(apvts);
-            voice->update(ampSettings.attack, ampSettings.decay, ampSettings.sustain, ampSettings.release);
-            voice->getOscillator().setWaveType(oscWaveChoice);
+            voice->update(apvts);
         }
     }
 
@@ -264,19 +260,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                            0.0f));
     */
     return layout;
-}
-
-AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts){
-    AmpSettings ampSettings;
-    
-    ampSettings.gain = apvts.getRawParameterValue("AmpGain")->load();
-
-    ampSettings.attack = apvts.getRawParameterValue("AmpAttack")->load();
-    ampSettings.decay = apvts.getRawParameterValue("AmpDecay")->load();
-    ampSettings.sustain = apvts.getRawParameterValue("AmpSustain")->load();
-    ampSettings.release = apvts.getRawParameterValue("AmpRelease")->load();
-    
-    return ampSettings;
 }
 
 //==============================================================================

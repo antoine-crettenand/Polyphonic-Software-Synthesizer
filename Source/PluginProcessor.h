@@ -12,12 +12,6 @@
 #include "SynthVoice.h"
 #include "SynthSound.h"
 
-struct AmpSettings {
-    float gain {0}, attack {0}, decay {0}, sustain {0}, release {0};
-};
-
-AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts);
-
 //==============================================================================
 /**
 */

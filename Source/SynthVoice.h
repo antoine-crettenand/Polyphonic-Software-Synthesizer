@@ -14,6 +14,7 @@
 #include "SynthSound.h"
 #include "Data/AdsrData.h"
 #include "Data/OscData.h"
+#include "Data/LFOData.h"
 
 class SynthVoice : public juce::SynthesiserVoice
 {
@@ -26,18 +27,19 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     void renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
     
-    void update(const float attack, const float decay, const float sustain, const float release);
+    void update(juce::AudioProcessorValueTreeState& apvts);
     OscData& getOscillator() { return osc; };
+    LFOData& getLFO() { return lfo; };
 
 private:
     AdsrData ampAdsr;
     //use lambda function, another : ;
     OscData osc;
     
+    LFOData lfo;
+    
     juce::AudioBuffer<float> synthBuffer;
     juce::dsp::Gain<float> gain;
     //to enforce to use prepareToPlay
     bool isPrepared { false };
-    
-    
 };

@@ -60,8 +60,16 @@ float ms2sec(const float sec){
     return sec * 0.001;
 }
 
-void SynthVoice::update(const float attack, const float decay, const float sustain, const float release){
-    ampAdsr.updateADSR(attack, decay, sustain, release);
+
+void SynthVoice::update(juce::AudioProcessorValueTreeState& apvts){
+    auto ampAttack = apvts.getRawParameterValue("AmpAttack")->load();
+    auto ampDecay = apvts.getRawParameterValue("AmpDecay")->load();
+    auto ampSustain = apvts.getRawParameterValue("AmpSustain")->load();
+    auto ampRelease = apvts.getRawParameterValue("AmpRelease")->load();
+    ampAdsr.updateADSR(ampAttack, ampDecay, ampSustain, ampRelease);
+    
+    auto oscWaveChoice = apvts.getRawParameterValue("Osc1WaveType")->load();
+    getOscillator().setWaveType(oscWaveChoice);
 }
 void SynthVoice::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples)
 {
