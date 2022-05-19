@@ -26,6 +26,7 @@ COM418AudioProcessor::COM418AudioProcessor()
     //no need call delete for memory, handled
     synth.addSound(new SynthSound());
     synth.addVoice(new SynthVoice());
+
 }
 
 COM418AudioProcessor::~COM418AudioProcessor()
@@ -107,6 +108,9 @@ void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
         }
         
     }
+    filter->prepare(sampleRate, samplesPerBlock);
+//    TODO : check 
+//    filter->updateFilters(apvts);
 }
 
 void COM418AudioProcessor::releaseResources()
@@ -167,6 +171,9 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
 
     
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    
+    filter->updateFilters(apvts);
+    filter->processBlock(buffer);
 }
 
 //==============================================================================
@@ -241,6 +248,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                           juce::NormalisableRange<float>(0.0f, 5.f, .001f, .5f),
                                                            0.0f));
     
+    filter->setParameterLayout(layout);
+    
     /*
     // filter section parameters
     layout.add(std::make_unique<juce::AudioParameterFloat>("FilterAttack",
@@ -278,6 +287,9 @@ AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts){
     
     return ampSettings;
 }
+
+
+
 
 //==============================================================================
 // This creates new instances of the plugin..
