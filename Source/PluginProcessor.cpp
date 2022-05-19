@@ -147,7 +147,6 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
@@ -156,12 +155,10 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
         {
             //osc controls; adsr; lfo
-            
             voice->update(apvts);
         }
     }
 
-    
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
