@@ -108,9 +108,8 @@ void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
         }
         
     }
-    filter->prepare(sampleRate, samplesPerBlock);
-//    TODO : check 
-//    filter->updateFilters(apvts);
+    filter->prepareToPlay(sampleRate, samplesPerBlock);
+    modEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
 }
 
 void COM418AudioProcessor::releaseResources()
@@ -174,6 +173,10 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     
     filter->updateFilters(apvts);
     filter->processBlock(buffer);
+    
+    modEffect->update(apvts);
+    modEffect->processBlock(buffer);
+    
 }
 
 //==============================================================================
@@ -249,6 +252,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                            0.0f));
     
     filter->setParameterLayout(layout);
+    modEffect->setParameterLayout(layout);
     
     /*
     // filter section parameters
