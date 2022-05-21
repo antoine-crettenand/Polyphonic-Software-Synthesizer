@@ -15,6 +15,7 @@ class OscData : public juce::dsp::Oscillator<float>
 {
 public:
     void setWaveType(const int choice);
+    juce::StringArray getWaveTypeChoices(){return {"Sine", "Saw", "Square"};}
     
 private:
     
