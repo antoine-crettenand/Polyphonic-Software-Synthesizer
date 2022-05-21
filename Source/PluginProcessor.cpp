@@ -112,7 +112,7 @@ void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
         
     }
     filter->prepareToPlay(sampleRate, samplesPerBlock);
-    modEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+    tremoloEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
 }
 
 void COM418AudioProcessor::releaseResources()
@@ -177,8 +177,8 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     filter->updateFilters(apvts);
     filter->processBlock(buffer);
     
-    modEffect->update(apvts);
-//    modEffect->processBlock(buffer);
+    tremoloEffect->update(apvts);
+    tremoloEffect->processBlock(buffer);
     
 }
 
@@ -255,9 +255,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                            0.0f));
     
     filter = new FilterData();
-    modEffect = new ModEffectData("modEffect");
+    tremoloEffect = new TremoloData();
     filter->setParameterLayout(layout);
-    modEffect->setParameterLayout(layout);
+    tremoloEffect->setParameterLayout(layout);
     
     /*
     // filter section parameters

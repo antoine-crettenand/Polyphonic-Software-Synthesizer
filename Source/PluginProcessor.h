@@ -12,7 +12,7 @@
 #include "SynthVoice.h"
 #include "SynthSound.h"
 #include "Data/FilterData.h"
-#include "Data/ModEffectData.h"
+#include "Data/TremoloData.h"
 
 
 struct AmpSettings {
@@ -70,7 +70,7 @@ public:
 private:
     juce::Synthesiser synth;
     FilterData* filter; // = new FilterData();
-    ModEffectData* modEffect;// = new ModEffectData("modEffect");
+    TremoloData* tremoloEffect;// = new ModEffectData("modEffect");
     
     
     

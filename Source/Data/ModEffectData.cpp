@@ -19,23 +19,6 @@ void ModEffectData::prepareToPlay(double sampleRate, int samplesPerBlock, int ou
     osc.prepare(spec);
     isPrepared = true;
 }
-void ModEffectData::processBlock(juce::AudioBuffer<float>& buffer){
-//    osc.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
-    //0 for left
-    auto* leftBuffer  = buffer.getWritePointer (0);
-//    auto* rightBuffer = buffer.getWritePointer (1);
-   
-    for (auto i = 0; i < buffer.getNumSamples(); ++i)
-    {
-        float level = osc.processSample(0.f);
-        auto nextSample = leftBuffer[i] * level;
-        
-        leftBuffer[i]  = nextSample;                                          
-    }
-
-    
-
-}
 
 void ModEffectData::update(juce::AudioProcessorValueTreeState& apvts){
     ModSettings settings = getModSettings(apvts);
@@ -48,7 +31,7 @@ void ModEffectData::setParameterLayout(juce::AudioProcessorValueTreeState::Param
     layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "ModFreq",
                                                            nameID + "ModFreq",
                                                            juce::NormalisableRange<float>(0.f, 20.f, 0.5f, 0.25f),
-                                                            5.f));
+                                                            1.f));
     
     juce::StringArray waveTypeChoices = osc.getWaveTypeChoices();
     layout.add(std::make_unique<juce::AudioParameterChoice>(nameID + "ModWaveType",

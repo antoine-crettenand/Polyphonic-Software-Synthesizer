@@ -25,11 +25,13 @@ public:
     ModEffectData(const std::string &nameID):nameID(nameID)
     {
     }
+    virtual ~ModEffectData(){}
+    
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     // TODO : check validity
 //        virtual ~ModEffectData();
 //    virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0;
-    void processBlock(juce::AudioBuffer<float>& buffer);
+    virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0;
     
     void update(juce::AudioProcessorValueTreeState& apvts);
     void setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
