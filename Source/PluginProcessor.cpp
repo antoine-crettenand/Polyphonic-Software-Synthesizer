@@ -19,7 +19,7 @@ COM418AudioProcessor::COM418AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), apvts (*this, nullptr, "Parameters", createParameterLayout())
+                       ), apvts(*this, nullptr, "Parameters", createParameterLayout())
                         
 #endif
 {
@@ -27,6 +27,9 @@ COM418AudioProcessor::COM418AudioProcessor()
     synth.addSound(new SynthSound());
     synth.addVoice(new SynthVoice());
 
+    //What I want to do
+//    apvts = new juce::AudioProcessorValueTreeState(*this, nullptr, "Parameters", createParameterLayout());
+//    apvts = {*this, nullptr, "Parameters", createParameterLayout()};
 }
 
 COM418AudioProcessor::~COM418AudioProcessor()
@@ -175,7 +178,7 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     filter->processBlock(buffer);
     
     modEffect->update(apvts);
-    modEffect->processBlock(buffer);
+//    modEffect->processBlock(buffer);
     
 }
 
@@ -251,6 +254,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                           juce::NormalisableRange<float>(0.0f, 5.f, .001f, .5f),
                                                            0.0f));
     
+    filter = new FilterData();
+    modEffect = new ModEffectData("modEffect");
     filter->setParameterLayout(layout);
     modEffect->setParameterLayout(layout);
     

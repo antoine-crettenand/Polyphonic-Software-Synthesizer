@@ -44,22 +44,23 @@ void ModEffectData::update(juce::AudioProcessorValueTreeState& apvts){
 }
 
 void ModEffectData::setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout){
-    layout.add(std::make_unique<juce::AudioParameterFloat>(name + "ModFreq",
-                                                           name + "ModFreq",
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "ModFreq",
+                                                           nameID + "ModFreq",
                                                            juce::NormalisableRange<float>(0.f, 20.f, 0.5f, 0.25f),
                                                             5.f));
     
     juce::StringArray waveTypeChoices = osc.getWaveTypeChoices();
-    layout.add(std::make_unique<juce::AudioParameterChoice>(name + "ModWaveType",
-                                                            name + "ModWaveType",
+    layout.add(std::make_unique<juce::AudioParameterChoice>(nameID + "ModWaveType",
+                                                            nameID + "ModWaveType",
                                                             waveTypeChoices, 0));
 }
 
 ModSettings ModEffectData::getModSettings(juce::AudioProcessorValueTreeState& apvts){
     ModSettings settings;
-
-    settings.freq = apvts.getRawParameterValue(name + "ModFreq")->load();
-    settings.waveType = apvts.getRawParameterValue(name + "ModWaveType")->load();
+    nameID + nameID;
+    settings.freq = apvts.getRawParameterValue(nameID + "ModFreq")->load();
+    settings.waveType = apvts.getRawParameterValue(nameID + "ModWaveType")->load();
     return settings;
 }
 

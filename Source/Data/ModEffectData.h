@@ -22,7 +22,7 @@ struct ModSettings
 class ModEffectData
 {
 public:
-    ModEffectData(juce::String name): name(name)
+    ModEffectData(const std::string &nameID):nameID(nameID)
     {
     }
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
@@ -39,7 +39,7 @@ public:
 
 protected:
     OscData osc;
-    juce::String name;
+    std::string nameID;
     
 private:
     ModSettings getModSettings(juce::AudioProcessorValueTreeState& apvts);

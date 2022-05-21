@@ -69,8 +69,8 @@ public:
 
 private:
     juce::Synthesiser synth;
-    FilterData* filter = new FilterData();
-    ModEffectData* modEffect = new ModEffectData("tremolo");
+    FilterData* filter; // = new FilterData();
+    ModEffectData* modEffect;// = new ModEffectData("modEffect");
     
     
     
