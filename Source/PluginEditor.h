@@ -32,12 +32,10 @@ private:
     COM418AudioProcessor& audioProcessor;
     
     OscComponent osc;
+    OscComponent osc2;
+    OscComponent osc3;
     AdsrComponent ampAdsr;
     FullOscsComponent fullOscsComponent;
-
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelAttachment;
-    juce::ComboBox oscSelector;
-
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessorEditor)
 };

@@ -25,6 +25,10 @@
         <FILE id="TKyrm2" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/UI/AdsrComponent.cpp"/>
         <FILE id="dhKq97" name="AdsrComponent.h" compile="0" resource="0" file="Source/UI/AdsrComponent.h"/>
+        <FILE id="ahv5UQ" name="FullOscsComponent.cpp" compile="1" resource="0"
+              file="Source/UI/FullOscsComponent.cpp"/>
+        <FILE id="UGWwkW" name="FullOscsComponent.h" compile="0" resource="0"
+              file="Source/UI/FullOscsComponent.h"/>
         <FILE id="Mn5SPq" name="OscComponent.cpp" compile="1" resource="0"
               file="Source/UI/OscComponent.cpp"/>
         <FILE id="gGaogu" name="OscComponent.h" compile="0" resource="0" file="Source/UI/OscComponent.h"/>

@@ -19,13 +19,17 @@ COM418AudioProcessor::COM418AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), apvts (*this, nullptr, "Parameters", createParameterLayout())
+                       ), apvts(*this, nullptr, "Parameters", createParameterLayout(3)) //NUMBER_OSCILLATORS=3 must be given since NUMBER_OSCILLATORS is not yet instantiated
                         
 #endif
 {
     //no need call delete for memory, handled
     synth.addSound(new SynthSound());
-    synth.addVoice(new SynthVoice());
+    for (int i = 0; i < NUMBER_OSCILLATORS; ++i)
+    {
+        synth.addVoice(new SynthVoice());
+    }
+
 }
 
 COM418AudioProcessor::~COM418AudioProcessor()
@@ -156,7 +160,9 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
         {
             //osc controls; adsr; lfo
-            auto& oscWaveChoice = *apvts.getRawParameterValue("Osc1WaveType");
+
+            std::string voiceName = "Osc" + std::to_string(i+1) + "WaveType";
+            auto& oscWaveChoice = *apvts.getRawParameterValue(voiceName);
             
             // Amp ADSR parameters
             AmpSettings ampSettings = getAmpSettings(apvts);
@@ -195,7 +201,7 @@ void COM418AudioProcessor::setStateInformation (const void* data, int sizeInByte
     // whose contents will have been created by the getStateInformation() call.
 }
 
-juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::createParameterLayout()
+juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::createParameterLayout(int numberOscillators)
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     
@@ -205,8 +211,19 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     */
     
     juce::StringArray waveTypeChoices = {"Sine", "Saw", "Square"};
-    layout.add(std::make_unique<juce::AudioParameterChoice>("Osc1WaveType", "Osc 1 Wave Type", waveTypeChoices, 0));
-    
+
+    for (int i = 0; i < numberOscillators; ++i)
+    {
+        layout.add(std::make_unique<juce::AudioParameterChoice>("Osc" + std::to_string(i + 1) + "WaveType", "Osc " + std::to_string(i + 1) + " Wave Type", waveTypeChoices, 0));
+        layout.add(std::make_unique<juce::AudioParameterInt>("Freq" + std::to_string(i + 1),
+                                                            "Frequency Oscillator" + std::to_string(i + 1),
+                                                            -12, 12, 0));
+        layout.add(std::make_unique<juce::AudioParameterFloat>("Volume" + std::to_string(i + 1),
+                                                            "Volume Oscillator" + std::to_string(i + 1),
+                                                            juce::NormalisableRange<float>(-5.f, 5.f, 1.f, 1.f),
+                                                            0));
+    }
+
     /* Amp section parameters
     AmpGain => Gain knob (-10 dB / +10 dB : 1db) - not implemented
      

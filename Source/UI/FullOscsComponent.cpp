@@ -12,72 +12,26 @@
 #include "FullOscsComponent.h"
 
 //==============================================================================
-FullOscsComponent::FullOscsComponent(juce::AudioProcessorValueTreeState& apvts)
+FullOscsComponent::FullOscsComponent(juce::AudioProcessorValueTreeState& apvts) : oscComponent1(apvts, 1), oscComponent2(apvts, 2), oscComponent3(apvts, 3)
 {
+
+    addAndMakeVisible(oscComponent1);
+    addAndMakeVisible(oscComponent2);
+    addAndMakeVisible(oscComponent3);
+
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
     frequencyText.setButtonText("Frequency");
     waveformText.setButtonText("Waveform");
     volumeText.setButtonText("Volume");
-    osc1Text.setButtonText("Osc 1");
-    osc2Text.setButtonText("Osc 2");
-    osc3Text.setButtonText("Osc 3");
     oSCText.setButtonText("OSC");
-    
-
-    juce::StringArray choices = { "Sine", "Saw", "Square" };
-    oscWaveTypeSelector1.addItemList(choices, 1);
-    addAndMakeVisible(oscWaveTypeSelector1);
-    oscWaveTypeSelector2.addItemList(choices, 1);
-    addAndMakeVisible(oscWaveTypeSelector2);
-    oscWaveTypeSelector3.addItemList(choices, 1);
-    addAndMakeVisible(oscWaveTypeSelector3);
-
-    
-    freq1.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    freq2.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    freq3.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-
-    freq1.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    freq2.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    freq3.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-
-    vol1.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    vol2.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    vol3.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-
-    vol1.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    vol2.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    vol3.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 
     oSCText.setColour(juce::TextButton::textColourOffId, juce::Colours::lightblue);
-    //osc1Text.setColour(juce::TextButton::textColourOnId, juce::Colours::green);
-    //osc1Text.setColour(juce::TextButton::buttonColourId, juce::Colours::blue);
-    //osc1Text.setColour(juce::TextButton::buttonNormal, juce::Colours::purple);
-
-    //if (osc1Text.isMouseOver()) {
-    //    osc1Text.setColour(juce::TextButton::textColourOffId, juce::Colours::purple);
-    //}
-
-
 
     addAndMakeVisible(frequencyText);
     addAndMakeVisible(waveformText);
     addAndMakeVisible(volumeText);
-    addAndMakeVisible(osc1Text);
-    addAndMakeVisible(osc2Text);
-    addAndMakeVisible(osc3Text);
     addAndMakeVisible(oSCText);
-
-
-    addAndMakeVisible(freq1);
-    addAndMakeVisible(freq2);
-    addAndMakeVisible(freq3);
-
-    addAndMakeVisible(vol1);
-    addAndMakeVisible(vol2);
-    addAndMakeVisible(vol3);
-
 }
 
 FullOscsComponent::~FullOscsComponent()
@@ -91,26 +45,18 @@ void FullOscsComponent::paint(juce::Graphics& g)
 
 void FullOscsComponent::resized()
 {
-    osc1Text.setBounds(25, 75, 50, 25);
-    osc2Text.setBounds(25, 150, 50, 25);
-    osc3Text.setBounds(25, 225, 50, 25);
-    oSCText.setBounds(15, 10, 70, 50);
+    const auto bounds = getLocalBounds();
 
-    frequencyText.setBounds(115, 10, 70, 25);
-    waveformText.setBounds(215, 10, 70, 25);
-    volumeText.setBounds(315, 10, 70, 25);
+    const double WIDTH_UNUSED_SPACE = bounds.getWidth() / 26;
+    const double HEIGHT_MARGIN = bounds.getHeight() / 30;
 
-    freq1.setBounds(115, 63, 70, 50);
-    freq2.setBounds(115, 138, 70, 50);
-    freq3.setBounds(115, 213, 70, 50);
+    oscComponent1.setBounds(0, bounds.getHeight() / 4, bounds.getWidth(), bounds.getHeight() / 4);
+    oscComponent2.setBounds(0, 2*bounds.getHeight() / 4, bounds.getWidth(), bounds.getHeight() / 4);
+    oscComponent3.setBounds(0, 3*bounds.getHeight() / 4, bounds.getWidth(), bounds.getHeight() / 4);
 
-    oscWaveTypeSelector1.setBounds(215, 75, 70, 25);
-    oscWaveTypeSelector2.setBounds(215, 150, 70, 25);
-    oscWaveTypeSelector3.setBounds(215, 225, 70, 25);
+    frequencyText.setBounds(bounds.getWidth()/4 + WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth()/4-2* WIDTH_UNUSED_SPACE, bounds.getHeight() / 12);
+    waveformText.setBounds(2*bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 12);
+    volumeText.setBounds(3*bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 12);
 
-    vol1.setBounds(315, 63, 70, 50);
-    vol2.setBounds(315, 138, 70, 50);
-    vol3.setBounds(315, 213, 70, 50);
-
-
+    oSCText.setBounds(WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 6);
 }

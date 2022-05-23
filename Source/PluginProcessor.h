@@ -61,11 +61,12 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout(int numberOscillators);
     juce::AudioProcessorValueTreeState apvts;
 
 private:
     juce::Synthesiser synth;
+    const int NUMBER_OSCILLATORS = 3; // If modified, also needs to change call to createParameterLayout since NUMBER_OSCILLATORS is instantiated afterwards
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessor)
 };
