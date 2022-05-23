@@ -14,8 +14,9 @@
 
 struct ModSettings
 {
-    float freq { 0 };
+    float freq { 0.f };
      int waveType { 0 };
+    float shift { 0.f };
 };
 
 
@@ -40,7 +41,9 @@ public:
 
 
 protected:
-    OscData osc;
+    //osc left not shifted in contrary to oscRight
+    OscData oscLeft;
+    OscData oscRight;
     std::string nameID;
     
 private:

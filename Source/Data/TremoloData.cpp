@@ -15,13 +15,16 @@ void TremoloData::processBlock(juce::AudioBuffer<float>& buffer) {
 //    osc.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     //0 for left
     auto* leftBuffer  = buffer.getWritePointer (0);
-//    auto* rightBuffer = buffer.getWritePointer (1);
+    auto* rightBuffer = buffer.getWritePointer (1);
    
     for (auto i = 0; i < buffer.getNumSamples(); ++i)
     {
-        float level = osc.processSample(0.f);
-        auto nextSample = leftBuffer[i] * level;
+        float levelLeft = (oscLeft.processSample(0.f) + 1) / 2;
+        auto nextSampleLeft = leftBuffer[i] * levelLeft;
+        leftBuffer[i]  = nextSampleLeft;
         
-        leftBuffer[i]  = nextSample;
+        float levelRight = (oscRight.processSample(0.f) + 1) / 2;
+        auto nextSampleRight = rightBuffer[i] * levelRight;
+        rightBuffer[i]  = nextSampleRight;
     }
 }

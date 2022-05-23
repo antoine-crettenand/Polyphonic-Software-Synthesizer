@@ -11,6 +11,7 @@
 #pragma once
 #include "ModEffectData.h"
 
+
 class TremoloData : public ModEffectData
 {
 public :
@@ -19,4 +20,5 @@ public :
     }
     void processBlock(juce::AudioBuffer<float>& buffer) override;
 
+private :
 };

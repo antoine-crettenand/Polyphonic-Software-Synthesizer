@@ -16,14 +16,19 @@ void ModEffectData::prepareToPlay(double sampleRate, int samplesPerBlock, int ou
     spec.sampleRate = sampleRate;
     spec.numChannels = outputChannels;
 
-    osc.prepare(spec);
+    oscLeft.prepare(spec);
+    oscRight.prepare(spec);
     isPrepared = true;
 }
 
 void ModEffectData::update(juce::AudioProcessorValueTreeState& apvts){
     ModSettings settings = getModSettings(apvts);
-    osc.setFrequency(settings.freq);
-    osc.setWaveType(settings.waveType);
+    oscLeft.setFrequency(settings.freq);
+    oscLeft.setWaveType(settings.waveType);
+    
+    oscRight.setFrequency(settings.freq);
+    oscRight.setWaveType(settings.waveType);
+    oscRight.shift = settings.shift;
 }
 
 void ModEffectData::setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout){
@@ -33,17 +38,24 @@ void ModEffectData::setParameterLayout(juce::AudioProcessorValueTreeState::Param
                                                            juce::NormalisableRange<float>(0.f, 20.f, 0.5f, 0.25f),
                                                             1.f));
     
-    juce::StringArray waveTypeChoices = osc.getWaveTypeChoices();
+    juce::StringArray waveTypeChoices = oscLeft.getWaveTypeChoices();
     layout.add(std::make_unique<juce::AudioParameterChoice>(nameID + "ModWaveType",
                                                             nameID + "ModWaveType",
                                                             waveTypeChoices, 0));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "ModShift",
+                                                           nameID + "ModShift",
+                                                           juce::NormalisableRange<float>(0.f, 20.f, 0.5f, 0.25f),
+                                                            1.f));
 }
 
 ModSettings ModEffectData::getModSettings(juce::AudioProcessorValueTreeState& apvts){
     ModSettings settings;
-    nameID + nameID;
+
     settings.freq = apvts.getRawParameterValue(nameID + "ModFreq")->load();
     settings.waveType = apvts.getRawParameterValue(nameID + "ModWaveType")->load();
+    settings.shift = apvts.getRawParameterValue(nameID + "ModShift")->load();
+    
     return settings;
 }
 
