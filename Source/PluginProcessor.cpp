@@ -19,7 +19,7 @@ COM418AudioProcessor::COM418AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), apvts (*this, nullptr, "Parameters", createParameterLayout())
+                       ), apvts(*this, nullptr, "Parameters", createParameterLayout())
                         
 #endif
 {
@@ -27,6 +27,9 @@ COM418AudioProcessor::COM418AudioProcessor()
     synth.addSound(new SynthSound());
     synth.addVoice(new SynthVoice());
 
+    //What I want to do
+//    apvts = new juce::AudioProcessorValueTreeState(*this, nullptr, "Parameters", createParameterLayout());
+//    apvts = {*this, nullptr, "Parameters", createParameterLayout()};
 }
 
 COM418AudioProcessor::~COM418AudioProcessor()
@@ -108,9 +111,8 @@ void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
         }
         
     }
-    filter->prepare(sampleRate, samplesPerBlock);
-//    TODO : check 
-//    filter->updateFilters(apvts);
+    filter->prepareToPlay(sampleRate, samplesPerBlock);
+    tremoloEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
 }
 
 void COM418AudioProcessor::releaseResources()
@@ -173,7 +175,11 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     
     filter->updateFilters(apvts);
-    filter->processBlock(buffer);
+//    filter->processBlock(buffer);
+    
+    tremoloEffect->update(apvts);
+    tremoloEffect->processBlock(buffer);
+    
 }
 
 //==============================================================================
@@ -248,7 +254,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                           juce::NormalisableRange<float>(0.0f, 5.f, .001f, .5f),
                                                            0.0f));
     
+    filter = new FilterData();
+    tremoloEffect = new TremoloData();
     filter->setParameterLayout(layout);
+    tremoloEffect->setParameterLayout(layout);
     
     /*
     // filter section parameters

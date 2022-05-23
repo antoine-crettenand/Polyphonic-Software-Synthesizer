@@ -29,7 +29,7 @@ public:
     {
     }
     
-    void prepare (double sampleRate, int samplesPerBlock);
+    void prepareToPlay (double sampleRate, int samplesPerBlock);
     void updateFilters(juce::AudioProcessorValueTreeState& apvts);
     void processBlock(juce::AudioBuffer<float>& buffer);
     void setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout);

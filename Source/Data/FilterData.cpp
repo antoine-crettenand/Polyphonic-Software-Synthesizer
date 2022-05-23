@@ -7,7 +7,7 @@
 
 #include "FilterData.h"
 
-void FilterData::prepare(double sampleRate, int samplesPerBlock){
+void FilterData::prepareToPlay(double sampleRate, int samplesPerBlock){
     this->sampleRate = sampleRate;
     juce::dsp::ProcessSpec spec;
     spec.maximumBlockSize = samplesPerBlock;
@@ -42,12 +42,14 @@ ChainSettings FilterData::getChainSettings(juce::AudioProcessorValueTreeState& a
 
 void FilterData::processBlock(juce::AudioBuffer<float>& buffer){
     juce::dsp::AudioBlock<float> block(buffer);
-    //only mono, o.w. define for left and right
-    auto monoBlock = block.getSingleChannelBlock(0);
-
     
-    juce::dsp::ProcessContextReplacing<float> monoContext(monoBlock);
-    chain.process(monoContext);
+    for(auto i = 0; i < block.getNumChannels(); ++i)
+    {
+        auto monoBlock = block.getSingleChannelBlock(i);
+        juce::dsp::ProcessContextReplacing<float> monoContext(monoBlock);
+        chain.process(monoContext);
+    }
+    
 }
 
 void FilterData::setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout){

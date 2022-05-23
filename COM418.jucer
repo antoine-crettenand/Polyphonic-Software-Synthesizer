@@ -4,7 +4,6 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               cppLanguageStandard="17" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               pluginVST3Category="Instrument">
-
   <MAINGROUP id="R5eGg0" name="COM418">
     <GROUP id="{ACBB9D11-05DA-11AC-ADC8-4A1DBBEAAE32}" name="Source">
       <FILE id="SRac7a" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -17,6 +16,11 @@
       <FILE id="Rltoay" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
       <FILE id="ZafGg3" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
       <GROUP id="{63F5F862-2042-7B9D-1411-D3DA4D58AEF4}" name="Data">
+        <FILE id="dxd9bc" name="TremoloData.cpp" compile="1" resource="0" file="Source/Data/TremoloData.cpp"/>
+        <FILE id="GlD6nZ" name="TremoloData.h" compile="0" resource="0" file="Source/Data/TremoloData.h"/>
+        <FILE id="ypdGn3" name="ModEffectData.cpp" compile="1" resource="0"
+              file="Source/Data/ModEffectData.cpp"/>
+        <FILE id="GsfVpq" name="ModEffectData.h" compile="0" resource="0" file="Source/Data/ModEffectData.h"/>
         <FILE id="HmHtQw" name="AdsrData.cpp" compile="1" resource="0" file="Source/Data/AdsrData.cpp"/>
         <FILE id="wBE0qH" name="AdsrData.h" compile="0" resource="0" file="Source/Data/AdsrData.h"/>
         <FILE id="us0Ryn" name="OscData.cpp" compile="1" resource="0" file="Source/Data/OscData.cpp"/>
