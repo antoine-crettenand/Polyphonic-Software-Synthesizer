@@ -16,7 +16,7 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, int oscNum
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-    oscText.setButtonText("Osc " + std::to_string(oscNumber));
+    oscText.setButtonText("Osc " + std::to_string(oscNumber+1));
     addAndMakeVisible(oscText);
 
     freq.setSliderStyle(juce::Slider::SliderStyle::Rotary);

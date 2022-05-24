@@ -12,12 +12,14 @@
 #include "FullOscsComponent.h"
 
 //==============================================================================
-FullOscsComponent::FullOscsComponent(juce::AudioProcessorValueTreeState& apvts) : oscComponent1(apvts, 0), oscComponent2(apvts, 1), oscComponent3(apvts, 2)
+FullOscsComponent::FullOscsComponent(juce::AudioProcessorValueTreeState& apvts, int numberOscillators)
 {
 
-    addAndMakeVisible(oscComponent1);
-    addAndMakeVisible(oscComponent2);
-    addAndMakeVisible(oscComponent3);
+    for (int i = 0; i < numberOscillators; ++i) {
+        OscComponent* osc = new OscComponent(apvts, i);
+        oscs.push_back(osc);
+        addAndMakeVisible(*osc);
+    }
 
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -50,13 +52,20 @@ void FullOscsComponent::resized()
     const double WIDTH_UNUSED_SPACE = bounds.getWidth() / 26;
     const double HEIGHT_MARGIN = bounds.getHeight() / 30;
 
-    oscComponent1.setBounds(0, bounds.getHeight() / 4, bounds.getWidth(), bounds.getHeight() / 4);
-    oscComponent2.setBounds(0, 2*bounds.getHeight() / 4, bounds.getWidth(), bounds.getHeight() / 4);
-    oscComponent3.setBounds(0, 3*bounds.getHeight() / 4, bounds.getWidth(), bounds.getHeight() / 4);
+    const size_t NUMBER_OSCILLATORS = oscs.size();
 
-    frequencyText.setBounds(bounds.getWidth()/4 + WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth()/4-2* WIDTH_UNUSED_SPACE, bounds.getHeight() / 12);
-    waveformText.setBounds(2*bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 12);
-    volumeText.setBounds(3*bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 12);
+
+    frequencyText.setBounds(bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 12);
+    waveformText.setBounds(2 * bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 12);
+    volumeText.setBounds(3 * bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 12);
 
     oSCText.setBounds(WIDTH_UNUSED_SPACE, HEIGHT_MARGIN, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 6);
+
+    double usedHeight = bounds.getHeight()/6 + 3*HEIGHT_MARGIN; //3 to let some space
+
+    double remainingHeight = bounds.getHeight()-usedHeight;
+
+    for (size_t i = 0; i < NUMBER_OSCILLATORS; ++i) {
+        oscs[i]->setBounds(0, i * remainingHeight/NUMBER_OSCILLATORS + usedHeight, bounds.getWidth(), remainingHeight / NUMBER_OSCILLATORS);
+    }
 }

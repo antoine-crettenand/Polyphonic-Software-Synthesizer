@@ -25,7 +25,7 @@ COM418AudioProcessor::COM418AudioProcessor()
 {
     //no need call delete for memory, handled
     synth.addSound(new SynthSound());
-    for (int i = 0; i < NUMBER_OSCILLATORS; ++i)
+    for (int i = 0; i < numberOscillators; ++i)
     {
         synth.addVoice(new SynthVoice());
     }
@@ -205,8 +205,10 @@ void COM418AudioProcessor::setStateInformation (const void* data, int sizeInByte
     // whose contents will have been created by the getStateInformation() call.
 }
 
-juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::createParameterLayout(int numberOscillators)
+juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::createParameterLayout(int numberOscs)
 {
+    numberOscillators = numberOscs;
+
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     
     

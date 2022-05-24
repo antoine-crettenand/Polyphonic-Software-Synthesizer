@@ -11,7 +11,7 @@
 
 //==============================================================================
 COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p), ampAdsr(audioProcessor.apvts, "Amp"), fullOscsComponent(audioProcessor.apvts)
+    : AudioProcessorEditor (&p), audioProcessor (p), ampAdsr(audioProcessor.apvts, "Amp"), fullOscsComponent(audioProcessor.apvts, 3) //If we change the number of oscillators in Plugin Processor, we should also change it here
 {
     setSize (600, 300);
 
