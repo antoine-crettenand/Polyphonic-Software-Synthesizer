@@ -31,13 +31,12 @@ public:
     }
     void prepareToPlay(double sampleRate, int samplesPerBlock);
     void processBlock(juce::AudioBuffer<float>& buffer);
-    void update(float preGain, float postGain, float highPassFreq);
-    
+    void update(juce::AudioProcessorValueTreeState& apvts);
+    void setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
     
 private:
     void reset();
     void prepareToPlay(const juce::dsp::ProcessSpec& specs);
-    void setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
 
     template <typename ProcessContext>
     void process(const ProcessContext& context);
