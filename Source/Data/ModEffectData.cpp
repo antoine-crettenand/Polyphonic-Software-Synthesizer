@@ -18,6 +18,7 @@ void ModEffectData::prepareToPlay(double sampleRate, int samplesPerBlock, int ou
 
     oscLeft.prepare(spec);
     oscRight.prepare(spec);
+
     isPrepared = true;
 }
 
@@ -32,21 +33,22 @@ void ModEffectData::update(juce::AudioProcessorValueTreeState& apvts){
 }
 
 void ModEffectData::setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout){
+    float initFreq = 1.f;
     
     layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "ModFreq",
                                                            nameID + "ModFreq",
                                                            juce::NormalisableRange<float>(0.f, 20.f, 0.5f, 0.25f),
-                                                            1.f));
+                                                            initFreq));
     
     juce::StringArray waveTypeChoices = oscLeft.getWaveTypeChoices();
     layout.add(std::make_unique<juce::AudioParameterChoice>(nameID + "ModWaveType",
                                                             nameID + "ModWaveType",
-                                                            waveTypeChoices, 0));
+                                                            waveTypeChoices, 2));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "ModShift",
                                                            nameID + "ModShift",
                                                            juce::NormalisableRange<float>(0.f, 20.f, 0.5f, 0.25f),
-                                                            1.f));
+                                                           juce::MathConstants<float>::pi));
 }
 
 ModSettings ModEffectData::getModSettings(juce::AudioProcessorValueTreeState& apvts){

@@ -28,12 +28,24 @@ void OscData::setWaveType(const int choice)
             
         case 1:
             //Saw wave
-            initialise([this](float x){ return (x + this->shift) / juce::MathConstants<float>::pi; });
+            initialise([this](float x){
+                float xShifted = x + this->shift;
+                if(xShifted > juce::MathConstants<float>::pi){
+                    xShifted -= juce::MathConstants<float>::twoPi;
+                }
+                return (xShifted) / juce::MathConstants<float>::pi;
+                
+            });
             break;
             
         case 2:
-            //Square wave
-            initialise([this](float x){ return x + this->shift < 0.0f ? -1.0f : 1.0f; });
+            //Square wave :
+            initialise([this](float x){
+                float xShifted = x + this->shift;
+                if(xShifted > juce::MathConstants<float>::pi){
+                    xShifted -= juce::MathConstants<float>::twoPi;
+                }
+                return xShifted < 0.0f ? -1.0f : 1.0f; });
             break;
             
         default:

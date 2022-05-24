@@ -19,11 +19,11 @@ void TremoloData::processBlock(juce::AudioBuffer<float>& buffer) {
    
     for (auto i = 0; i < buffer.getNumSamples(); ++i)
     {
-        float levelLeft = (oscLeft.processSample(0.f) + 1) / 2;
+        float levelLeft = (oscLeft.processSample(1.f)) / 2.f;
         auto nextSampleLeft = leftBuffer[i] * levelLeft;
         leftBuffer[i]  = nextSampleLeft;
         
-        float levelRight = (oscRight.processSample(0.f) + 1) / 2;
+        float levelRight = (oscRight.processSample(1.f)) / 2.f;
         auto nextSampleRight = rightBuffer[i] * levelRight;
         rightBuffer[i]  = nextSampleRight;
     }
