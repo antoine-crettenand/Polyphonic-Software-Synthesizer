@@ -160,14 +160,18 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
         {
             //osc controls; adsr; lfo
-
-            std::string voiceName = "Osc" + std::to_string(i+1) + "WaveType";
-            auto& oscWaveChoice = *apvts.getRawParameterValue(voiceName);
+            auto& oscWaveChoice = *apvts.getRawParameterValue("Osc" + std::to_string(i) + "WaveType");
             
             // Amp ADSR parameters
             AmpSettings ampSettings = getAmpSettings(apvts);
             voice->update(ampSettings.attack, ampSettings.decay, ampSettings.sustain, ampSettings.release);
             voice->getOscillator().setWaveType(oscWaveChoice);
+            
+            //Volume
+            auto& volume = *apvts.getRawParameterValue("Volume" + std::to_string(i));
+            voice->getGain().setGainDecibels(volume);
+            (volume);
+
         }
     }
 
@@ -214,14 +218,17 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
 
     for (int i = 0; i < numberOscillators; ++i)
     {
-        layout.add(std::make_unique<juce::AudioParameterChoice>("Osc" + std::to_string(i + 1) + "WaveType", "Osc " + std::to_string(i + 1) + " Wave Type", waveTypeChoices, 0));
-        layout.add(std::make_unique<juce::AudioParameterInt>("Freq" + std::to_string(i + 1),
-                                                            "Frequency Oscillator" + std::to_string(i + 1),
+        layout.add(std::make_unique<juce::AudioParameterChoice>("Osc" + std::to_string(i) + "WaveType", "Osc " + std::to_string(i) + " Wave Type", waveTypeChoices, 0));
+        layout.add(std::make_unique<juce::AudioParameterInt>("Freq" + std::to_string(i),
+                                                            "Frequency Oscillator" + std::to_string(i),
                                                             -12, 12, 0));
-        layout.add(std::make_unique<juce::AudioParameterFloat>("Volume" + std::to_string(i + 1),
-                                                            "Volume Oscillator" + std::to_string(i + 1),
-                                                            juce::NormalisableRange<float>(-5.f, 5.f, 1.f, 1.f),
-                                                            0));
+        // We start at -10 DB and let the gain range from -20 to 0 DB because even 0 DB is already louder than most VST I have tried in FL Studio
+        layout.add(std::make_unique<juce::AudioParameterFloat>("Volume" + std::to_string(i),
+                                                            "Volume Oscillator" + std::to_string(i),
+                                                            juce::NormalisableRange<float>(-20.f, 0.f, .01f, 0.5f, true),
+                                                            -10.f));
+
+                                                            
     }
 
     /* Amp section parameters

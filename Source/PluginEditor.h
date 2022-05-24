@@ -30,10 +30,6 @@ public:
 private:
     //& == reference here to plugin processor
     COM418AudioProcessor& audioProcessor;
-    
-    OscComponent osc;
-    OscComponent osc2;
-    OscComponent osc3;
     AdsrComponent ampAdsr;
     FullOscsComponent fullOscsComponent;
 

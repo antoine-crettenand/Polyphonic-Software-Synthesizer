@@ -12,7 +12,7 @@
 #include "FullOscsComponent.h"
 
 //==============================================================================
-FullOscsComponent::FullOscsComponent(juce::AudioProcessorValueTreeState& apvts) : oscComponent1(apvts, 1), oscComponent2(apvts, 2), oscComponent3(apvts, 3)
+FullOscsComponent::FullOscsComponent(juce::AudioProcessorValueTreeState& apvts) : oscComponent1(apvts, 0), oscComponent2(apvts, 1), oscComponent3(apvts, 2)
 {
 
     addAndMakeVisible(oscComponent1);
