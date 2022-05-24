@@ -170,7 +170,11 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
             //Volume
             auto& volume = *apvts.getRawParameterValue("Volume" + std::to_string(i));
             voice->getGain().setGainDecibels(volume);
-            (volume);
+
+            //Frequency
+            auto& freq = *apvts.getRawParameterValue("Freq" + std::to_string(i));
+            voice->getOscillator().setSemiTonesUp(freq);
+
 
         }
     }

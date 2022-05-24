@@ -15,8 +15,8 @@ class OscData : public juce::dsp::Oscillator<float>
 {
 public:
     void setWaveType(const int choice);
-    
+    void setFrequency(int midiNoteNumber);
+    void setSemiTonesUp(int semiTones);
 private:
-    
-    
+    int semiTonesUp = 0; //Number of semiTone
 };

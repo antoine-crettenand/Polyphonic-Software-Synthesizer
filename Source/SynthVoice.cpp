@@ -17,7 +17,8 @@ bool SynthVoice::canPlaySound (juce::SynthesiserSound *sound)
 }
 void SynthVoice::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound *sound, int currentPitchWheelPosition)
 {
-    osc.setFrequency(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber));
+    osc.setFrequency(midiNoteNumber);
+
     ampAdsr.noteOn();
 }
 void SynthVoice::stopNote (float velocity, bool allowTailOff)
