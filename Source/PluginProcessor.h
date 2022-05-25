@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "SynthVoice.h"
 #include "SynthSound.h"
+#include "Synth.h"
 
 struct AmpSettings {
     float gain {0}, attack {0}, decay {0}, sustain {0}, release {0};
@@ -65,7 +66,7 @@ public:
     juce::AudioProcessorValueTreeState apvts;
 
 private:
-    juce::Synthesiser synth;
+    Synth synth;
     int numberOscillators; //Is set in createParameterLayout because we need it in this method (before the constructor)
 
     //==============================================================================
