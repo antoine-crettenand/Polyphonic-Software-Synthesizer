@@ -231,8 +231,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
         // We start at -10 DB and let the gain range from -20 to 0 DB because even 0 DB is already louder than most VST I have tried in FL Studio
         layout.add(std::make_unique<juce::AudioParameterFloat>("Volume" + std::to_string(i),
                                                             "Volume Oscillator" + std::to_string(i),
-                                                            juce::NormalisableRange<float>(-20.f, 0.f, .01f, 0.5f, true),
-                                                            -10.f));
+                                                            juce::NormalisableRange<float>(-10.f, 10.f, .01f, 0.5f, true),
+                                                            0.f));
 
                                                             
     }

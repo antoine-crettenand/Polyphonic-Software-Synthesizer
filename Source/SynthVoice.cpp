@@ -48,7 +48,10 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
     spec.numChannels = outputChannels;
     //pass to component the spec (pass reference)
     osc.prepare(spec);
-    gain.prepare(spec);
+    defaultGain.prepare(spec);
+    defaultGain.setGainLinear(0.25);
+
+    userModifiableGain.prepare(spec);
     
     isPrepared = true;
 }
@@ -78,7 +81,8 @@ void SynthVoice::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int 
     //process and store result wrt context, read buffer and write into it
     osc.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     //audioblock already processed by osc (wait until osc process done with block)
-    gain.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
+    defaultGain.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    userModifiableGain.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     
     //adsr, not audioBlock since expect another type (but same)
     ampAdsr.applyEnvelopeToBuffer(synthBuffer, 0, synthBuffer.getNumSamples());
