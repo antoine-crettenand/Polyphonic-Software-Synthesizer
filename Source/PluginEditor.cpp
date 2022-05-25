@@ -37,6 +37,8 @@ void COM418AudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour(juce::Colours::lightblue);
     g.fillRect(verticalSeparation);
+    g.fillRect(verticalSeparation2);
+
 }
 
 void COM418AudioProcessorEditor::resized()
