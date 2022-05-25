@@ -228,7 +228,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
         layout.add(std::make_unique<juce::AudioParameterInt>("Freq" + std::to_string(i),
                                                             "Frequency Oscillator" + std::to_string(i),
                                                             -12, 12, 0));
-        // We start at -10 DB and let the gain range from -20 to 0 DB because even 0 DB is already louder than most VST I have tried in FL Studio
         layout.add(std::make_unique<juce::AudioParameterFloat>("Volume" + std::to_string(i),
                                                             "Volume Oscillator" + std::to_string(i),
                                                             juce::NormalisableRange<float>(-10.f, 10.f, .01f, 0.5f, true),
@@ -253,8 +252,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpAttack",
                                                           "Attack",
-                                                          juce::NormalisableRange<float>(0.0f, 5.f, .001f, .5f),
-                                                           0.0f));
+                                                          juce::NormalisableRange<float>(0.001f, 5.f, .001f, .5f),
+                                                           0.001f));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpDecay",
                                                           "Decay",
@@ -268,8 +267,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpRelease",
                                                           "Release",
-                                                          juce::NormalisableRange<float>(0.0f, 5.f, .001f, .5f),
-                                                           0.0f));
+                                                          juce::NormalisableRange<float>(0.001f, 5.f, .001f, .5f),
+                                                           0.001f));
     
     /*
     // filter section parameters
