@@ -20,6 +20,7 @@ COM418AudioProcessor::COM418AudioProcessor()
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
                        ), apvts(*this, nullptr, "Parameters", createParameterLayout(3)) //NUMBER_OSCILLATORS=3 must be given since NUMBER_OSCILLATORS is not yet instantiated
+
                         
 #endif
 {
@@ -30,6 +31,11 @@ COM418AudioProcessor::COM418AudioProcessor()
         synth.addVoice(new SynthVoice());
     }
 
+
+
+    //What I want to do
+//    apvts = new juce::AudioProcessorValueTreeState(*this, nullptr, "Parameters", createParameterLayout(3));
+//    apvts = {*this, nullptr, "Parameters", createParameterLayout(3)};
 }
 
 COM418AudioProcessor::~COM418AudioProcessor()
@@ -111,6 +117,8 @@ void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
         }
         
     }
+    filter->prepareToPlay(sampleRate, samplesPerBlock);
+    tremoloEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
 }
 
 void COM418AudioProcessor::releaseResources()
@@ -180,7 +188,15 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     }
 
     
+    
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    
+    filter->updateFilters(apvts);
+//    filter->processBlock(buffer);
+    
+    tremoloEffect->update(apvts);
+    tremoloEffect->processBlock(buffer);
+    
 }
 
 //==============================================================================
@@ -270,6 +286,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                           juce::NormalisableRange<float>(0.001f, 5.f, .001f, .5f),
                                                            0.001f));
     
+    filter = new FilterData();
+    tremoloEffect = new TremoloData();
+    filter->setParameterLayout(layout);
+    tremoloEffect->setParameterLayout(layout);
+    
     /*
     // filter section parameters
     layout.add(std::make_unique<juce::AudioParameterFloat>("FilterAttack",
@@ -307,6 +328,9 @@ AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts){
     
     return ampSettings;
 }
+
+
+
 
 //==============================================================================
 // This creates new instances of the plugin..

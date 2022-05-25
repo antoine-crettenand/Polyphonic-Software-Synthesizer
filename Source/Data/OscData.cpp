@@ -18,21 +18,34 @@ void OscData::setWaveType(const int choice)
      saw wave : return x / juce::MathConstants<float>::pi; (scie /|/|)
      => more efficient when change freq : use lookup table
      */
+
     
     switch (choice) {
         case 0:
             //Sine wave
-            initialise([](float x){ return std::sin(x); });
+            initialise([this](float x){ return std::sin(x + this->shift); });
             break;
             
         case 1:
             //Saw wave
-            initialise([](float x){ return x / juce::MathConstants<float>::pi; });
+            initialise([this](float x){
+                float xShifted = x + this->shift;
+                if(xShifted > juce::MathConstants<float>::pi){
+                    xShifted -= juce::MathConstants<float>::twoPi;
+                }
+                return (xShifted) / juce::MathConstants<float>::pi;
+                
+            });
             break;
             
         case 2:
-            //Square wave
-            initialise([](float x){ return x < 0.0f ? -1.0f : 1.0f; });
+            //Square wave :
+            initialise([this](float x){
+                float xShifted = x + this->shift;
+                if(xShifted > juce::MathConstants<float>::pi){
+                    xShifted -= juce::MathConstants<float>::twoPi;
+                }
+                return xShifted < 0.0f ? -1.0f : 1.0f; });
             break;
             
         default:

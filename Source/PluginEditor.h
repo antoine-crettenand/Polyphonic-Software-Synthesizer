@@ -13,6 +13,7 @@
 #include "UI/AdsrComponent.h"
 #include "UI/OscComponent.h"
 #include "UI/FullOscsComponent.h"
+#include "UI/FilterComponent.h"
 
 //==============================================================================
 /**
@@ -32,6 +33,7 @@ private:
     COM418AudioProcessor& audioProcessor;
     AdsrComponent ampAdsr;
     FullOscsComponent fullOscsComponent;
+    FilterComponent filter;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessorEditor)
 };
