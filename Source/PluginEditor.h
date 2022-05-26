@@ -14,6 +14,7 @@
 #include "UI/OscComponent.h"
 #include "UI/FullOscsComponent.h"
 #include "UI/FilterComponent.h"
+#include "UI/ModEffectComponent.h"
 
 //==============================================================================
 /**
@@ -34,6 +35,8 @@ private:
     AdsrComponent ampAdsr;
     FullOscsComponent fullOscsComponent;
     FilterComponent filter;
+    ModEffectComponent tremolo;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessorEditor)
 };

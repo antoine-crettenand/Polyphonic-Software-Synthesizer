@@ -12,8 +12,9 @@
 
 
 void TremoloData::processBlock(juce::AudioBuffer<float>& buffer) {
-//    osc.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
-    //0 for left
+    if (!isActive){
+        return;
+    }
     auto* leftBuffer  = buffer.getWritePointer (0);
     auto* rightBuffer = buffer.getWritePointer (1);
    
