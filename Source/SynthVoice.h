@@ -28,6 +28,7 @@ public:
     
     void update(const float attack, const float decay, const float sustain, const float release);
     OscData& getOscillator() { return osc; };
+    juce::dsp::Gain<float>& getGain() { return userModifiableGain; };
 
 private:
     AdsrData ampAdsr;
@@ -35,7 +36,8 @@ private:
     OscData osc;
     
     juce::AudioBuffer<float> synthBuffer;
-    juce::dsp::Gain<float> gain;
+    juce::dsp::Gain<float> defaultGain; //Used to lower the default volume so that the other gain can be centered around 0 DB and still be used nicely
+    juce::dsp::Gain<float> userModifiableGain;
     //to enforce to use prepareToPlay
     bool isPrepared { false };
     

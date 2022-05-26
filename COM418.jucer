@@ -6,6 +6,8 @@
               pluginVST3Category="Instrument">
   <MAINGROUP id="R5eGg0" name="COM418">
     <GROUP id="{ACBB9D11-05DA-11AC-ADC8-4A1DBBEAAE32}" name="Source">
+      <FILE id="DoUCyn" name="Synth.cpp" compile="1" resource="0" file="Source/Synth.cpp"/>
+      <FILE id="Yz0zPN" name="Synth.h" compile="0" resource="0" file="Source/Synth.h"/>
       <FILE id="SRac7a" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="ADgsXr" name="PluginProcessor.h" compile="0" resource="0"
@@ -32,6 +34,10 @@
         <FILE id="TKyrm2" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/UI/AdsrComponent.cpp"/>
         <FILE id="dhKq97" name="AdsrComponent.h" compile="0" resource="0" file="Source/UI/AdsrComponent.h"/>
+        <FILE id="ahv5UQ" name="FullOscsComponent.cpp" compile="1" resource="0"
+              file="Source/UI/FullOscsComponent.cpp"/>
+        <FILE id="UGWwkW" name="FullOscsComponent.h" compile="0" resource="0"
+              file="Source/UI/FullOscsComponent.h"/>
         <FILE id="Mn5SPq" name="OscComponent.cpp" compile="1" resource="0"
               file="Source/UI/OscComponent.cpp"/>
         <FILE id="gGaogu" name="OscComponent.h" compile="0" resource="0" file="Source/UI/OscComponent.h"/>

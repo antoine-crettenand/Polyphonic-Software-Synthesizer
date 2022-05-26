@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 #include "UI/AdsrComponent.h"
 #include "UI/OscComponent.h"
+#include "UI/FullOscsComponent.h"
 #include "UI/FilterComponent.h"
 
 //==============================================================================
@@ -30,14 +31,9 @@ public:
 private:
     //& == reference here to plugin processor
     COM418AudioProcessor& audioProcessor;
-    
-    OscComponent osc;
     AdsrComponent ampAdsr;
+    FullOscsComponent fullOscsComponent;
     FilterComponent filter;
-    
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscSelAttachment;
-    juce::ComboBox oscSelector;
-
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessorEditor)
 };

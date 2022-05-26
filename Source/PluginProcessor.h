@@ -11,9 +11,9 @@
 #include <JuceHeader.h>
 #include "SynthVoice.h"
 #include "SynthSound.h"
+#include "Synth.h"
 #include "Data/FilterData.h"
 #include "Data/TremoloData.h"
-
 
 struct AmpSettings {
     float gain {0}, attack {0}, decay {0}, sustain {0}, release {0};
@@ -64,18 +64,15 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout(int numberOscs);
     juce::AudioProcessorValueTreeState apvts;
 
 private:
-    juce::Synthesiser synth;
+    Synth synth;
+    int numberOscillators; //Is set in createParameterLayout because we need it in this method (before the constructor)
     FilterData* filter; // = new FilterData();
     TremoloData* tremoloEffect;// = new ModEffectData("modEffect");
-    
-    
-    
-    
-    
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessor)
     
