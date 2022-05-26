@@ -43,7 +43,7 @@ void ModEffectData::setParameterLayout(juce::AudioProcessorValueTreeState::Param
     juce::StringArray waveTypeChoices = oscLeft.getWaveTypeChoices();
     layout.add(std::make_unique<juce::AudioParameterChoice>(nameID + "ModWaveType",
                                                             nameID + "ModWaveType",
-                                                            waveTypeChoices, 2));
+                                                            waveTypeChoices, 0));
     
     layout.add(std::make_unique<juce::AudioParameterBool>(nameID + "ModIsActive",
                                                           nameID + "ModIsActive",
@@ -52,7 +52,7 @@ void ModEffectData::setParameterLayout(juce::AudioProcessorValueTreeState::Param
     layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "ModShift",
                                                            nameID + "ModShift",
                                                            juce::NormalisableRange<float>(0.f, juce::MathConstants<float>::pi, 0.01f, 0.25f),
-                                                           juce::MathConstants<float>::pi));
+                                                           0));
 }
 
 ModSettings ModEffectData::getModSettings(juce::AudioProcessorValueTreeState& apvts){
