@@ -18,6 +18,10 @@
       <FILE id="Rltoay" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
       <FILE id="ZafGg3" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
       <GROUP id="{63F5F862-2042-7B9D-1411-D3DA4D58AEF4}" name="Data">
+        <FILE id="Ajr5Ce" name="DistortionData.cpp" compile="1" resource="0"
+              file="Source/Data/DistortionData.cpp"/>
+        <FILE id="GzSMym" name="DistortionData.h" compile="0" resource="0"
+              file="Source/Data/DistortionData.h"/>
         <FILE id="dxd9bc" name="TremoloData.cpp" compile="1" resource="0" file="Source/Data/TremoloData.cpp"/>
         <FILE id="GlD6nZ" name="TremoloData.h" compile="0" resource="0" file="Source/Data/TremoloData.h"/>
         <FILE id="ypdGn3" name="ModEffectData.cpp" compile="1" resource="0"
@@ -31,6 +35,10 @@
         <FILE id="p0ITYt" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
       </GROUP>
       <GROUP id="{18E55AC1-EDC9-7B8E-6751-905A2143C764}" name="UI">
+        <FILE id="VVuqpr" name="DistortionComponent.cpp" compile="1" resource="0"
+              file="Source/UI/DistortionComponent.cpp"/>
+        <FILE id="xRlaiz" name="DistortionComponent.h" compile="0" resource="0"
+              file="Source/UI/DistortionComponent.h"/>
         <FILE id="TKyrm2" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/UI/AdsrComponent.cpp"/>
         <FILE id="dhKq97" name="AdsrComponent.h" compile="0" resource="0" file="Source/UI/AdsrComponent.h"/>

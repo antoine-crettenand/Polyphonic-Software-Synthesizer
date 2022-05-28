@@ -13,6 +13,7 @@
 #include "SynthSound.h"
 #include "Synth.h"
 #include "Data/FilterData.h"
+#include "Data/DistortionData.h"
 #include "Data/TremoloData.h"
 
 struct AmpSettings {
@@ -71,6 +72,7 @@ private:
     Synth synth;
     int numberOscillators; //Is set in createParameterLayout because we need it in this method (before the constructor)
     FilterData* filter; // = new FilterData();
+    DistortionData* distortion;
     TremoloData* tremoloEffect;// = new ModEffectData("modEffect");
 
     //==============================================================================
