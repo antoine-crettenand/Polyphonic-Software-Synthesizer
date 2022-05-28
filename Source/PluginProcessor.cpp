@@ -171,9 +171,7 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
             //osc controls; adsr; lfo
             auto& oscWaveChoice = *apvts.getRawParameterValue("Osc" + std::to_string(i) + "WaveType");
             
-            // Amp ADSR parameters
-            AmpSettings ampSettings = getAmpSettings(apvts);
-            voice->update(ampSettings.attack, ampSettings.decay, ampSettings.sustain, ampSettings.release);
+            voice->update(apvts);
             voice->getOscillator().setWaveType(oscWaveChoice);
             
             //Volume
@@ -252,8 +250,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                             "Volume Oscillator" + std::to_string(i),
                                                             juce::NormalisableRange<float>(-10.f, 10.f, .01f, 0.5f, true),
                                                             0.f));
-
-                                                            
     }
 
     /* Amp section parameters
@@ -323,19 +319,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                            0.0f));
     */
     return layout;
-}
-
-AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts){
-    AmpSettings ampSettings;
-    
-    ampSettings.gain = apvts.getRawParameterValue("AmpGain")->load();
-
-    ampSettings.attack = apvts.getRawParameterValue("AmpAttack")->load();
-    ampSettings.decay = apvts.getRawParameterValue("AmpDecay")->load();
-    ampSettings.sustain = apvts.getRawParameterValue("AmpSustain")->load();
-    ampSettings.release = apvts.getRawParameterValue("AmpRelease")->load();
-    
-    return ampSettings;
 }
 
 
