@@ -10,6 +10,19 @@
 
 #include "DistortionData.h"
 
+DistortionData::DistortionData() noexcept {
+    distortionChain.get<DistortionData::ChainPositions::Waveshaper>().functionToUse = [] (float x)
+                               {
+                                   return std::tanh (x);
+                               };
+    // Default values
+    auto& preGain = distortionChain.get<DistortionData::ChainPositions::PreGain>();
+    preGain.setGainDecibels (0.f);
+
+    auto& postGain = distortionChain.get<DistortionData::ChainPositions::PostGain>();
+    postGain.setGainDecibels (0.0f);
+};
+
 void DistortionData::prepareToPlay(double sampleRate, int samplesPerBlock){
     this->sampleRate = sampleRate;
     juce::dsp::ProcessSpec spec;
