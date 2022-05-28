@@ -14,31 +14,30 @@ void DistortionData::prepareToPlay(double sampleRate, int samplesPerBlock){
     this->sampleRate = sampleRate;
     juce::dsp::ProcessSpec spec;
     spec.maximumBlockSize = samplesPerBlock;
-    //Can process only one channel of audio
     spec.numChannels = 1;
     spec.sampleRate = sampleRate;
-    //a dsp processorChain takes to instantiate the spec
-    this->prepare(spec);
 
+    updateHighpassFilter(1000.0f); // default value
+    
+    //a dsp processorChain takes to instantiate the spec
+    distortionChain.prepare(spec);
     this->isPrepared = true;
 }
 
-void DistortionData::prepareToPlay(const juce::dsp::ProcessSpec &specs){
-    auto& filter = this->template get<filterIndex>();
-    filter.state = FilterCoefs::makeFirstOrderHighPass (specs.sampleRate, highPassFreq);  
-
-    this->prepare(specs);
-};
-
+void DistortionData::updateHighpassFilter(float highPassFreq){
+    auto lowCutCoefficients = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, highPassFreq);
+    *distortionChain.get<DistortionData::ChainPositions::Filter>().coefficients = *lowCutCoefficients;
+}
 
 void DistortionData::update(juce::AudioProcessorValueTreeState& apvts){
-    this->preGain = apvts.getRawParameterValue("DistPreGain")->load();
-    this->postGain = apvts.getRawParameterValue("DistPostGain")->load();
-    this->highPassFreq = apvts.getRawParameterValue("DistHighPassFreq")->load();
+    auto preGain = apvts.getRawParameterValue("DistPreGain")->load();
+    auto postGain = apvts.getRawParameterValue("DistPostGain")->load();
+    auto highPassFreq = apvts.getRawParameterValue("DistHighPassFreq")->load();
     
-    this->template get<preGainIndex>().setGainDecibels (preGain);
-    this->template get<postGainIndex>().setGainDecibels (postGain);
-    this->template get<filterIndex>().state = FilterCoefs::makeFirstOrderHighPass(sampleRate, highPassFreq);
+    distortionChain.get<DistortionData::ChainPositions::PreGain>().setGainDecibels (preGain);
+    distortionChain.get<DistortionData::ChainPositions::PostGain>().setGainDecibels (postGain);
+    
+    updateHighpassFilter(highPassFreq);
 };
 
 
@@ -49,7 +48,7 @@ void DistortionData::processBlock(juce::AudioBuffer<float> &buffer){
     {
         auto monoBlock = block.getSingleChannelBlock(i);
         juce::dsp::ProcessContextReplacing<float> monoContext(monoBlock);
-        this->process(monoContext);
+        distortionChain.process(monoContext);
     }
 };
 

@@ -12,20 +12,20 @@
 #include "JuceHeader.h"
 using Filter = juce::dsp::IIR::Filter<float>;
 using FilterCoefs = juce::dsp::IIR::Coefficients<float>;
+using DistortionChain = juce::dsp::ProcessorChain<Filter, juce::dsp::Gain<float>, juce::dsp::WaveShaper<float>, juce::dsp::Gain<float>>;
 
-class DistortionData : public juce::dsp::ProcessorChain<juce::dsp::ProcessorDuplicator<Filter, FilterCoefs>, juce::dsp::Gain<float>, juce::dsp::WaveShaper<float>, juce::dsp::Gain<float>> {
-    
+class DistortionData : public DistortionChain {
 public:
     DistortionData() noexcept {
-        this->template get<waveshaperIndex>().functionToUse = [] (float x)
+        distortionChain.get<DistortionData::ChainPositions::Waveshaper>().functionToUse = [] (float x)
                                    {
                                        return std::tanh (x);
                                    };
         // Default values
-        auto& preGain = this->template get<preGainIndex>();
+        auto& preGain = distortionChain.get<DistortionData::ChainPositions::PreGain>();
         preGain.setGainDecibels (30.0f);
 
-        auto& postGain = this->template get<postGainIndex>();
+        auto& postGain = distortionChain.get<DistortionData::ChainPositions::PostGain>();
         postGain.setGainDecibels (-20.0f);
     }
     void prepareToPlay(double sampleRate, int samplesPerBlock);
@@ -34,23 +34,19 @@ public:
     void setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
     
 private:
-    void reset();
-    void prepareToPlay(const juce::dsp::ProcessSpec& specs);
-
-    template <typename ProcessContext>
-    void process(const ProcessContext& context);
     
-    float preGain;
-    float postGain;
-    float highPassFreq;
+    void reset();
+    void updateHighpassFilter(float highPassFreq);
     
     double sampleRate;
     bool isPrepared = false;
     
-    enum {
-        filterIndex,
-        preGainIndex,
-        waveshaperIndex,
-        postGainIndex
+    enum ChainPositions {
+        Filter,
+        PreGain,
+        Waveshaper,
+        PostGain
     };
+    
+    DistortionChain distortionChain;
 };

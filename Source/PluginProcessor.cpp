@@ -119,7 +119,7 @@ void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
     }
     filter->prepareToPlay(sampleRate, samplesPerBlock);
     distortion->prepareToPlay(sampleRate, samplesPerBlock);
-    tremoloEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+ //   tremoloEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
 }
 
 void COM418AudioProcessor::releaseResources()
@@ -199,7 +199,7 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     distortion->processBlock(buffer);
     
     tremoloEffect->update(apvts);
-    tremoloEffect->processBlock(buffer);
+ //   tremoloEffect->processBlock(buffer);
     
 }
 
@@ -291,9 +291,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                            0.001f));
     
     filter = new FilterData();
-    tremoloEffect = new TremoloData();
     filter->setParameterLayout(layout);
+    
+    distortion = new DistortionData();
+    distortion->setParameterLayout(layout);
+
+    tremoloEffect = new TremoloData();
     tremoloEffect->setParameterLayout(layout);
+
     
     /*
     // filter section parameters
