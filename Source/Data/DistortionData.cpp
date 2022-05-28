@@ -56,9 +56,9 @@ void DistortionData::processBlock(juce::AudioBuffer<float> &buffer){
 void DistortionData::setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout){
     /*
      Distortion settings :
-     DistPreGain => pregain  (-60 - 60 [dB])
-     HighPassFreq => lowCut frequency (20 - 20000 [Hz])
-     DistPostGain => pregain  (-60 - 60 [dB])
+     DistPreGain => pregain  (-60 : +60 [dB])
+     HighPassFreq => lowCut frequency (20 : 20000 [Hz])
+     DistPostGain => pregain  (-60 : +60 [dB])
      */
     layout.add(std::make_unique<juce::AudioParameterFloat>("DistPreGain",
                                                            "DistPreGain",
@@ -74,4 +74,3 @@ void DistortionData::setParameterLayout(juce::AudioProcessorValueTreeState::Para
                                                            juce::NormalisableRange<float>(-60.0f, 60.f, 1.f, 1.f),
                                                            -20.f));
 };
-

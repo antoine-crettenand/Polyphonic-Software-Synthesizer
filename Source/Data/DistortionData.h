@@ -21,7 +21,6 @@ public:
                                    {
                                        return std::tanh (x);
                                    };
-
         // Default values
         auto& preGain = this->template get<preGainIndex>();
         preGain.setGainDecibels (30.0f);
