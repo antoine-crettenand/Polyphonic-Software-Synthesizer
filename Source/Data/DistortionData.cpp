@@ -14,7 +14,7 @@ void DistortionData::prepareToPlay(double sampleRate, int samplesPerBlock){
     this->sampleRate = sampleRate;
     juce::dsp::ProcessSpec spec;
     spec.maximumBlockSize = samplesPerBlock;
-    spec.numChannels = 1;
+    spec.numChannels = 2;
     spec.sampleRate = sampleRate;
 
     updateHighpassFilter(1000.0f); // default value
@@ -25,8 +25,8 @@ void DistortionData::prepareToPlay(double sampleRate, int samplesPerBlock){
 }
 
 void DistortionData::updateHighpassFilter(float highPassFreq){
-    auto lowCutCoefficients = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate, highPassFreq);
-    *distortionChain.get<DistortionData::ChainPositions::Filter>().coefficients = *lowCutCoefficients;
+    auto& filter = distortionChain.get<DistortionData::ChainPositions::Filter>();                 
+    filter.state = FilterCoefs::makeFirstOrderHighPass (sampleRate, highPassFreq);
 }
 
 void DistortionData::update(juce::AudioProcessorValueTreeState& apvts){
@@ -44,12 +44,9 @@ void DistortionData::update(juce::AudioProcessorValueTreeState& apvts){
 void DistortionData::processBlock(juce::AudioBuffer<float> &buffer){
     juce::dsp::AudioBlock<float> block(buffer);
     
-    for(auto i = 0; i < block.getNumChannels(); ++i)
-    {
-        auto monoBlock = block.getSingleChannelBlock(i);
-        juce::dsp::ProcessContextReplacing<float> monoContext(monoBlock);
-        distortionChain.process(monoContext);
-    }
+    auto context = juce::dsp::ProcessContextReplacing<float>(block);
+    
+    distortionChain.process(context);
 };
 
 void DistortionData::setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout){

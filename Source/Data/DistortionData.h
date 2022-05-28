@@ -12,7 +12,7 @@
 #include "JuceHeader.h"
 using Filter = juce::dsp::IIR::Filter<float>;
 using FilterCoefs = juce::dsp::IIR::Coefficients<float>;
-using DistortionChain = juce::dsp::ProcessorChain<Filter, juce::dsp::Gain<float>, juce::dsp::WaveShaper<float>, juce::dsp::Gain<float>>;
+using DistortionChain = juce::dsp::ProcessorChain<juce::dsp::ProcessorDuplicator<Filter, FilterCoefs>, juce::dsp::Gain<float>, juce::dsp::WaveShaper<float>, juce::dsp::Gain<float>>;
 
 class DistortionData : public DistortionChain {
 public:
