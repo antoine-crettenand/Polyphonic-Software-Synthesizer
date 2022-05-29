@@ -20,7 +20,7 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
 
 {
 
-    setSize (1655, 600);
+    setSize (1280, 300);
 
     addAndMakeVisible(fullOscsComponent);
     addAndMakeVisible(ampAdsr);
@@ -43,11 +43,13 @@ void COM418AudioProcessorEditor::paint (juce::Graphics& g)
     juce::Rectangle<int> verticalSeparation(400, 0, 1, 300);
     juce::Rectangle<int> verticalSeparation2(630, 0, 1, 300);
     juce::Rectangle<int> verticalSeparation3(865, 0, 1, 300);
+    juce::Rectangle<int> verticalSeparation4(1100, 0, 1, 300);
 
     g.setColour(juce::Colours::lightblue);
     g.fillRect(verticalSeparation);
     g.fillRect(verticalSeparation2);
     g.fillRect(verticalSeparation3);
+    g.fillRect(verticalSeparation4);
 
 }
 
@@ -59,6 +61,6 @@ void COM418AudioProcessorEditor::resized()
     ampAdsr.setBounds(405, 0, 220, getHeight());
     filter.setBounds(635, 0, 220, getHeight());
     tremolo.setBounds(870, 0, 220, getHeight());
-    distortionComponent.setBounds(1200, 0, 220, getHeight());
+    distortionComponent.setBounds(1110, 0, 220, getHeight());
 }
 
