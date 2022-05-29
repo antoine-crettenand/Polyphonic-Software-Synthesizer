@@ -17,6 +17,7 @@ struct ModSettings
     float freq { 0.f };
      int waveType { 0 };
     float shift { 0.f };
+    bool isActive {false};
 };
 
 
@@ -45,6 +46,7 @@ protected:
     OscData oscLeft;
     OscData oscRight;
     std::string nameID;
+    bool isActive = false;
     
 private:
     ModSettings getModSettings(juce::AudioProcessorValueTreeState& apvts);

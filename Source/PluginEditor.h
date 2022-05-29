@@ -14,6 +14,7 @@
 #include "UI/OscComponent.h"
 #include "UI/FullOscsComponent.h"
 #include "UI/FilterComponent.h"
+#include "UI/ModEffectComponent.h"
 #include "UI/DistortionComponent.h"
 
 //==============================================================================
@@ -35,6 +36,7 @@ private:
     AdsrComponent ampAdsr;
     FullOscsComponent fullOscsComponent;
     FilterComponent filter;
+    ModEffectComponent tremolo;
     DistortionComponent distortionComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessorEditor)
