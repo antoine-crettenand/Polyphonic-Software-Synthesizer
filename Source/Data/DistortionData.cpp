@@ -11,10 +11,12 @@
 #include "DistortionData.h"
 
 DistortionData::DistortionData() noexcept {
-    distortionChain.get<DistortionData::ChainPositions::Waveshaper>().functionToUse = [] (float x)
-                               {
-                                   return std::tanh (x);
-                               };
+    auto& waveShaper = distortionChain.get<DistortionData::ChainPositions::Waveshaper>();
+    waveShaper.functionToUse = [] (auto x)
+    {
+        return std::tanh(x);
+    };
+    
     // Default values
     auto& preGain = distortionChain.get<DistortionData::ChainPositions::PreGain>();
     preGain.setGainDecibels (0.f);

@@ -17,7 +17,7 @@ using DistortionChain = juce::dsp::ProcessorChain<juce::dsp::ProcessorDuplicator
 class DistortionData {
 public:
 
-    DistortionData();
+    DistortionData() noexcept;
     ~DistortionData();
     
     void prepareToPlay(double sampleRate, int samplesPerBlock);
@@ -26,12 +26,12 @@ public:
     void setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
     
 private:
-    
     void reset();
     void updateHighpassFilter(float highPassFreq);
     
     double sampleRate;
     bool isPrepared = false;
+    float mix = 1.0f; // dry/wet of the signal.
     
     enum ChainPositions {
         Filter,
