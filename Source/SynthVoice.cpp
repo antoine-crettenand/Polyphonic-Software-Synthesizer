@@ -56,13 +56,18 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
     isPrepared = true;
 }
 
-float ms2sec(const float sec){
-    return sec * 0.001;
-}
+void SynthVoice::update(juce::AudioProcessorValueTreeState& apvts) {
+    auto gain = apvts.getRawParameterValue("AmpGain")->load();
 
-void SynthVoice::update(const float attack, const float decay, const float sustain, const float release){
+    auto attack = apvts.getRawParameterValue("AmpAttack")->load();
+    auto decay = apvts.getRawParameterValue("AmpDecay")->load();
+    auto sustain = apvts.getRawParameterValue("AmpSustain")->load();
+    auto release = apvts.getRawParameterValue("AmpRelease")->load();
+    
     ampAdsr.updateADSR(attack, decay, sustain, release);
 }
+
+
 void SynthVoice::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples)
 {
     jassert(isPrepared);

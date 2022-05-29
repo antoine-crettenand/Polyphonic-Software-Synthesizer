@@ -15,14 +15,18 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p), ampAdsr(audioProcessor.apvts, "Amp"),
     fullOscsComponent(audioProcessor.apvts, 3), //If we change the number of oscillators in Plugin Processor, we should also change it here
     filter(audioProcessor.apvts, ""),
-    tremolo(audioProcessor.apvts, "tremolo")
+    tremolo(audioProcessor.apvts, "tremolo"),
+    distortionComponent(audioProcessor.apvts)
+
 {
-    setSize (1100, 300);
+
+    setSize (1655, 600);
 
     addAndMakeVisible(fullOscsComponent);
     addAndMakeVisible(ampAdsr);
     addAndMakeVisible(filter);
     addAndMakeVisible(tremolo);
+    addAndMakeVisible(distortionComponent);
 
 }
 
@@ -55,5 +59,6 @@ void COM418AudioProcessorEditor::resized()
     ampAdsr.setBounds(405, 0, 220, getHeight());
     filter.setBounds(635, 0, 220, getHeight());
     tremolo.setBounds(870, 0, 220, getHeight());
+    distortionComponent.setBounds(1200, 0, 220, getHeight());
 }
 

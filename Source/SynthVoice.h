@@ -26,7 +26,7 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     void renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
     
-    void update(const float attack, const float decay, const float sustain, const float release);
+    void update(juce::AudioProcessorValueTreeState& apvts);
     OscData& getOscillator() { return osc; };
     juce::dsp::Gain<float>& getGain() { return userModifiableGain; };
 

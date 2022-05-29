@@ -13,13 +13,8 @@
 #include "SynthSound.h"
 #include "Synth.h"
 #include "Data/FilterData.h"
+#include "Data/DistortionData.h"
 #include "Data/TremoloData.h"
-
-struct AmpSettings {
-    float gain {0}, attack {0}, decay {0}, sustain {0}, release {0};
-};
-
-AmpSettings getAmpSettings(juce::AudioProcessorValueTreeState& apvts);
 
 //==============================================================================
 /**
@@ -71,6 +66,7 @@ private:
     Synth synth;
     int numberOscillators; //Is set in createParameterLayout because we need it in this method (before the constructor)
     FilterData* filter; // = new FilterData();
+    DistortionData* distortion;
     TremoloData* tremoloEffect;// = new ModEffectData("modEffect");
 
     //==============================================================================
