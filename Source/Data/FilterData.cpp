@@ -15,7 +15,8 @@ void FilterData::prepareToPlay(double sampleRate, int samplesPerBlock){
     spec.numChannels = 1;
     spec.sampleRate = sampleRate;
     //a dsp processorChain takes to instantiate the spec
-    chain.prepare(spec);
+    leftChain.prepare(spec);
+    rightChain.prepare(spec);
     
     this->isPrepared = true;
 }
@@ -42,13 +43,20 @@ ChainSettings FilterData::getChainSettings(juce::AudioProcessorValueTreeState& a
 
 void FilterData::processBlock(juce::AudioBuffer<float>& buffer){
     juce::dsp::AudioBlock<float> block(buffer);
-    
-    for(auto i = 0; i < block.getNumChannels(); ++i)
-    {
-        auto monoBlock = block.getSingleChannelBlock(i);
-        juce::dsp::ProcessContextReplacing<float> monoContext(monoBlock);
-        chain.process(monoContext);
-    }
+
+    auto monoBlock0 = block.getSingleChannelBlock(0);
+    juce::dsp::ProcessContextReplacing<float> monoContext0(monoBlock0);
+    leftChain.process(monoContext0);
+
+    auto monoBlock1 = block.getSingleChannelBlock(1);
+    juce::dsp::ProcessContextReplacing<float> monoContext1(monoBlock1);
+    rightChain.process(monoContext1);
+//    for(auto i = 0; i < block.getNumChannels(); ++i)
+//    {
+//        auto monoBlock = block.getSingleChannelBlock(i);
+//        juce::dsp::ProcessContextReplacing<float> monoContext(monoBlock);
+//        chain.process(monoContext);
+//    }
     
 }
 
@@ -92,7 +100,8 @@ void FilterData::updatePeakFilter(const ChainSettings &chainSettings){
                                                                                 chainSettings.peakQuality,
                                                                                 juce::Decibels::decibelsToGain(chainSettings.peakGainInDecibels));
     
-    updateCoefficients(chain.get<FilterData::ChainPositions::Peak>().coefficients, peakCoefficients);
+    updateCoefficients(leftChain.get<FilterData::ChainPositions::Peak>().coefficients, peakCoefficients);
+    updateCoefficients(rightChain.get<FilterData::ChainPositions::Peak>().coefficients, peakCoefficients);
 }
 
 
@@ -103,13 +112,17 @@ void FilterData::updateCoefficients(Coefficients& old, const Coefficients& repla
 
 void FilterData::updateLowCutFilter(const ChainSettings& chainSettings){
     auto lowCutCoefficients = juce::dsp::IIR::Coefficients<float>::makeHighPass(sampleRate,
-                                                                                chainSettings.lowCutFreq);
-    updateCoefficients(chain.get<FilterData::ChainPositions::LowCut>().coefficients, lowCutCoefficients);
+                                                                                chainSettings.lowCutFreq,
+                                                                                0.1f);
+    updateCoefficients(leftChain.get<FilterData::ChainPositions::LowCut>().coefficients, lowCutCoefficients);
+    updateCoefficients(rightChain.get<FilterData::ChainPositions::LowCut>().coefficients, lowCutCoefficients);
     
 }
 
 void FilterData::updateHighCutFilter(const ChainSettings& chainSettings){
     auto highCutCoefficients = juce::dsp::IIR::Coefficients<float>::makeLowPass(sampleRate,
-                                                                                chainSettings.highCutFreq);
-    updateCoefficients(chain.get<FilterData::ChainPositions::HighCut>().coefficients, highCutCoefficients);
+                                                                                chainSettings.highCutFreq,
+                                                                                0.1f);
+    updateCoefficients(leftChain.get<FilterData::ChainPositions::HighCut>().coefficients, highCutCoefficients);
+    updateCoefficients(rightChain.get<FilterData::ChainPositions::HighCut>().coefficients, highCutCoefficients);
 }

@@ -10,10 +10,13 @@
 
 //    Aliases
     using Filter = juce::dsp::IIR::Filter<float>;
+    using MonoChain = juce::dsp::ProcessorChain<Filter, Filter, Filter>;
+
+;
 //    Chain of 4 iir filters (one for each slope)=> lowcut and highcut
 //    using CutFilter = juce::dsp::ProcessorChain<Filter, Filter, Filter, Filter>;
 //    Path of a mono source
-    using MonoChain = juce::dsp::ProcessorChain<Filter, Filter, Filter>;
+    
 
 struct ChainSettings
 {
@@ -35,7 +38,9 @@ public:
     void setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout);
     
 private:
-    MonoChain chain;
+    MonoChain leftChain;
+    MonoChain rightChain;
+    
     
     double sampleRate;
     bool isPrepared = false;

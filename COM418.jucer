@@ -35,6 +35,10 @@
         <FILE id="p0ITYt" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
       </GROUP>
       <GROUP id="{18E55AC1-EDC9-7B8E-6751-905A2143C764}" name="UI">
+        <FILE id="gYjg7t" name="ModEffectComponent.cpp" compile="1" resource="0"
+              file="Source/UI/ModEffectComponent.cpp"/>
+        <FILE id="aN5ezA" name="ModEffectComponent.h" compile="0" resource="0"
+              file="Source/UI/ModEffectComponent.h"/>
         <FILE id="uGQROl" name="DistortionComponent.cpp" compile="1" resource="0"
               file="Source/UI/DistortionComponent.cpp"/>
         <FILE id="pne3ls" name="DistortionComponent.h" compile="0" resource="0"

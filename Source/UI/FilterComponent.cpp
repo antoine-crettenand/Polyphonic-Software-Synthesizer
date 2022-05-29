@@ -42,8 +42,8 @@ void FilterComponent::paint (juce::Graphics& g)
 
 void FilterComponent::resized()
 {
-    const auto bounds = getLocalBounds().reduced(10);
-    const auto padding = 10;
+    const auto bounds = getLocalBounds().reduced(20);
+    const auto padding = 5;
     const auto sliderWidth = bounds.getWidth() / 4 - padding;
     const auto sliderHeight = bounds.getHeight();
     const auto sliderStartX = 0;

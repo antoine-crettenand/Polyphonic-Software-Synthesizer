@@ -191,7 +191,7 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     
     filter->updateFilters(apvts);
-//    filter->processBlock(buffer);
+    filter->processBlock(buffer);
     
     distortion->update(apvts);
     distortion->processBlock(buffer);
