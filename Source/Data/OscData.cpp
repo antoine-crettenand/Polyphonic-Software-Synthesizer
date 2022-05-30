@@ -54,7 +54,7 @@ void OscData::setWaveType(const int choice)
     }
 }
 
-void OscData::setFrequency(int midiNoteNumber) {
+void OscData::setFrequencyNote(int midiNoteNumber) {
     int newNoteNumber = midiNoteNumber + semiTonesUp;
     //Clamp between 0 and 127 which are the lowest and highest values in midi format
     newNoteNumber = newNoteNumber > 127 ? 127 : newNoteNumber;
@@ -62,6 +62,8 @@ void OscData::setFrequency(int midiNoteNumber) {
 
     juce::dsp::Oscillator<float>::setFrequency(juce::MidiMessage::getMidiNoteInHertz(newNoteNumber));
 }
+
+
 
 void OscData::setSemiTonesUp(int semiTones) {
     semiTonesUp = semiTones;

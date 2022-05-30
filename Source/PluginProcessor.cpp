@@ -191,7 +191,7 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     distortion->processBlock(buffer);
     
     tremoloEffect->update(apvts);
- //   tremoloEffect->processBlock(buffer);
+    tremoloEffect->processBlock(buffer);
     
 }
 
