@@ -20,7 +20,7 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
 
 {
 
-    setSize (1280, 300);
+    setSize (1600, 600);
 
     addAndMakeVisible(fullOscsComponent);
     addAndMakeVisible(ampAdsr);
@@ -40,10 +40,11 @@ void COM418AudioProcessorEditor::paint (juce::Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colours::black);
 
-    juce::Rectangle<int> verticalSeparation(400, 0, 1, 300);
-    juce::Rectangle<int> verticalSeparation2(630, 0, 1, 300);
-    juce::Rectangle<int> verticalSeparation3(865, 0, 1, 300);
-    juce::Rectangle<int> verticalSeparation4(1100, 0, 1, 300);
+    auto componentWidth = getWidth() / 5;
+    juce::Rectangle<int> verticalSeparation(componentWidth * 1, 0, 1, getHeight());
+    juce::Rectangle<int> verticalSeparation2(componentWidth * 2, 0, 1, getHeight());
+    juce::Rectangle<int> verticalSeparation3(componentWidth * 3, 0, 1, getHeight());
+    juce::Rectangle<int> verticalSeparation4(componentWidth * 4, 0, 1, getHeight());
 
     g.setColour(juce::Colours::lightblue);
     g.fillRect(verticalSeparation);
@@ -55,12 +56,14 @@ void COM418AudioProcessorEditor::paint (juce::Graphics& g)
 
 void COM418AudioProcessorEditor::resized()
 {
+    auto componentWidth = getWidth() / 6;
+    auto componentHeight = getHeight();
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    fullOscsComponent.setBounds(0, 0, 395, getHeight());
-    ampAdsr.setBounds(405, 0, 220, getHeight());
-    filter.setBounds(635, 0, 220, getHeight());
-    tremolo.setBounds(870, 0, 220, getHeight());
-    distortionComponent.setBounds(1110, 0, 220, getHeight());
+    fullOscsComponent.setBounds(0, 0, 2 * componentWidth, componentHeight);
+    ampAdsr.setBounds(fullOscsComponent.getRight(), 0, componentWidth, componentHeight);
+    filter.setBounds(ampAdsr.getRight(), 0, componentWidth, componentHeight);
+    tremolo.setBounds(filter.getRight(), 0, componentWidth, componentHeight);
+    distortionComponent.setBounds(tremolo.getRight(), 0, componentWidth, componentHeight);
 }
 

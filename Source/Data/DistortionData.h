@@ -31,7 +31,7 @@ private:
     
     double sampleRate;
     bool isPrepared = false;
-    float mix = 1.0f; // dry/wet of the signal.
+    bool isActive = false;
     
     enum ChainPositions {
         Filter,
