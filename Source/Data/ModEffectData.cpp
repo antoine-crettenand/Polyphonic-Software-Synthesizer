@@ -37,7 +37,7 @@ void ModEffectData::setParameterLayout(juce::AudioProcessorValueTreeState::Param
 
     layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "ModFreq",
                                                            nameID + "ModFreq",
-                                                           juce::NormalisableRange<float>(0.001f, 10.f, 0.01f, 0.25f),
+                                                           juce::NormalisableRange<float>(0.3f, 30.f, 0.01f, 0.25f),
                                                             1.f));
     
     juce::StringArray waveTypeChoices = oscLeft.getWaveTypeChoices();
