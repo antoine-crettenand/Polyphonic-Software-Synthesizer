@@ -160,7 +160,6 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
@@ -170,7 +169,6 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
         {
             //osc controls; adsr; lfo
             auto& oscWaveChoice = *apvts.getRawParameterValue("Osc" + std::to_string(i) + "WaveType");
-            
             voice->update(apvts);
             voice->getOscillator().setWaveType(oscWaveChoice);
             
@@ -181,13 +179,9 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
             //Frequency
             auto& freq = *apvts.getRawParameterValue("Freq" + std::to_string(i));
             voice->getOscillator().setSemiTonesUp(freq);
-
-
         }
     }
 
-    
-    
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     
     filter->updateFilters(apvts);
@@ -210,7 +204,6 @@ bool COM418AudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* COM418AudioProcessor::createEditor()
 {
     return new COM418AudioProcessorEditor (*this);
-  //  return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
