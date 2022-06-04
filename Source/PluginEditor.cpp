@@ -17,7 +17,6 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
     filter(audioProcessor.apvts, ""),
     tremolo(audioProcessor.apvts, "tremolo"),
     distortionComponent(audioProcessor.apvts)
-
 {
 
     setSize (1600, 600);
@@ -27,7 +26,8 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
     addAndMakeVisible(filter);
     addAndMakeVisible(tremolo);
     addAndMakeVisible(distortionComponent);
-
+    
+    addAndMakeVisible(audioProcessor.waveformVisualizer);
 }
 
 COM418AudioProcessorEditor::~COM418AudioProcessorEditor()
@@ -51,6 +51,8 @@ void COM418AudioProcessorEditor::paint (juce::Graphics& g)
     g.fillRect(verticalSeparation2);
     g.fillRect(verticalSeparation3);
     g.fillRect(verticalSeparation4);
+    
+    audioProcessor.waveformVisualizer.setColours(juce::Colours::black, juce::Colours::whitesmoke.withAlpha(0.5f));
 
 }
 
@@ -63,7 +65,9 @@ void COM418AudioProcessorEditor::resized()
     fullOscsComponent.setBounds(0, 0, 2 * componentWidth, componentHeight);
     ampAdsr.setBounds(fullOscsComponent.getRight(), 0, componentWidth, componentHeight);
     filter.setBounds(ampAdsr.getRight(), 0, componentWidth, componentHeight);
-    tremolo.setBounds(filter.getRight(), 0, componentWidth, componentHeight);
-    distortionComponent.setBounds(tremolo.getRight(), 0, componentWidth, componentHeight);
+    distortionComponent.setBounds(filter.getRight(), 0, componentWidth, componentHeight);
+    tremolo.setBounds(distortionComponent.getRight(), 0, componentWidth, componentHeight * .5f);
+    
+    audioProcessor.waveformVisualizer.setBounds(distortionComponent.getRight(), componentHeight * .5f, componentWidth, componentHeight * .5f);
 }
 

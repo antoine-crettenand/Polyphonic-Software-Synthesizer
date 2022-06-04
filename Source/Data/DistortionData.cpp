@@ -70,7 +70,6 @@ void DistortionData::setParameterLayout(juce::AudioProcessorValueTreeState::Para
      Distortion settings :
      DistPreGain => pregain  (-60 : +60 [dB])
      HighPassFreq => lowCut frequency (20 : 20000 [Hz])
-     DistPostGain => pregain  (-60 : +60 [dB])
      */
     layout.add(std::make_unique<juce::AudioParameterFloat>("DistGain",
                                                            "DistPreGain",
