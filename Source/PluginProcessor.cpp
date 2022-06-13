@@ -179,7 +179,7 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
             
             //Volume
             auto& volume = *apvts.getRawParameterValue("Volume" + std::to_string(i % numberOscillators));
-            voice->getGain().setGainDecibels(volume);
+            voice->getGain().setGainLinear(volume);
 
             //Frequency
             auto& freq = *apvts.getRawParameterValue("Freq" + std::to_string(i % numberOscillators));
@@ -245,8 +245,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
                                                             -12, 12, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>("Volume" + std::to_string(i),
                                                             "Volume Oscillator" + std::to_string(i),
-                                                            juce::NormalisableRange<float>(-10.f, 10.f, .01f, 0.5f, true),
-                                                            0.f));
+                                                            juce::NormalisableRange<float>(0.f, 1.f, .01f, 0.5f, true),
+                                                            0.5f));
     }
 
     /* Amp section parameters
