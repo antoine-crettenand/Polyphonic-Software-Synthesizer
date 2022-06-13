@@ -36,6 +36,9 @@ private:
     juce::Label sustainLabel;
     juce::Slider releaseSlider;
     juce::Label releaseLabel;
+
+    juce::TextButton adsrTitle;
+
     
     //alias
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
