@@ -9,7 +9,6 @@
 */
 
 #include "SynthVoice.h"
-#include "Data/AdsrData.h"
 //will return true if have a sound loaded
 bool SynthVoice::canPlaySound (juce::SynthesiserSound *sound)
 {

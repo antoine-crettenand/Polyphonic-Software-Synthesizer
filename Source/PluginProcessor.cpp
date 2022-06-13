@@ -28,8 +28,13 @@ COM418AudioProcessor::COM418AudioProcessor()
     synth.addSound(new SynthSound());
     for (int i = 0; i < numberOscillators; ++i)
     {
-        synth.addVoice(new SynthVoice());
+        for (int j = 0; j < numberPolyphony; ++j) {
+            synth.addVoice(new SynthVoice());
+        }
     }
+
+    synth.setNumberPolyphony(numberPolyphony);
+    synth.setNumberOscillators(numberOscillators);
 
 
 
@@ -168,16 +173,16 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
         {
             //osc controls; adsr; lfo
-            auto& oscWaveChoice = *apvts.getRawParameterValue("Osc" + std::to_string(i) + "WaveType");
+            auto& oscWaveChoice = *apvts.getRawParameterValue("Osc" + std::to_string(i % numberOscillators) + "WaveType");
             voice->update(apvts);
             voice->getOscillator().setWaveType(oscWaveChoice);
             
             //Volume
-            auto& volume = *apvts.getRawParameterValue("Volume" + std::to_string(i));
+            auto& volume = *apvts.getRawParameterValue("Volume" + std::to_string(i % numberOscillators));
             voice->getGain().setGainDecibels(volume);
 
             //Frequency
-            auto& freq = *apvts.getRawParameterValue("Freq" + std::to_string(i));
+            auto& freq = *apvts.getRawParameterValue("Freq" + std::to_string(i % numberOscillators));
             voice->getOscillator().setSemiTonesUp(freq);
         }
     }
