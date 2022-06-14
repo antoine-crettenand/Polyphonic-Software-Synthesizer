@@ -17,32 +17,36 @@ void CircularBuffer::prepareToPlay(double sampleRate, int samplesPerBlock, int o
     isInit = true;
 }
 
-void CircularBuffer::processBlock(juce::AudioBuffer<float>& buffer, float timeDelay){
+void CircularBuffer::processBlock(juce::AudioBuffer<float>& buffer, float timeDelay, bool update){
     assert(isInit);
     
     auto bufferSize = buffer.getNumSamples();
-    auto circularBufferSize = circularBuffer.getNumSamples();
     
     for (int channel = 0; channel < numChannels; ++ channel){
-        auto* channelData = buffer.getWritePointer(channel);
-        
-        int remainSamples = circularBufferSize - writePointer;
-        
-        if (remainSamples > bufferSize){
-            circularBuffer.copyFromWithRamp(channel, writePointer, channelData, bufferSize, 1.f,1.f);
-        }
-        else {
-            
-            circularBuffer.copyFromWithRamp(channel, writePointer, channelData, remainSamples, 1.f, 1.f);
-            int numSamplesStart = bufferSize - remainSamples;
-            circularBuffer.copyFromWithRamp(channel, 0, channelData + remainSamples, numSamplesStart, 1.f, 1.f);
-        }
-        updateReadPointer(timeDelay, bufferSize, circularBufferSize);
+        fillBuffer(buffer, channel);
     }
-    writePointer += bufferSize;
-    writePointer %= circularBufferSize;
+    if(update){
+        updatePointers(timeDelay, bufferSize);
+    }
 }
 
+void CircularBuffer::fillBuffer(juce::AudioBuffer<float>& buffer, int channel){
+    auto* channelData = buffer.getWritePointer(channel);
+    auto bufferSize = buffer.getNumSamples();
+    auto circularBufferSize = circularBuffer.getNumSamples();
+    
+    int remainSamples = circularBufferSize - writePointer;
+    
+    if (remainSamples > bufferSize){
+        circularBuffer.copyFromWithRamp(channel, writePointer, channelData, bufferSize, 1.f,1.f);
+    }
+    else {
+        circularBuffer.copyFromWithRamp(channel, writePointer, channelData, remainSamples, 1.f, 1.f);
+        int numSamplesStart = bufferSize - remainSamples;
+        circularBuffer.copyFromWithRamp(channel, 0, channelData + remainSamples, numSamplesStart, 1.f, 1.f);
+    }
+    
+}
 
 int CircularBuffer::getWritePointer(){
     return writePointer;
@@ -56,10 +60,21 @@ juce::AudioBuffer<float> CircularBuffer::getCircularBuffer(){
     return circularBuffer;
 }
 
-void CircularBuffer::updateReadPointer(int sec, int bufferSize, int circularBufferSize){
+void CircularBuffer::updateWritePointer(int bufferSize){
+    writePointer += bufferSize;
+    writePointer %= circularBuffer.getNumSamples();
+}
+
+void CircularBuffer::updateReadPointer(int sec, int bufferSize){
     assert(sec < maxTimeDelay);
     readPointer = static_cast<int>(writePointer - sec * sample_rate);
     if (readPointer < 0){
-        readPointer += circularBufferSize;
+        readPointer += circularBuffer.getNumSamples();
     }
 }
+                       
+void CircularBuffer::updatePointers(int sec, int bufferSize){
+    updateWritePointer(bufferSize);
+    updateReadPointer(sec, bufferSize);
+}
+
