@@ -65,6 +65,7 @@ public:
 private:
     Synth synth;
     int numberOscillators; //Is set in createParameterLayout because we need it in this method (before the constructor)
+    int numberPolyphony = 7;
     FilterData* filter; // = new FilterData();
     DistortionData* distortion;
     TremoloData* tremoloEffect;// = new ModEffectData("modEffect");

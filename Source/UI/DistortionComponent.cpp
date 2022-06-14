@@ -18,13 +18,30 @@ DistortionComponent::DistortionComponent(juce::AudioProcessorValueTreeState& apv
     // initialise any special settings that your component needs.
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
     
-    preGainAttachment = std::make_unique<SliderAttachment>(apvts, "DistPreGain", preGainSlider);
-    postGainAttachment = std::make_unique<SliderAttachment>(apvts, "DistPostGain", postGainSlider);
+    isActiveAttachment = std::make_unique<ButtonAttachment>(apvts, "DistActive", isActiveButton);
+    gainAttachment = std::make_unique<SliderAttachment>(apvts, "DistGain", gainSlider);
     highPassFreqAttachment = std::make_unique<SliderAttachment>(apvts, "DistHighPassFreq", highPassFreqSlider);
 
-    setParameterStyle(preGainSlider);
-    setParameterStyle(postGainSlider);
+    setParameterStyle(gainSlider);
+    gainSlider.setTextValueSuffix(" dB");
+
+    distortionTitle.setButtonText("Distortion");
+    distortionTitle.setColour(juce::TextButton::textColourOffId, juce::Colours::lightblue);
+    addAndMakeVisible(distortionTitle);
+    
+    addAndMakeVisible(gainLabel);
+    gainLabel.setText ("Gain", juce::dontSendNotification);
+    gainLabel.attachToComponent (&gainSlider, false);
+    
+    
     setParameterStyle(highPassFreqSlider);
+    highPassFreqSlider.setTextValueSuffix(" Hz");
+    
+    addAndMakeVisible(highPassFreqLabel);
+    highPassFreqLabel.setText("HP Frequency", juce::dontSendNotification);
+    highPassFreqLabel.attachToComponent(&highPassFreqSlider, false);
+    
+    addAndMakeVisible(isActiveButton);
 }
 
 void DistortionComponent::setParameterStyle(juce::Slider& slider){
@@ -44,16 +61,20 @@ void DistortionComponent::paint (juce::Graphics& g)
 
 void DistortionComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-    const auto bounds = getLocalBounds().reduced(10);
-    const auto padding = 10;
-    const auto sliderWidth = bounds.getWidth() / 4 - padding;
-    const auto sliderHeight = bounds.getHeight();
-    const auto sliderStartX = 0;
-    const auto sliderStartY = 0;
-    
-    preGainSlider.setBounds(sliderStartX, sliderStartY, sliderWidth, sliderHeight);
-    highPassFreqSlider.setBounds(preGainSlider.getRight() + padding, sliderStartY, sliderWidth, sliderHeight);
-    postGainSlider.setBounds(highPassFreqSlider.getRight() + padding, sliderStartY, sliderWidth, sliderHeight);
-}
+    const auto sliderWidth = 3*getWidth() / 10;
+    const auto sliderHeight = 3 * getHeight() / 5;
+    const int paddingTextVertical = getHeight() / 25;
+    const int textHeight = 3 * getHeight() / 25;
+
+    const auto paddingTitle = getWidth() / 36;
+    const auto modIsActiveButtonWidth = 2 * getWidth() / 25;
+    const auto paddingHorizontal = 2*getWidth() / 20;
+
+    isActiveButton.setBounds(7 * getWidth() / 20 - (paddingTitle + modIsActiveButtonWidth) / 2, getHeight() / 10, modIsActiveButtonWidth, getHeight() / 10);
+    distortionTitle.setBounds(isActiveButton.getRight() + paddingTitle, getHeight() / 10, 3*getWidth() / 10, getHeight() / 10);
+
+    gainSlider.setBounds(3 * getWidth() / 20, distortionTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
+    gainLabel.setBounds(3 * getWidth() / 20 + getWidth() / 13, gainSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+    highPassFreqSlider.setBounds(gainSlider.getRight() + paddingHorizontal, distortionTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
+    highPassFreqLabel.setBounds(gainSlider.getRight() + paddingHorizontal, highPassFreqSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+   }

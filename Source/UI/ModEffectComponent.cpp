@@ -17,7 +17,13 @@ ModEffectComponent::ModEffectComponent(juce::AudioProcessorValueTreeState& apvts
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-    modIsActiveButton.setButtonText("Activate");
+    std::string name = nameID.toStdString();
+    name[0] = toupper(name[0]);
+    modelEffectTitle.setButtonText(name);
+    modelEffectTitle.setColour(juce::TextButton::textColourOffId, juce::Colours::lightblue);
+    addAndMakeVisible(modelEffectTitle);
+
+
     addAndMakeVisible(modIsActiveButton);
     modIsActiveAttachment = std::make_unique<ButtonAttachment>(apvts, nameID + "ModIsActive", modIsActiveButton);
 
@@ -25,12 +31,18 @@ ModEffectComponent::ModEffectComponent(juce::AudioProcessorValueTreeState& apvts
     modFreqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
     addAndMakeVisible(modFreqSlider);
     modFreqAttachment = std::make_unique<SliderAttachment>(apvts, nameID + "ModFreq", modFreqSlider);
+    modFreqText.setText("Frequency", juce::dontSendNotification);
+    addAndMakeVisible(modFreqText);
+
     
-//    modShiftSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     modShiftSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     modShiftSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
     addAndMakeVisible(modShiftSlider);
     modShiftAttachment = std::make_unique<SliderAttachment>(apvts, nameID + "ModShift", modShiftSlider);
+    modShiftText.setText("Shift", juce::dontSendNotification);
+    addAndMakeVisible(modShiftText);
+
+
 
     juce::StringArray choices = { "Sine", "Saw", "Square" };
     modWaveTypeBox.addItemList(choices, 1);
@@ -52,15 +64,22 @@ void ModEffectComponent::paint (juce::Graphics& g)
 void ModEffectComponent::resized()
 {
 
-    const auto bounds = getLocalBounds();
+    const auto sliderWidth = 9 * getWidth() / 36;
+    const auto sliderHeight = 3 * getHeight() / 5;
+    const int paddingTextVertical = getHeight() / 25;
+    const int textHeight = 3 * getHeight() / 25;
 
-    const double WIDTH_UNUSED_SPACE = bounds.getWidth() / 26;
+    const auto paddingTitle = getWidth() / 36;
+    const auto modIsActiveButtonWidth = 2*getWidth() / 25;
+    const auto paddingHorizontal = getWidth() / 18;
 
-    modIsActiveButton.setBounds(bounds.getWidth() / 16, 0, bounds.getWidth() / 8, bounds.getHeight()/3);
+    modIsActiveButton.setBounds(2 * getWidth() / 5-(paddingTitle +modIsActiveButtonWidth)/2, getHeight() / 10, modIsActiveButtonWidth, getHeight() / 10);
+    modelEffectTitle.setBounds(modIsActiveButton.getRight()+paddingTitle, getHeight() / 10, getWidth() / 5, getHeight() / 10);
     
-    modFreqSlider.setBounds(bounds.getWidth() / 2 + WIDTH_UNUSED_SPACE, 0, bounds.getWidth() / 4 - 2* WIDTH_UNUSED_SPACE, 2 * bounds.getHeight() / 3);
-    
-    modWaveTypeBox.setBounds(bounds.getWidth() / 16, bounds.getHeight() / 3, bounds.getWidth() / 2 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 9);
-    
-    modShiftSlider.setBounds(2.8*bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, 0, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, 2 * bounds.getHeight() / 3);
+    modWaveTypeBox.setBounds(paddingHorizontal, modelEffectTitle.getBottom()+6*getHeight()/25, 5*getWidth()/18, 4*getHeight()/25);
+    modFreqSlider.setBounds(modWaveTypeBox.getRight()+paddingHorizontal, modelEffectTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
+    modFreqText.setBounds(modWaveTypeBox.getRight() + paddingHorizontal, modFreqSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+    modShiftSlider.setBounds(modFreqSlider.getRight() + paddingHorizontal, modelEffectTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
+    modShiftText.setBounds(modFreqText.getRight() + paddingHorizontal+getWidth()/16, modShiftSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+
 }

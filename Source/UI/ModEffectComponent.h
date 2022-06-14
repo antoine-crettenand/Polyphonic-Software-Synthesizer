@@ -36,13 +36,14 @@ private:
 
     juce::Slider modFreqSlider;
     std::unique_ptr<SliderAttachment> modFreqAttachment;
+    juce::Label modFreqText;
     
     juce::Slider modShiftSlider;
     std::unique_ptr<SliderAttachment> modShiftAttachment;
+    juce::Label modShiftText;
     
-    
-    void setParameterStyle(juce::Slider& slider);
-    juce::String getStringParameter(juce::String pName);
+    juce::TextButton modelEffectTitle;
+
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ModEffectComponent)
 };

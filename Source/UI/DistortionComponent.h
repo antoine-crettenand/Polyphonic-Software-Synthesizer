@@ -25,15 +25,21 @@ public:
     void resized() override;
 
 private:
-    juce::Slider preGainSlider;
-    juce::Slider postGainSlider;
+    juce::ToggleButton isActiveButton;
+    juce::Slider gainSlider;
+    juce::Label gainLabel;
     juce::Slider highPassFreqSlider;
+    juce::Label highPassFreqLabel;
+
+    juce::TextButton distortionTitle;
+
     
     //alias
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
-    
-    std::unique_ptr<SliderAttachment> preGainAttachment;
-    std::unique_ptr<SliderAttachment> postGainAttachment;
+    using ButtonAttachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
+
+    std::unique_ptr<ButtonAttachment> isActiveAttachment;
+    std::unique_ptr<SliderAttachment> gainAttachment;
     std::unique_ptr<SliderAttachment> highPassFreqAttachment;
     
     void setParameterStyle(juce::Slider& slider);

@@ -18,15 +18,34 @@ AdsrComponent::AdsrComponent(juce::AudioProcessorValueTreeState& apvts, juce::St
     // initialise any special settings that your component needs.
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
     
-    ampAttackAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Attack"), ampAttackSlider);
-    ampDecayAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Decay"), ampDecaySlider);
-    ampSustainAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Sustain"), ampSustainSlider);
-    ampReleaseAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Release"), ampReleaseSlider);
+    attackAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Attack"), attackSlider);
+    decayAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Decay"), decaySlider);
+    sustainAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Sustain"), sustainSlider);
+    releaseAttachment = std::make_unique<SliderAttachment>(apvts, getStringParameter("Release"), releaseSlider);
 
-    setParameterStyle(ampAttackSlider);
-    setParameterStyle(ampDecaySlider);
-    setParameterStyle(ampSustainSlider);
-    setParameterStyle(ampReleaseSlider);
+    setParameterStyle(attackSlider);
+    attackSlider.setTextValueSuffix(" s.");
+    addAndMakeVisible(attackLabel);
+    attackLabel.setText("Attack", juce::dontSendNotification);
+    
+    setParameterStyle(decaySlider);
+    decaySlider.setTextValueSuffix(" s.");
+    addAndMakeVisible(decayLabel);
+    decayLabel.setText("Decay", juce::dontSendNotification);
+    
+    setParameterStyle(sustainSlider);
+    addAndMakeVisible(sustainLabel);
+    sustainLabel.setText("Sustain", juce::dontSendNotification);
+    
+    setParameterStyle(releaseSlider);
+    releaseSlider.setTextValueSuffix(" s.");
+    addAndMakeVisible(releaseLabel);
+    releaseLabel.setText("Release", juce::dontSendNotification);
+
+    adsrTitle.setButtonText("ADSR");
+    adsrTitle.setColour(juce::TextButton::textColourOffId, juce::Colours::lightblue);
+    addAndMakeVisible(adsrTitle);
+
 }
 
 AdsrComponent::~AdsrComponent()
@@ -40,17 +59,23 @@ void AdsrComponent::paint (juce::Graphics& g)
 
 void AdsrComponent::resized()
 {
-    const auto bounds = getLocalBounds().reduced(10);
-    const auto padding = 10;
-    const auto sliderWidth = bounds.getWidth() / 4 - padding;
-    const auto sliderHeight = bounds.getHeight();
-    const auto sliderStartX = 0;
-    const auto sliderStartY = 0;
-    
-    ampAttackSlider.setBounds(sliderStartX, sliderStartY, sliderWidth, sliderHeight);
-    ampDecaySlider.setBounds(ampAttackSlider.getRight() + padding, sliderStartY, sliderWidth, sliderHeight);
-    ampSustainSlider.setBounds(ampDecaySlider.getRight() + padding, sliderStartY, sliderWidth, sliderHeight);
-    ampReleaseSlider.setBounds(ampSustainSlider.getRight() + padding, sliderStartY, sliderWidth, sliderHeight);
+    const auto sliderWidth = getWidth() / 5;
+    const auto sliderHeight = 3 * getHeight() / 5;
+    const int padding = getWidth() / 30;
+    const int paddingTextVertical = getHeight() / 25;
+    const int textHeight = 3 * getHeight() / 25;
+
+    adsrTitle.setBounds(2 * getWidth() / 5, getHeight() / 10, getWidth() / 5, getHeight() / 10);
+
+    attackSlider.setBounds(padding, adsrTitle.getBottom() + padding, sliderWidth, sliderHeight);
+    attackLabel.setBounds(padding, attackSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+    decaySlider.setBounds(attackSlider.getRight() + padding, adsrTitle.getBottom() + padding, sliderWidth, sliderHeight);
+    decayLabel.setBounds(attackLabel.getRight() + padding, decaySlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+    sustainSlider.setBounds(decaySlider.getRight() + padding, adsrTitle.getBottom() + padding, sliderWidth, sliderHeight);
+    sustainLabel.setBounds(decayLabel.getRight() + padding, sustainSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+    releaseSlider.setBounds(sustainSlider.getRight() + padding, adsrTitle.getBottom() + padding, sliderWidth, sliderHeight);
+    releaseLabel.setBounds(sustainLabel.getRight() + padding, releaseSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+
 }
 
 void AdsrComponent::setParameterStyle(juce::Slider& slider){

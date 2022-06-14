@@ -19,7 +19,7 @@ DistortionData::DistortionData() noexcept {
     
     // Default values
     auto& preGain = distortionChain.get<DistortionData::ChainPositions::PreGain>();
-    preGain.setGainDecibels (0.f);
+    preGain.setGainDecibels (0.0f);
 
     auto& postGain = distortionChain.get<DistortionData::ChainPositions::PostGain>();
     postGain.setGainDecibels (0.0f);
@@ -32,7 +32,7 @@ void DistortionData::prepareToPlay(double sampleRate, int samplesPerBlock){
     spec.numChannels = 2;
     spec.sampleRate = sampleRate;
 
-    updateHighpassFilter(1000.0f); // default value
+    updateHighpassFilter(20.f); // default value
     
     //a dsp processorChain takes to instantiate the spec
     distortionChain.prepare(spec);
@@ -45,22 +45,23 @@ void DistortionData::updateHighpassFilter(float highPassFreq){
 }
 
 void DistortionData::update(juce::AudioProcessorValueTreeState& apvts){
-    auto preGain = apvts.getRawParameterValue("DistPreGain")->load();
-    auto postGain = apvts.getRawParameterValue("DistPostGain")->load();
+    auto gain = apvts.getRawParameterValue("DistGain")->load();
     auto highPassFreq = apvts.getRawParameterValue("DistHighPassFreq")->load();
+    auto active = apvts.getRawParameterValue("DistActive")->load();
     
-    distortionChain.get<DistortionData::ChainPositions::PreGain>().setGainDecibels (preGain);
-    distortionChain.get<DistortionData::ChainPositions::PostGain>().setGainDecibels (postGain);
-    
+    distortionChain.get<DistortionData::ChainPositions::PreGain>().setGainDecibels (gain);
+    distortionChain.get<DistortionData::ChainPositions::PostGain>().setGainDecibels (-gain);
     updateHighpassFilter(highPassFreq);
+    this->isActive = active;
 };
 
 
 void DistortionData::processBlock(juce::AudioBuffer<float> &buffer){
+    if (!isActive)
+        return;
+    
     juce::dsp::AudioBlock<float> block(buffer);
-    
     auto context = juce::dsp::ProcessContextReplacing<float>(block);
-    
     distortionChain.process(context);
 };
 
@@ -71,17 +72,14 @@ void DistortionData::setParameterLayout(juce::AudioProcessorValueTreeState::Para
      HighPassFreq => lowCut frequency (20 : 20000 [Hz])
      DistPostGain => pregain  (-60 : +60 [dB])
      */
-    layout.add(std::make_unique<juce::AudioParameterFloat>("DistPreGain",
+    layout.add(std::make_unique<juce::AudioParameterFloat>("DistGain",
                                                            "DistPreGain",
                                                            juce::NormalisableRange<float>(-60.0f, 60.f, 1.f, 1.f),
-                                                            30.f));
+                                                            0.f));
     layout.add(std::make_unique<juce::AudioParameterFloat>("DistHighPassFreq",
                                                            "DistHighPassFreq",
                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 0.25f),
                                                            1000.f));
     
-    layout.add(std::make_unique<juce::AudioParameterFloat>("DistPostGain",
-                                                           "DistPostGain",
-                                                           juce::NormalisableRange<float>(-60.0f, 60.f, 1.f, 1.f),
-                                                           -20.f));
+    layout.add(std::make_unique<juce::AudioParameterBool>("DistActive", "DistActive", false));
 };

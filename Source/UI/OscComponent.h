@@ -33,18 +33,13 @@ private:
     juce::ComboBox oscWaveTypeSelector;
     std::unique_ptr<ComboBoxAttachment> oscWaveTypeSelectorAttachment;
     
-    
-    juce::TextButton oscText;
+    juce::Label oscText;
 
     juce::Slider freq;
     std::unique_ptr<SliderAttachment> freqAttachment;
 
     juce::Slider volume;
     std::unique_ptr<SliderAttachment> volumeAttachment;
-
-
-
-
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscComponent)
 };
