@@ -50,11 +50,11 @@ void DelayData::setParameterLayout(juce::AudioProcessorValueTreeState::Parameter
     TimeEffectData::setParameterLayout(layout);
     layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "TimeDelay",
                                                            nameID + "TimeDelay",
-                                                           juce::NormalisableRange<float>(0.3f, 3.f, 0.01f, 0.25f),
-                                                            1.f));
+                                                           juce::NormalisableRange<float>(0.01f, 1.f, 0.01f, 0.5f),
+                                                            0.22f));
     layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "GainDelay",
                                                            nameID + "GainDelay",
-                                                           juce::NormalisableRange<float>(0.0f, 1.f, 0.01f, 0.25f),
-                                                            0.8f));
+                                                           juce::NormalisableRange<float>(0.0f, 1.f, 0.01f, 0.6f),
+                                                            0.42f));
     
 }

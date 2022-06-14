@@ -48,9 +48,6 @@ void CircularBuffer::fillBuffer(juce::AudioBuffer<float>& buffer, int channel){
     
 }
 
-int CircularBuffer::getWritePointer(){
-    return writePointer;
-}
 
 int CircularBuffer::getReadPointer(){
     return readPointer;
@@ -65,16 +62,17 @@ void CircularBuffer::updateWritePointer(int bufferSize){
     writePointer %= circularBuffer.getNumSamples();
 }
 
-void CircularBuffer::updateReadPointer(int sec, int bufferSize){
-    assert(sec < maxTimeDelay);
-    readPointer = static_cast<int>(writePointer - sec * sample_rate);
+void CircularBuffer::updateReadPointer(float timeDelay, int bufferSize){
+    assert(timeDelay < maxTimeDelay);
+    readPointer = static_cast<int>(writePointer - timeDelay * sample_rate);
     if (readPointer < 0){
         readPointer += circularBuffer.getNumSamples();
     }
+    assert(readPointer >= 0);
 }
                        
-void CircularBuffer::updatePointers(int sec, int bufferSize){
+void CircularBuffer::updatePointers(float timeDelay, int bufferSize){
     updateWritePointer(bufferSize);
-    updateReadPointer(sec, bufferSize);
+    updateReadPointer(timeDelay, bufferSize);
 }
 
