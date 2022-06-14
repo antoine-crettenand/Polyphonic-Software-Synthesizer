@@ -19,7 +19,7 @@ COM418AudioProcessor::COM418AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), apvts(*this, nullptr, "Parameters", createParameterLayout(3)) //NUMBER_OSCILLATORS=3 must be given since NUMBER_OSCILLATORS is not yet instantiated
+                       ), apvts(*this, nullptr, "Parameters", createParameterLayout(3)) /*NUMBER_OSCILLATORS=3 must be given since NUMBER_OSCILLATORS is not yet instantiated*/, waveformVisualizer(2, apvts)
 
                         
 #endif
@@ -35,8 +35,6 @@ COM418AudioProcessor::COM418AudioProcessor()
 
     synth.setNumberPolyphony(numberPolyphony);
     synth.setNumberOscillators(numberOscillators);
-
-
 
     //What I want to do
 //    apvts = new juce::AudioProcessorValueTreeState(*this, nullptr, "Parameters", createParameterLayout(3));
@@ -124,7 +122,9 @@ void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
     }
     filter->prepareToPlay(sampleRate, samplesPerBlock);
     distortion->prepareToPlay(sampleRate, samplesPerBlock);
- //   tremoloEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+    tremoloEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+    
+    waveformVisualizer.clear();
 }
 
 void COM418AudioProcessor::releaseResources()
@@ -197,6 +197,17 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     
     tremoloEffect->update(apvts);
     tremoloEffect->processBlock(buffer);
+    
+    
+    // Master Gain control
+    auto& gain = *apvts.getRawParameterValue("MasterGain");
+    masterGain.setGainDecibels(gain);
+    juce::dsp::AudioBlock<float> block(buffer);
+    auto context = juce::dsp::ProcessContextReplacing<float>(block);
+    masterGain.process(context);
+    
+    // Audiowave Visualizer
+    waveformVisualizer.pushBuffer(buffer);
 }
 
 //==============================================================================
@@ -292,7 +303,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     tremoloEffect = new TremoloData();
     tremoloEffect->setParameterLayout(layout);
 
-    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("MasterGain",
+                                                          "MasterGain",
+                                                          juce::NormalisableRange<float>(-10.f, 10.f, .5f, .5f),
+                                                           0.0f));
     /*
     // filter section parameters
     layout.add(std::make_unique<juce::AudioParameterFloat>("FilterAttack",
