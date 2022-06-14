@@ -199,7 +199,7 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     tremoloEffect->update(apvts);
     tremoloEffect->processBlock(buffer);
     
-//    delayEffect->update(apvts);
+    delayEffect->update(apvts);
     delayEffect->processBlock(buffer);
 }
 
@@ -297,6 +297,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     tremoloEffect->setParameterLayout(layout);
     
     delayEffect = new DelayData(5.0f);
+    delayEffect->setParameterLayout(layout);
 
     
     /*
