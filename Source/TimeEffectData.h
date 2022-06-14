@@ -1,8 +1,7 @@
 /*
   ==============================================================================
 
-    ModEffectData.h
-    Created: 21 May 2022 10:00:01am
+    TimeEffectData.h
     Author:  Jonathan Reymond
 
   ==============================================================================
@@ -10,9 +9,10 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include "OscData.h"
+#include "Data/OscData.h"
+#include "CircularBuffer.h"
 
-struct ModSettings
+struct TimeSettings
 {
     float freq { 0.f };
      int waveType { 0 };
@@ -21,13 +21,13 @@ struct ModSettings
 };
 
 
-class ModEffectData
+class TimeEffectData
 {
 public:
-    ModEffectData(const std::string &nameID):nameID(nameID)
+    TimeEffectData(const std::string &nameID, float maxTimeDelay):nameID(nameID), circularBuffer(maxTimeDelay)
     {
     }
-    virtual ~ModEffectData(){}
+    virtual ~TimeEffectData(){}
     
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     // TODO : check validity
@@ -45,10 +45,13 @@ protected:
     OscData oscLeft;
     OscData oscRight;
     std::string nameID;
-    bool isActive = false;
+    bool isActive = true;
+    CircularBuffer circularBuffer;
+    juce::dsp::ProcessSpec spec;
+    
     
 private:
-    ModSettings getModSettings(juce::AudioProcessorValueTreeState& apvts);
+    TimeSettings getTimeSettings(juce::AudioProcessorValueTreeState& apvts);
 
     //use lambda function, another : ;
     
