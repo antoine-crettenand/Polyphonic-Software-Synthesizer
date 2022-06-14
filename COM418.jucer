@@ -18,6 +18,10 @@
       <FILE id="Rltoay" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
       <FILE id="ZafGg3" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
       <GROUP id="{63F5F862-2042-7B9D-1411-D3DA4D58AEF4}" name="Data">
+        <FILE id="iV8fHb" name="CircularBuffer.cpp" compile="1" resource="0"
+              file="Source/CircularBuffer.cpp"/>
+        <FILE id="MzF2kU" name="CircularBuffer.h" compile="0" resource="0"
+              file="Source/CircularBuffer.h"/>
         <FILE id="Ajr5Ce" name="DistortionData.cpp" compile="1" resource="0"
               file="Source/Data/DistortionData.cpp"/>
         <FILE id="GzSMym" name="DistortionData.h" compile="0" resource="0"
