@@ -32,7 +32,7 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, int oscNum
 
     volume.setSliderStyle(juce::Slider::SliderStyle::Rotary);
     volume.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
-    volume.setTextValueSuffix(" dB");
+ //   volume.setTextValueSuffix(" dB");
     addAndMakeVisible(volume);
     volumeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "Volume" + std::to_string(oscNumber), volume);
 
