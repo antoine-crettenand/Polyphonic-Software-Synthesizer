@@ -28,17 +28,11 @@ public:
     //void createIndividualOscillators(juce::AudioProcessorValueTreeState& apvts, int numberOscillators);
 
 private:
-
-    // Would be more modulable to have a list, but don't know how to initialize in list initalizer from constructor
-    //OscComponent oscComponent1;
-    //OscComponent oscComponent2;
-    //OscComponent oscComponent3;
-
     std::vector<OscComponent*> oscs;
 
-    juce::TextButton frequencyText;
-    juce::TextButton waveformText;
-    juce::TextButton volumeText;
+    juce::Label frequencyText;
+    juce::Label waveformText;
+    juce::Label volumeText;
 
     juce::TextButton oSCText;
 

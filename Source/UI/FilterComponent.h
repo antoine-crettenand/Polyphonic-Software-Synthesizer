@@ -28,10 +28,18 @@ private:
     juce::String filterID;
     
     juce::Slider lowCutFreqSlider;
+    juce::Label lowCutFreqText;
     juce::Slider highCutFreqSlider;
+    juce::Label highCutFreqText;
     juce::Slider peakFreqSlider;
+    juce::Label peakFreqText;
     juce::Slider peakGainInDecibelsSlider;
+    juce::Label peakGainText;
     juce::Slider peakQualitySlider;
+    juce::Label peakQualityText;
+
+    juce::TextButton filterTitle;
+
     
     //alias
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;

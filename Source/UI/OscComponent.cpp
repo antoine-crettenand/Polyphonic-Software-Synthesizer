@@ -15,8 +15,8 @@
 OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, int oscNumber)
 {
     // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-    oscText.setButtonText("Osc " + std::to_string(oscNumber+1));
+    // initialise any special settings that your component needs.$
+    oscText.setText("Osc" + std::to_string(oscNumber + 1), juce::dontSendNotification);
     addAndMakeVisible(oscText);
 
     freq.setSliderStyle(juce::Slider::SliderStyle::Rotary);
@@ -49,13 +49,12 @@ void OscComponent::paint (juce::Graphics& g)
 
 void OscComponent::resized()
 {
+    const auto elementWidth = getWidth() / 6;
+    const auto padding = getWidth() / 15;
+    const auto heightMargin = getHeight() / 6;
 
-    const auto bounds = getLocalBounds();
-
-    const double WIDTH_UNUSED_SPACE = bounds.getWidth() / 26;
-
-    oscText.setBounds(bounds.getWidth() / 16, 0, bounds.getWidth() / 8, bounds.getHeight()/3);
-    freq.setBounds(bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, 0, bounds.getWidth() / 4 - 2* WIDTH_UNUSED_SPACE, 2 * bounds.getHeight() / 3);
-    oscWaveTypeSelector.setBounds(2*bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, 0, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, bounds.getHeight() / 3);
-    volume.setBounds(3*bounds.getWidth() / 4 + WIDTH_UNUSED_SPACE, 0, bounds.getWidth() / 4 - 2 * WIDTH_UNUSED_SPACE, 2 * bounds.getHeight() / 3);
+    oscText.setBounds(padding, heightMargin, getWidth()/6, getHeight() / 3);
+    freq.setBounds(oscText.getRight()+padding, heightMargin/3, elementWidth, 2 * getHeight() / 3);
+    oscWaveTypeSelector.setBounds(freq.getRight() + padding, heightMargin, elementWidth, getHeight() / 3);
+    volume.setBounds(oscWaveTypeSelector.getRight() + padding, heightMargin/3, elementWidth, 2 * getHeight() / 3);
 }

@@ -26,11 +26,13 @@ public:
 
 private:
     juce::ToggleButton isActiveButton;
-    juce::Label isActiveLabel;
     juce::Slider gainSlider;
     juce::Label gainLabel;
     juce::Slider highPassFreqSlider;
     juce::Label highPassFreqLabel;
+
+    juce::TextButton distortionTitle;
+
     
     //alias
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
