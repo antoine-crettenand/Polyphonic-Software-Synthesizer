@@ -40,13 +40,7 @@ COM418AudioProcessorEditor::~COM418AudioProcessorEditor()
 void COM418AudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (juce::Colours::black);
-
-    juce::Rectangle<int> separation(0, 0, getWidth(), getHeight());
-
-    g.setColour(juce::Colours::lightblue);
-    g.fillRect(separation);
-
+    g.fillAll (juce::Colours::lightblue);
 
 }
 
