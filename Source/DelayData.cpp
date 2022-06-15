@@ -46,6 +46,7 @@ void DelayData::update(juce::AudioProcessorValueTreeState& apvts){
     
     
 }
+
 void DelayData::setParameterLayout(juce::AudioProcessorValueTreeState::ParameterLayout& layout){
     TimeEffectData::setParameterLayout(layout);
     layout.add(std::make_unique<juce::AudioParameterFloat>(nameID + "TimeDelay",

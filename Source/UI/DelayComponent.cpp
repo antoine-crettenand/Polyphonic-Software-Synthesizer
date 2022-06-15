@@ -39,7 +39,7 @@ DelayComponent::DelayComponent(juce::AudioProcessorValueTreeState& apvts, juce::
     gainDelaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
     addAndMakeVisible(gainDelaySlider);
     gainDelayAttachment = std::make_unique<SliderAttachment>(apvts, nameID + "GainDelay", gainDelaySlider);
-    gainDelayText.setText("Length", juce::dontSendNotification);
+    gainDelayText.setText("Feedback", juce::dontSendNotification);
     addAndMakeVisible(gainDelayText);
 
 }
@@ -62,16 +62,16 @@ void DelayComponent::resized()
     const int textHeight = 3 * getHeight() / 25;
 
     const auto paddingTitle = getWidth() / 36;
-    const auto delayIsActiveButtonWidth = 2*getWidth() / 25;
-    const auto paddingHorizontal = getWidth() / 18;
+    const auto delayIsActiveButtonWidth = getWidth() / 6;
+    const auto paddingHorizontal = getWidth() / 18 + 10;
 
-    delayIsActiveButton.setBounds(2 * getWidth() / 5-(paddingTitle +delayIsActiveButtonWidth)/2, getHeight() / 10, delayIsActiveButtonWidth, getHeight() / 10);
-    modelEffectTitle.setBounds(delayIsActiveButton.getRight()+paddingTitle, getHeight() / 10, getWidth() / 5, getHeight() / 10);
+    delayIsActiveButton.setBounds(getWidth() / 15, getHeight() / 10, delayIsActiveButtonWidth, getHeight() / 10);
+    modelEffectTitle.setBounds(delayIsActiveButton.getRight() + getWidth()/24, getHeight() / 10, getWidth() / 2, getHeight() / 10);
     
-    timeDelaySlider.setBounds(3 * getWidth() / 20, modelEffectTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
-    timeDelayText.setBounds(3 * getWidth() / 20 + getWidth() / 13, timeDelaySlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+    timeDelaySlider.setBounds(4 * getWidth() / 20, modelEffectTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
+    timeDelayText.setBounds(4 * getWidth() / 20, timeDelaySlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
     
     gainDelaySlider.setBounds(timeDelaySlider.getRight() + paddingHorizontal, modelEffectTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
-    gainDelayText.setBounds(timeDelaySlider.getRight() + paddingHorizontal, gainDelaySlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+    gainDelayText.setBounds(timeDelaySlider.getRight() + 2*paddingHorizontal/3, gainDelaySlider.getBottom() + paddingTextVertical, 3*sliderWidth /2, textHeight);
 
 }

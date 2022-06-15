@@ -42,22 +42,11 @@ void COM418AudioProcessorEditor::paint (juce::Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colours::black);
 
-    
-    auto smallComponentWidth = (3 * getWidth() / 10);
-    auto smallComponentHeight = getHeight() / 2;
-    juce::Rectangle<int> verticalSeparation(4 * smallComponentWidth / 3 -1, 0, 2, getHeight());
-    juce::Rectangle<int> verticalSeparation2(7 * smallComponentWidth / 3 - 1, 0, 2, getHeight());
-//    juce::Rectangle<int> verticalSeparation3(7.2 * smallComponentWidth / 3 - 1, 0, 2, getHeight());
-    
-    juce::Rectangle<int> horizontalSeparation1(4 * smallComponentWidth / 3 - 1, smallComponentHeight-1, getWidth()-(4 * smallComponentWidth / 3 - 1), 2);
-    juce::Rectangle<int> horizontalSeparation2(7 * smallComponentWidth / 3 - 1, smallComponentHeight-1, getWidth()-(4 * smallComponentWidth / 3 - 1), 2);
+    juce::Rectangle<int> separation(0, 0, getWidth(), getHeight());
 
     g.setColour(juce::Colours::lightblue);
-    g.fillRect(verticalSeparation);
-    g.fillRect(verticalSeparation2);
-//    g.fillRect(verticalSeparation3);
-    g.fillRect(horizontalSeparation1);
-    g.fillRect(horizontalSeparation2);
+    g.fillRect(separation);
+
 
 }
 
