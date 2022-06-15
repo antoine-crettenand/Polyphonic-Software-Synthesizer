@@ -17,6 +17,7 @@
 #include "UI/ModEffectComponent.h"
 #include "UI/DistortionComponent.h"
 #include "UI/WaveformVisualizerComponent.h"
+#include "UI/DelayComponent.h"
 
 //==============================================================================
 /**
@@ -39,6 +40,8 @@ private:
     FilterComponent filter;
     ModEffectComponent tremolo;
     DistortionComponent distortionComponent;
+    DelayComponent delayComponent;
+    
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessorEditor)
 };

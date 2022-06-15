@@ -16,6 +16,7 @@
 #include "Data/DistortionData.h"
 #include "Data/TremoloData.h"
 #include "UI/WaveformVisualizerComponent.h"
+#include "DelayData.h"
 
 //==============================================================================
 /**
@@ -71,7 +72,8 @@ private:
     FilterData* filter; // = new FilterData();
     DistortionData* distortion;
     TremoloData* tremoloEffect;// = new ModEffectData("modEffect");
-    
+    DelayData* delayEffect;
+
     juce::dsp::Gain<float> masterGain;
     
     //==============================================================================

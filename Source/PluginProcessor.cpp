@@ -125,6 +125,8 @@ void COM418AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
     tremoloEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
     
     waveformVisualizer.clear();
+ //   tremoloEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+    delayEffect->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
 }
 
 void COM418AudioProcessor::releaseResources()
@@ -197,8 +199,7 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     
     tremoloEffect->update(apvts);
     tremoloEffect->processBlock(buffer);
-    
-    
+        
     // Master Gain control
     auto& gain = *apvts.getRawParameterValue("MasterGain");
     masterGain.setGainDecibels(gain);
@@ -208,6 +209,8 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     
     // Audiowave Visualizer
     waveformVisualizer.pushBuffer(buffer);
+    delayEffect->update(apvts);
+    delayEffect->processBlock(buffer);
 }
 
 //==============================================================================
@@ -302,6 +305,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
 
     tremoloEffect = new TremoloData();
     tremoloEffect->setParameterLayout(layout);
+    
+    delayEffect = new DelayData(5.0f);
+    delayEffect->setParameterLayout(layout);
 
     layout.add(std::make_unique<juce::AudioParameterFloat>("MasterGain",
                                                           "MasterGain",
