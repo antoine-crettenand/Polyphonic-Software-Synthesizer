@@ -15,8 +15,9 @@
 #include "Data/FilterData.h"
 #include "Data/DistortionData.h"
 #include "Data/TremoloData.h"
+#include "Data/DelayData.h"
 #include "UI/WaveformVisualizerComponent.h"
-#include "DelayData.h"
+
 
 //==============================================================================
 /**

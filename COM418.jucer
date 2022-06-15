@@ -18,6 +18,16 @@
       <FILE id="Rltoay" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
       <FILE id="ZafGg3" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
       <GROUP id="{63F5F862-2042-7B9D-1411-D3DA4D58AEF4}" name="Data">
+        <FILE id="of4LmF" name="CircularBuffer.cpp" compile="1" resource="0"
+              file="Source/Data/CircularBuffer.cpp"/>
+        <FILE id="T8VHQK" name="CircularBuffer.h" compile="0" resource="0"
+              file="Source/Data/CircularBuffer.h"/>
+        <FILE id="dJeoPa" name="TimeEffectData.cpp" compile="1" resource="0"
+              file="Source/Data/TimeEffectData.cpp"/>
+        <FILE id="Fk3yeX" name="TimeEffectData.h" compile="0" resource="0"
+              file="Source/Data/TimeEffectData.h"/>
+        <FILE id="AwMKvw" name="DelayData.cpp" compile="1" resource="0" file="Source/Data/DelayData.cpp"/>
+        <FILE id="WMwWEe" name="DelayData.h" compile="0" resource="0" file="Source/Data/DelayData.h"/>
         <FILE id="f2cY7A" name="WaveformVisualizerData.cpp" compile="1" resource="0"
               file="Source/Data/WaveformVisualizerData.cpp"/>
         <FILE id="nAbnyP" name="WaveformVisualizerData.h" compile="0" resource="0"
