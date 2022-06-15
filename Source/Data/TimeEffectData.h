@@ -9,7 +9,7 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include "Data/OscData.h"
+#include "OscData.h"
 #include "CircularBuffer.h"
 
 
@@ -22,7 +22,7 @@ public:
     }
     virtual ~TimeEffectData(){}
     
-    void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
+    virtual void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
 
     virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0;
     

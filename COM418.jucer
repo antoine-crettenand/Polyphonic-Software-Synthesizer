@@ -18,12 +18,16 @@
       <FILE id="Rltoay" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
       <FILE id="ZafGg3" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
       <GROUP id="{63F5F862-2042-7B9D-1411-D3DA4D58AEF4}" name="Data">
-        <FILE id="GkdTXN" name="DelayData.cpp" compile="1" resource="0" file="Source/DelayData.cpp"/>
-        <FILE id="LQ5Hts" name="DelayData.h" compile="0" resource="0" file="Source/DelayData.h"/>
-        <FILE id="iV8fHb" name="CircularBuffer.cpp" compile="1" resource="0"
-              file="Source/CircularBuffer.cpp"/>
-        <FILE id="MzF2kU" name="CircularBuffer.h" compile="0" resource="0"
-              file="Source/CircularBuffer.h"/>
+        <FILE id="of4LmF" name="CircularBuffer.cpp" compile="1" resource="0"
+              file="Source/Data/CircularBuffer.cpp"/>
+        <FILE id="T8VHQK" name="CircularBuffer.h" compile="0" resource="0"
+              file="Source/Data/CircularBuffer.h"/>
+        <FILE id="dJeoPa" name="TimeEffectData.cpp" compile="1" resource="0"
+              file="Source/Data/TimeEffectData.cpp"/>
+        <FILE id="Fk3yeX" name="TimeEffectData.h" compile="0" resource="0"
+              file="Source/Data/TimeEffectData.h"/>
+        <FILE id="AwMKvw" name="DelayData.cpp" compile="1" resource="0" file="Source/Data/DelayData.cpp"/>
+        <FILE id="WMwWEe" name="DelayData.h" compile="0" resource="0" file="Source/Data/DelayData.h"/>
         <FILE id="Ajr5Ce" name="DistortionData.cpp" compile="1" resource="0"
               file="Source/Data/DistortionData.cpp"/>
         <FILE id="GzSMym" name="DistortionData.h" compile="0" resource="0"
@@ -37,10 +41,6 @@
         <FILE id="wBE0qH" name="AdsrData.h" compile="0" resource="0" file="Source/Data/AdsrData.h"/>
         <FILE id="us0Ryn" name="OscData.cpp" compile="1" resource="0" file="Source/Data/OscData.cpp"/>
         <FILE id="u86QBz" name="OscData.h" compile="0" resource="0" file="Source/Data/OscData.h"/>
-        <FILE id="ZtaDRF" name="TimeEffectData.cpp" compile="1" resource="0"
-              file="Source/TimeEffectData.cpp"/>
-        <FILE id="eA7sGL" name="TimeEffectData.h" compile="0" resource="0"
-              file="Source/TimeEffectData.h"/>
         <FILE id="Kov8NF" name="FilterData.cpp" compile="1" resource="0" file="Source/Data/FilterData.cpp"/>
         <FILE id="p0ITYt" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
       </GROUP>

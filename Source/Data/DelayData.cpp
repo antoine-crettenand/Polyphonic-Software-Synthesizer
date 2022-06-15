@@ -9,7 +9,16 @@
 
 #include "DelayData.h"
 
+void DelayData::prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels){
+    TimeEffectData::prepareToPlay(sampleRate, samplesPerBlock, outputChannels);
+    //    juce::AudioBuffer<float> initBuffer = juce::AudioBuffer(buffer);
+    delayBuffer = juce::AudioBuffer<float>(outputChannels, samplesPerBlock);
+    
+}
+
 void DelayData::processBlock(juce::AudioBuffer<float>& buffer) {
+
+    
     circularBuffer.processBlock(buffer, timeDelay, false);
     int bufferSize = buffer.getNumSamples();
     
@@ -17,26 +26,33 @@ void DelayData::processBlock(juce::AudioBuffer<float>& buffer) {
         circularBuffer.updatePointers(timeDelay, bufferSize);
         return;
     }
-    auto readPointer = circularBuffer.getReadPointer();
     
+    fillDelayBuffer(buffer);
+    
+    //feedback loop
+    circularBuffer.processBlock(buffer, timeDelay, true);
+}
+
+void DelayData::fillDelayBuffer(juce::AudioBuffer<float>& delayBuffer){
     juce::AudioBuffer<float> memoryBuffer = circularBuffer.getCircularBuffer();
     int memoryBufferSize = memoryBuffer.getNumSamples();
+
+    auto bufferSize = delayBuffer.getNumSamples();
+    auto readPointer = circularBuffer.getReadPointer();
     
     for (int channel = 0; channel < spec.numChannels; ++ channel){
-        
+
         if(readPointer + bufferSize < memoryBufferSize){
-            buffer.addFromWithRamp(channel, 0, memoryBuffer.getReadPointer(channel, readPointer), bufferSize, gainDelay, gainDelay);
+            delayBuffer.addFromWithRamp(channel, 0, memoryBuffer.getReadPointer(channel, readPointer), bufferSize, gainDelay, gainDelay);
         }
         else {
             auto numSamplesToEnd = memoryBufferSize - readPointer;
-            buffer.addFromWithRamp(channel, 0, memoryBuffer.getReadPointer(channel, readPointer), numSamplesToEnd, gainDelay, gainDelay);
-            
+            delayBuffer.addFromWithRamp(channel, 0, memoryBuffer.getReadPointer(channel, readPointer), numSamplesToEnd, gainDelay, gainDelay);
+        
             auto numSamplesToStart = bufferSize - numSamplesToEnd;
-            buffer.addFromWithRamp(channel, numSamplesToEnd, memoryBuffer.getReadPointer(channel, 0), numSamplesToStart, gainDelay, gainDelay);
+            delayBuffer.addFromWithRamp(channel, numSamplesToEnd, memoryBuffer.getReadPointer(channel, 0), numSamplesToStart, gainDelay, gainDelay);
         }
     }
-    //feedback loop
-    circularBuffer.processBlock(buffer, timeDelay, true);
 }
 
 void DelayData::update(juce::AudioProcessorValueTreeState& apvts){
