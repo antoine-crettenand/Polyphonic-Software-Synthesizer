@@ -16,6 +16,7 @@
 #include "UI/FilterComponent.h"
 #include "UI/ModEffectComponent.h"
 #include "UI/DistortionComponent.h"
+#include "UI/WaveformVisualizerComponent.h"
 #include "UI/DelayComponent.h"
 
 //==============================================================================

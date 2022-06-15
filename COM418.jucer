@@ -28,6 +28,10 @@
               file="Source/Data/TimeEffectData.h"/>
         <FILE id="AwMKvw" name="DelayData.cpp" compile="1" resource="0" file="Source/Data/DelayData.cpp"/>
         <FILE id="WMwWEe" name="DelayData.h" compile="0" resource="0" file="Source/Data/DelayData.h"/>
+        <FILE id="f2cY7A" name="WaveformVisualizerData.cpp" compile="1" resource="0"
+              file="Source/Data/WaveformVisualizerData.cpp"/>
+        <FILE id="nAbnyP" name="WaveformVisualizerData.h" compile="0" resource="0"
+              file="Source/Data/WaveformVisualizerData.h"/>
         <FILE id="Ajr5Ce" name="DistortionData.cpp" compile="1" resource="0"
               file="Source/Data/DistortionData.cpp"/>
         <FILE id="GzSMym" name="DistortionData.h" compile="0" resource="0"
@@ -45,10 +49,10 @@
         <FILE id="p0ITYt" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
       </GROUP>
       <GROUP id="{18E55AC1-EDC9-7B8E-6751-905A2143C764}" name="UI">
-        <FILE id="f0Akv5" name="DelayComponent.cpp" compile="1" resource="0"
-              file="Source/UI/DelayComponent.cpp"/>
-        <FILE id="qtVur1" name="DelayComponent.h" compile="0" resource="0"
-              file="Source/UI/DelayComponent.h"/>
+        <FILE id="mbKO5M" name="WaveformVisualizerComponent.cpp" compile="1"
+              resource="0" file="Source/UI/WaveformVisualizerComponent.cpp"/>
+        <FILE id="lwrvEV" name="WaveformVisualizerComponent.h" compile="0"
+              resource="0" file="Source/UI/WaveformVisualizerComponent.h"/>
         <FILE id="gYjg7t" name="ModEffectComponent.cpp" compile="1" resource="0"
               file="Source/UI/ModEffectComponent.cpp"/>
         <FILE id="aN5ezA" name="ModEffectComponent.h" compile="0" resource="0"

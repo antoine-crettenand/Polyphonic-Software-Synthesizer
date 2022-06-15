@@ -20,7 +20,8 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, int oscNum
     addAndMakeVisible(oscText);
 
     freq.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    freq.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    freq.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
+    freq.setTextValueSuffix(" semitones");
     addAndMakeVisible(freq);
     freqAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "Freq" + std::to_string(oscNumber), freq);
 
@@ -30,7 +31,8 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, int oscNum
     oscWaveTypeSelectorAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(apvts, "Osc" + std::to_string(oscNumber) + "WaveType", oscWaveTypeSelector);
 
     volume.setSliderStyle(juce::Slider::SliderStyle::Rotary);
-    volume.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    volume.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
+ //   volume.setTextValueSuffix(" dB");
     addAndMakeVisible(volume);
     volumeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "Volume" + std::to_string(oscNumber), volume);
 

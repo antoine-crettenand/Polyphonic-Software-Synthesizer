@@ -16,6 +16,8 @@
 #include "Data/DistortionData.h"
 #include "Data/TremoloData.h"
 #include "Data/DelayData.h"
+#include "UI/WaveformVisualizerComponent.h"
+
 
 //==============================================================================
 /**
@@ -62,6 +64,7 @@ public:
     
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout(int numberOscs);
     juce::AudioProcessorValueTreeState apvts;
+    WaveformVisualizerComponent waveformVisualizer;
 
 private:
     Synth synth;
@@ -72,6 +75,8 @@ private:
     TremoloData* tremoloEffect;// = new ModEffectData("modEffect");
     DelayData* delayEffect;
 
+    juce::dsp::Gain<float> masterGain;
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessor)
     
