@@ -1,8 +1,6 @@
 /*
   ==============================================================================
-
     This file contains the basic framework code for a JUCE plugin editor.
-
   ==============================================================================
 */
 
@@ -18,6 +16,7 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
     tremolo(audioProcessor.apvts, "tremolo"),
     distortionComponent(audioProcessor.apvts),
     delayComponent(audioProcessor.apvts, "delay")
+
 {
 
     setSize (1100, 600);
@@ -27,8 +26,9 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
     addAndMakeVisible(filter);
     addAndMakeVisible(tremolo);
     addAndMakeVisible(distortionComponent);
-    addAndMakeVisible(audioProcessor.waveformVisualizer);
     addAndMakeVisible(delayComponent);
+//    addAndMakeVisible(audioProcessor.waveformVisualizer);
+
 }
 
 COM418AudioProcessorEditor::~COM418AudioProcessorEditor()
@@ -40,6 +40,8 @@ void COM418AudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colours::lightblue);
+//    audioProcessor.waveformVisualizer.setColours(juce::Colours::black, juce::Colours::whitesmoke.withAlpha(0.5f));
+
 }
 
 void COM418AudioProcessorEditor::resized()
@@ -52,8 +54,10 @@ void COM418AudioProcessorEditor::resized()
     ampAdsr.setBounds(fullOscsComponent.getRight()+2, 0, smallComponentWidth-2, smallComponentHeight-1);
     filter.setBounds(fullOscsComponent.getRight()+2, ampAdsr.getBottom()+2, smallComponentWidth-2, smallComponentHeight-1);
     tremolo.setBounds(ampAdsr.getRight()+2, 0, smallComponentWidth-1, smallComponentHeight-1);
-    distortionComponent.setBounds(filter.getRight()+2, tremolo.getBottom()+2, smallComponentWidth-1, smallComponentHeight-1);
-    audioProcessor.waveformVisualizer.setBounds(distortionComponent.getRight(), smallComponentHeight * .5f, smallComponentWidth, smallComponentHeight * .5f);
+    distortionComponent.setBounds(filter.getRight()+2, tremolo.getBottom()+2, smallComponentWidth/2 - 1, smallComponentHeight-1);
     delayComponent.setBounds(distortionComponent.getRight()+2, tremolo.getBottom()+2, smallComponentWidth/2 - 1, smallComponentHeight-1);
+    
+//    auto componentWidth = getWidth() / 6;
+//    auto componentHeight = getHeight();
+//    audioProcessor.waveformVisualizer.setBounds(distortionComponent.getRight(), componentHeight * .5f, componentWidth, componentHeight * .5f);
 }
-
