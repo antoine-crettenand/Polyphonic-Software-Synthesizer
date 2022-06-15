@@ -32,7 +32,6 @@ public:
     void prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels);
     // TODO : check validity
 //        virtual ~ModEffectData();
-//    virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0;
     virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0;
     
     void update(juce::AudioProcessorValueTreeState& apvts);

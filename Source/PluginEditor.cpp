@@ -16,17 +16,19 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
     fullOscsComponent(audioProcessor.apvts, 3), //If we change the number of oscillators in Plugin Processor, we should also change it here
     filter(audioProcessor.apvts, ""),
     tremolo(audioProcessor.apvts, "tremolo"),
-    distortionComponent(audioProcessor.apvts)
+    distortionComponent(audioProcessor.apvts),
+    delayComponent(audioProcessor.apvts, "delay")
 
 {
 
-    setSize (1000, 600);
+    setSize (1100, 600);
 
     addAndMakeVisible(fullOscsComponent);
     addAndMakeVisible(ampAdsr);
     addAndMakeVisible(filter);
     addAndMakeVisible(tremolo);
     addAndMakeVisible(distortionComponent);
+    addAndMakeVisible(delayComponent);
 
 }
 
@@ -40,19 +42,11 @@ void COM418AudioProcessorEditor::paint (juce::Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colours::black);
 
-    
-    auto smallComponentWidth = (3 * getWidth() / 10);
-    auto smallComponentHeight = getHeight() / 2;
-    juce::Rectangle<int> verticalSeparation(4 * smallComponentWidth / 3 -1, 0, 2, getHeight());
-    juce::Rectangle<int> verticalSeparation2(7 * smallComponentWidth / 3 - 1, 0, 2, getHeight());
-    juce::Rectangle<int> horizontalSeparation1(4 * smallComponentWidth / 3 - 1, smallComponentHeight-1, getWidth()-(4 * smallComponentWidth / 3 - 1), 2);
-    juce::Rectangle<int> horizontalSeparation2(7 * smallComponentWidth / 3 - 1, smallComponentHeight-1, getWidth()-(4 * smallComponentWidth / 3 - 1), 2);
+    juce::Rectangle<int> separation(0, 0, getWidth(), getHeight());
 
     g.setColour(juce::Colours::lightblue);
-    g.fillRect(verticalSeparation);
-    g.fillRect(verticalSeparation2);
-    g.fillRect(horizontalSeparation1);
-    g.fillRect(horizontalSeparation2);
+    g.fillRect(separation);
+
 
 }
 
@@ -66,6 +60,7 @@ void COM418AudioProcessorEditor::resized()
     ampAdsr.setBounds(fullOscsComponent.getRight()+2, 0, smallComponentWidth-2, smallComponentHeight-1);
     filter.setBounds(fullOscsComponent.getRight()+2, ampAdsr.getBottom()+2, smallComponentWidth-2, smallComponentHeight-1);
     tremolo.setBounds(ampAdsr.getRight()+2, 0, smallComponentWidth-1, smallComponentHeight-1);
-    distortionComponent.setBounds(filter.getRight()+2, tremolo.getBottom()+2, smallComponentWidth-1, smallComponentHeight-1);
+    distortionComponent.setBounds(filter.getRight()+2, tremolo.getBottom()+2, smallComponentWidth/2 - 1, smallComponentHeight-1);
+    delayComponent.setBounds(distortionComponent.getRight()+2, tremolo.getBottom()+2, smallComponentWidth/2 - 1, smallComponentHeight-1);
 }
 

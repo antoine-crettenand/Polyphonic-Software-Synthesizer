@@ -67,14 +67,14 @@ void DistortionComponent::resized()
     const int textHeight = 3 * getHeight() / 25;
 
     const auto paddingTitle = getWidth() / 36;
-    const auto modIsActiveButtonWidth = 2 * getWidth() / 25;
-    const auto paddingHorizontal = 2*getWidth() / 20;
+    const auto modIsActiveButtonWidth = getWidth() / 6;
+    const auto paddingHorizontal = getWidth() / 10;
 
-    isActiveButton.setBounds(7 * getWidth() / 20 - (paddingTitle + modIsActiveButtonWidth) / 2, getHeight() / 10, modIsActiveButtonWidth, getHeight() / 10);
-    distortionTitle.setBounds(isActiveButton.getRight() + paddingTitle, getHeight() / 10, 3*getWidth() / 10, getHeight() / 10);
+    isActiveButton.setBounds(getWidth() / 15, getHeight() / 10, modIsActiveButtonWidth, getHeight() / 10);
+    distortionTitle.setBounds(isActiveButton.getRight() + getWidth()/25, getHeight() / 10, getWidth() / 2, getHeight() / 10);
 
     gainSlider.setBounds(3 * getWidth() / 20, distortionTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
-    gainLabel.setBounds(3 * getWidth() / 20 + getWidth() / 13, gainSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+    gainLabel.setBounds(3 * getWidth() / 17, gainSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
     highPassFreqSlider.setBounds(gainSlider.getRight() + paddingHorizontal, distortionTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
-    highPassFreqLabel.setBounds(gainSlider.getRight() + paddingHorizontal, highPassFreqSlider.getBottom() + paddingTextVertical, sliderWidth, textHeight);
+    highPassFreqLabel.setBounds(gainSlider.getRight() + 2*paddingHorizontal/3, highPassFreqSlider.getBottom() + paddingTextVertical, 3*sliderWidth /2, textHeight);
    }

@@ -15,6 +15,7 @@
 #include "Data/FilterData.h"
 #include "Data/DistortionData.h"
 #include "Data/TremoloData.h"
+#include "DelayData.h"
 
 //==============================================================================
 /**
@@ -69,6 +70,7 @@ private:
     FilterData* filter; // = new FilterData();
     DistortionData* distortion;
     TremoloData* tremoloEffect;// = new ModEffectData("modEffect");
+    DelayData* delayEffect;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (COM418AudioProcessor)

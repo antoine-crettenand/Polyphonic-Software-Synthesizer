@@ -74,7 +74,7 @@ void ModEffectComponent::resized()
     const auto paddingHorizontal = getWidth() / 18;
 
     modIsActiveButton.setBounds(2 * getWidth() / 5-(paddingTitle +modIsActiveButtonWidth)/2, getHeight() / 10, modIsActiveButtonWidth, getHeight() / 10);
-    modelEffectTitle.setBounds(modIsActiveButton.getRight()+paddingTitle, getHeight() / 10, getWidth() / 5, getHeight() / 10);
+    modelEffectTitle.setBounds(modIsActiveButton.getRight()+paddingTitle, getHeight() / 10, getWidth() / 5 + 10, getHeight() / 10);
     
     modWaveTypeBox.setBounds(paddingHorizontal, modelEffectTitle.getBottom()+6*getHeight()/25, 5*getWidth()/18, 4*getHeight()/25);
     modFreqSlider.setBounds(modWaveTypeBox.getRight()+paddingHorizontal, modelEffectTitle.getBottom() + paddingTitle, sliderWidth, sliderHeight);
