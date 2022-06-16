@@ -73,7 +73,7 @@ void DistortionData::setParameterLayout(juce::AudioProcessorValueTreeState::Para
      */
     layout.add(std::make_unique<juce::AudioParameterFloat>("DistGain",
                                                            "DistPreGain",
-                                                           juce::NormalisableRange<float>(-60.0f, 60.f, 1.f, 1.f),
+                                                           juce::NormalisableRange<float>(-60.0f, 60.f, .1f, 1.f),
                                                             0.f));
     layout.add(std::make_unique<juce::AudioParameterFloat>("DistHighPassFreq",
                                                            "DistHighPassFreq",

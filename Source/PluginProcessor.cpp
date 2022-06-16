@@ -311,7 +311,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
 
     layout.add(std::make_unique<juce::AudioParameterFloat>("MasterGain",
                                                           "MasterGain",
-                                                          juce::NormalisableRange<float>(-10.f, 10.f, .5f, .5f),
+                                                          juce::NormalisableRange<float>(-100.f, 10.f, .1f, 4.f),
                                                            0.0f));
     /*
     // filter section parameters

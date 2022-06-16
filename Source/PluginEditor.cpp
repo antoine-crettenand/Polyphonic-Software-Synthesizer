@@ -27,7 +27,7 @@ COM418AudioProcessorEditor::COM418AudioProcessorEditor (COM418AudioProcessor& p)
     addAndMakeVisible(tremolo);
     addAndMakeVisible(distortionComponent);
     addAndMakeVisible(delayComponent);
-//    addAndMakeVisible(audioProcessor.waveformVisualizer);
+    addAndMakeVisible(audioProcessor.waveformVisualizer);
 
 }
 
@@ -40,7 +40,7 @@ void COM418AudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colours::lightblue);
-//    audioProcessor.waveformVisualizer.setColours(juce::Colours::black, juce::Colours::whitesmoke.withAlpha(0.5f));
+    audioProcessor.waveformVisualizer.setColours(juce::Colours::black, juce::Colours::whitesmoke.withAlpha(0.5f));
 
 }
 
@@ -50,14 +50,12 @@ void COM418AudioProcessorEditor::resized()
     auto smallComponentHeight = getHeight()/2;
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    fullOscsComponent.setBounds(0, 0, 4* smallComponentWidth/3-1, getHeight());
+    fullOscsComponent.setBounds(0, 0, 4* smallComponentWidth/3-1, getHeight() * 2/3);
     ampAdsr.setBounds(fullOscsComponent.getRight()+2, 0, smallComponentWidth-2, smallComponentHeight-1);
     filter.setBounds(fullOscsComponent.getRight()+2, ampAdsr.getBottom()+2, smallComponentWidth-2, smallComponentHeight-1);
     tremolo.setBounds(ampAdsr.getRight()+2, 0, smallComponentWidth-1, smallComponentHeight-1);
     distortionComponent.setBounds(filter.getRight()+2, tremolo.getBottom()+2, smallComponentWidth/2 - 1, smallComponentHeight-1);
     delayComponent.setBounds(distortionComponent.getRight()+2, tremolo.getBottom()+2, smallComponentWidth/2 - 1, smallComponentHeight-1);
     
-//    auto componentWidth = getWidth() / 6;
-//    auto componentHeight = getHeight();
-//    audioProcessor.waveformVisualizer.setBounds(distortionComponent.getRight(), componentHeight * .5f, componentWidth, componentHeight * .5f);
+    audioProcessor.waveformVisualizer.setBounds(0, fullOscsComponent.getBottom(), 4*smallComponentWidth/3 - 1, getHeight() * 1/3);
 }

@@ -36,7 +36,10 @@ WaveformVisualizerComponent::~WaveformVisualizerComponent()
 
 void WaveformVisualizerComponent::resized() {
     auto bounds = getLocalBounds();
+    const auto padding = getWidth() / 15;
+    const auto labelWidth = 50;
     
-    gainSlider.setBounds(0, 0,bounds.getWidth(), bounds.getHeight());
+    gainSlider.setBounds(padding, 0,bounds.getWidth() - 2 * padding - labelWidth, bounds.getHeight()-2);
+    gainLabel.setBounds(gainSlider.getRight(), 0, labelWidth, bounds.getHeight()-2);
 }
 
