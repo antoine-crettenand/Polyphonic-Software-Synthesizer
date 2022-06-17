@@ -15,9 +15,9 @@
 WaveformVisualizerComponent::WaveformVisualizerComponent(int numChannels, juce::AudioProcessorValueTreeState& apvts) : juce::AudioVisualiserComponent(numChannels)
 {
     //
-    setRepaintRate(512);
+    setRepaintRate(60);
     //vitesse + elargissement
-    setBufferSize(320);
+    setBufferSize(160);
     //elargissement
     setSamplesPerBlock(32);
     
