@@ -18,7 +18,7 @@ void CircularBuffer::prepareToPlay(double sampleRate, int samplesPerBlock, int o
 }
 
 void CircularBuffer::processBlock(juce::AudioBuffer<float>& buffer, float timeDelay, bool update){
-    assert(isInit);
+    jassert(isInit);
     
     auto bufferSize = buffer.getNumSamples();
     
@@ -63,12 +63,12 @@ void CircularBuffer::updateWritePointer(int bufferSize){
 }
 
 void CircularBuffer::updateReadPointer(float timeDelay, int bufferSize){
-    assert(timeDelay < maxTimeDelay);
+    jassert(timeDelay < maxTimeDelay);
     readPointer = static_cast<int>(writePointer - timeDelay * sample_rate);
     if (readPointer < 0){
         readPointer += circularBuffer.getNumSamples();
     }
-    assert(readPointer >= 0);
+    jassert(readPointer >= 0);
 }
                        
 void CircularBuffer::updatePointers(float timeDelay, int bufferSize){
