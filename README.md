@@ -40,7 +40,11 @@ To only download the VST3 and AU plugins, please click on the following [link](h
 ## Synthesizer controls
 
 ## Presets
-
+Here is some presets we found : 
+https://user-images.githubusercontent.com/43465471/174438065-8d86d1c2-1237-4687-96cf-a45734e2d1ff.mov
 ## Ressources
+
+
+
 
 
