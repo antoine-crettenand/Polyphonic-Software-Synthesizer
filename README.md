@@ -3,22 +3,15 @@ The polyphonic-software synthesizer is a synthesizer in the form of a VST3/AU pl
 The ressources we used to create this synth were mainly the [JUCE documentation](https://juce.com/learn/documentation) and the [AudioProgrammer tutorials](https://www.theaudioprogrammer.com/).
 ## Project structure
 - JuceLibraryCode : all the libraries provided by the JUCE framework
-- Source/ : 
-  - PluginEditor :
-  - PluginProcessor :
-  - Synth :
-  - SynthVoice : 
-  - Data/ :
-    - AdsrData
-    - CircularBuffer
-    - DelayData
-    - DistortionData
-    - FilterData
-    - ModEffectData
-    - OscData
-    - TimeEffectData
-    - Tremolo
-  - UI/ : 
+- Source/ 
+  - PluginEditor : The file handling all the visual components
+  - PluginProcessor : The file handling all the sound processing of each component
+  - Synth / SynthVoice : The file handling all the first block process (process MIDI inputs, voices,...)
+
+  - Data/ : Contains for each component (ADSR, Filters, Oscillators, Distortion, Delay, Tremolo) their sound processing implementation part that will be handled as a block in the PluginProcessor file.
+
+  - UI/ : Contains for each component (ADSR, Filters, Oscillators, Distortion, Delay, Tremolo, WaveformVisualizer) their visual implementation part and also handle the binding with the corresponding sound processing file. They will be handled in the PluginEditor file.
+
     - AdsrComponent
     - DelayComponent
     - DistortionComponent
@@ -36,11 +29,7 @@ https://user-images.githubusercontent.com/43465471/174483290-87f09886-37a9-45b9-
 
 
 
-It is possible that if you use GarageBand, the plugin does not appear. If it is the case, please execute `killall -9 AudioComponentRegistrar` in your Terminal after having closed Garage
-
-
-
-Band.
+It is possible that if you use GarageBand, the plugin does not appear. If it is the case, please execute `killall -9 AudioComponentRegistrar` in your Terminal after having closed GarageBand. Make sure to select the option "stereo" when launching the plugin into your DAW.
 
 ## Download
 To only download the VST3 and AU plugins, please click on the following [link](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fantoine-crettenand%2FPolyphonic-Software-Synthesizer%2Ftree%2Frelease%2Fplugins). Then make sure to place them in the correct directory with respect to your OS :
@@ -50,7 +39,7 @@ To only download the VST3 and AU plugins, please click on the following [link](h
 | AU          | ~/Library/Audio/Plug-Ins/Components | Not supported                      |
 | VST3        | ~/Library/Audio/Plug-Ins/VST3       | C:\Program Files\Common Files\VST3 |
 
-You will find two versions of each: the standard one and the light one. The difference between them is that the light version do not contain the Wave visualization, because it could cause for some computers lags.
+You will find two versions of each: the standard one and the light one. The difference between them is that the light version do not contain the wave visualization, because it could cause for some computers lags and/or clipping sounds. You will have to select the option "stereo" when launching the plugin into your DAW.
 
 
 ## Presets
