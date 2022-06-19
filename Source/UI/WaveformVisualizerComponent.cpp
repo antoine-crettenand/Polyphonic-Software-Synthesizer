@@ -14,8 +14,12 @@
 //==============================================================================
 WaveformVisualizerComponent::WaveformVisualizerComponent(int numChannels, juce::AudioProcessorValueTreeState& apvts) : juce::AudioVisualiserComponent(numChannels)
 {
-    setRepaintRate(120);
-    setBufferSize(32);
+    //
+    setRepaintRate(16);
+    //vitesse + elargissement
+    setBufferSize(160);
+    //elargissement
+    setSamplesPerBlock(32);
     
     gainAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, "MasterGain", gainSlider);
     
