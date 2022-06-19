@@ -41,7 +41,7 @@ Here you can find a video of some presets that you can use :
 https://user-images.githubusercontent.com/43465471/174476560-ac63e572-d3ec-4d77-86e5-a3977c7c6fb2.mp4
 
 
-
+For a better audio experience, please consider using headphones.
 
 
 
