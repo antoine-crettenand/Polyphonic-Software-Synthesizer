@@ -208,7 +208,7 @@ void COM418AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     masterGain.process(context);
     
     // Audiowave Visualizer
-    waveformVisualizer.pushBuffer(buffer);
+//    waveformVisualizer.pushBuffer(buffer);
     delayEffect->update(apvts);
     delayEffect->processBlock(buffer);
 }
