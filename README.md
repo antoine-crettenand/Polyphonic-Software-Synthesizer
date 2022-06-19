@@ -1,5 +1,6 @@
 # Polyphonic-Software-Synthesizer
-
+The polyphonic-software synthesizer is a synthesizer in the form of a VST3/AU plugin containing multiple oscillators and differents effects : filters, tremolo, delay, distortion. You can download the plugin by following the instructions in the [dedicated section](#Download). A presentation of the presets you can use is made [afterwards](#Presets).  
+The ressources we used to create this synth were mainly the [JUCE documentation](https://juce.com/learn/documentation) and the [AudioProgrammer tutorials](https://www.theaudioprogrammer.com/).
 ## Project structure
 - JuceLibraryCode : all the libraries provided by the JUCE framework
 - Source/ : 
@@ -40,13 +41,10 @@ To only download the VST3 and AU plugins, please click on the following [link](h
 ## Synthesizer controls
 
 ## Presets
-Here is some presets we found : 
+Here you can find a video of some presets we have found :
 
 
 https://user-images.githubusercontent.com/43465471/174476560-ac63e572-d3ec-4d77-86e5-a3977c7c6fb2.mp4
-
-
-## Ressources
 
 
 
