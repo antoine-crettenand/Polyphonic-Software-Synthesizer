@@ -28,20 +28,23 @@ The ressources we used to create this synth were mainly the [JUCE documentation]
     - OscComponent
     - WaveformVisualizerComponent
 ## Installation 
-If you want only to use the already built plugins and not the all JUCE project, please go to the [next section](#Download).
+If you want only to use the already built plugins and not the all JUCE project, please go to the [next section](#Download). To launch the project, please first install [JUCE](https://juce.com/get-juce/download). After that, you will have to have either [XCode](https://apps.apple.com/ch/app/xcode/id497799835?mt=12) for Mac users or [Visual Studio](https://visualstudio.microsoft.com/) for Windows. You can then clone this github repository. To launch the project you will have to execute the COM418.jucer file, a Projucer window will appear. Click then on the Xcode or Visual Code icon on the top of the window. To execute the project so that the plugin runs on your DAW, you will have to select the right version (VST3/AU), make sure to be on release mode and then build the project. These steps may slightly change with the DAW or the OS you have selectioned. Here is an example for MacOSX with garageBand: 
+
+
 
 ## Download
-To only download the VST3 and AU plugins, please click on the following [link](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fantoine-crettenand%2FPolyphonic-Software-Synthesizer%2Ftree%2Frelease%2Fplugins). Then make sure to place them in the correct directory w.r.t. your OS :
+To only download the VST3 and AU plugins, please click on the following [link](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fantoine-crettenand%2FPolyphonic-Software-Synthesizer%2Ftree%2Frelease%2Fplugins). Then make sure to place them in the correct directory with respect to your OS :
 
 | Plugin type | MacOSX                              | Windows                            |
 |-------------|-------------------------------------|------------------------------------|
 | AU          | ~/Library/Audio/Plug-Ins/Components | Not supported                      |
 | VST3        | ~/Library/Audio/Plug-Ins/VST3       | C:\Program Files\Common Files\VST3 |
 
-## Synthesizer controls
+You will find two versions of each: the standard one and the light one. The difference between them is that the light version do not contain the Wave visualization, because it could cause for some computers lags.
+
 
 ## Presets
-Here you can find a video of some presets we have found :
+Here you can find a video of some presets that you can use :
 
 
 https://user-images.githubusercontent.com/43465471/174476560-ac63e572-d3ec-4d77-86e5-a3977c7c6fb2.mp4
