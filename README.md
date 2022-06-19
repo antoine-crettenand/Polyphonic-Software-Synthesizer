@@ -31,7 +31,7 @@ To only download the VST3 and AU plugins, please click on the following [link](h
 | AU          | ~/Library/Audio/Plug-Ins/Components | Not supported                      |
 | VST3        | ~/Library/Audio/Plug-Ins/VST3       | C:\Program Files\Common Files\VST3 |
 
-You will find two versions of each: the standard one and the light one. The difference between them is that the light version do not contain the wave visualization, because it could cause for some computers lags and/or clipping sounds. You will have to select the option "stereo" when launching the plugin into your DAW.
+You will find two versions of each: the standard one and the light one. The difference between them is that the light version do not contain the wave visualization, because it could cause for some computers lags and/or clipping sounds. You will have to select the option "stereo" when launching the plugin into your DAW. Note also that in some DAW, you should only add one of the 2 versions (either the standard one or the light one) as they are both recognised as being called COM418 when scanning for new plugins.
 
 
 ## Presets
