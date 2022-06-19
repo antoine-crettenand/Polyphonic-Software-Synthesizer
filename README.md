@@ -24,7 +24,7 @@ https://user-images.githubusercontent.com/43465471/174483290-87f09886-37a9-45b9-
 It is possible that if you use GarageBand, the plugin does not appear. If it is the case, please execute `killall -9 AudioComponentRegistrar` in your Terminal after having closed GarageBand. Make sure to select the option "stereo" when launching the plugin into your DAW.
 
 ## Download
-To only download the VST3 and AU plugins, please click on the following [link](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fantoine-crettenand%2FPolyphonic-Software-Synthesizer%2Ftree%2Frelease%2Fplugins). Then make sure to place them in the correct directory with respect to your OS :
+To only download the VST3 and AU plugins, please click on the following [link](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fantoine-crettenand%2FPolyphonic-Software-Synthesizer%2Ftree%2Fmain%2Fplugins). Then make sure to place them in the correct directory with respect to your OS :
 
 | Plugin type | MacOSX                              | Windows                            |
 |-------------|-------------------------------------|------------------------------------|
