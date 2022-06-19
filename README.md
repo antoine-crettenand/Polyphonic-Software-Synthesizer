@@ -29,7 +29,12 @@ The ressources we used to create this synth were mainly the [JUCE documentation]
     - WaveformVisualizerComponent
 ## Installation 
 If you want only to use the already built plugins and not the all JUCE project, please go to the [next section](#Download). To launch the project, please first install [JUCE](https://juce.com/get-juce/download). After that, you will have to have either [XCode](https://apps.apple.com/ch/app/xcode/id497799835?mt=12) for Mac users or [Visual Studio](https://visualstudio.microsoft.com/) for Windows. You can then clone this github repository. To launch the project you will have to execute the COM418.jucer file, a Projucer window will appear. Click then on the Xcode or Visual Code icon on the top of the window. To execute the project so that the plugin runs on your DAW, you will have to select the right version (VST3/AU), make sure to be on release mode and then build the project.  Here is an example for MacOSX with GarageBand. These steps may slightly change with the DAW or the OS you have selectioned.
-https://user-images.githubusercontent.com/43465471/174483232-26e984a0-3837-4d1f-807b-4391423ed9c6.mp4
+
+
+
+https://user-images.githubusercontent.com/43465471/174483290-87f09886-37a9-45b9-9cfc-cb6476fd3b62.mp4
+
+
 
 It is possible that if you use GarageBand, the plugin does not appear. If it is the case, please execute `killall -9 AudioComponentRegistrar` in your Terminal after having closed Garage
 
