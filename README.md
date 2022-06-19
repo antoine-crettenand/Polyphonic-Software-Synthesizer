@@ -12,14 +12,6 @@ The ressources we used to create this synth were mainly the [JUCE documentation]
 
   - UI/ : Contains for each component (ADSR, Filters, Oscillators, Distortion, Delay, Tremolo, WaveformVisualizer) their visual implementation part and also handle the binding with the corresponding sound processing file. They will be handled in the PluginEditor file.
 
-    - AdsrComponent
-    - DelayComponent
-    - DistortionComponent
-    - FilterComponent
-    - FullOscsComponent
-    - ModEffectComponent
-    - OscComponent
-    - WaveformVisualizerComponent
 ## Installation 
 If you want only to use the already built plugins and not the all JUCE project, please go to the [next section](#Download). To launch the project, please first install [JUCE](https://juce.com/get-juce/download). After that, you will have to have either [XCode](https://apps.apple.com/ch/app/xcode/id497799835?mt=12) for Mac users or [Visual Studio](https://visualstudio.microsoft.com/) for Windows. You can then clone this github repository. To launch the project you will have to execute the COM418.jucer file, a Projucer window will appear. Click then on the Xcode or Visual Code icon on the top of the window. To execute the project so that the plugin runs on your DAW, you will have to select the right version (VST3/AU), make sure to be on release mode and then build the project.  Here is an example for MacOSX with GarageBand. These steps may slightly change with the DAW or the OS you have selectioned.
 
