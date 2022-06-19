@@ -280,7 +280,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpAttack",
                                                           "Attack",
                                                           juce::NormalisableRange<float>(0.001f, 5.f, .001f, .5f),
-                                                           0.001f));
+                                                           0.002f));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpDecay",
                                                           "Decay",
@@ -295,7 +295,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout COM418AudioProcessor::create
     layout.add(std::make_unique<juce::AudioParameterFloat>("AmpRelease",
                                                           "Release",
                                                           juce::NormalisableRange<float>(0.001f, 5.f, .001f, .5f),
-                                                           0.001f));
+                                                           0.002f));
     
     filter = new FilterData();
     filter->setParameterLayout(layout);
